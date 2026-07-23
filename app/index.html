@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>קוראים חכמים — עולם הקריאה שלי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ========== מסך פתיחה / הרשמה (יחידה 0 לייט) ========== -->
+  <section id="screen-onboarding" class="screen">
+    <div class="ob-sky"></div>
+    <div class="ob-card" id="ob-card"><!-- נבנה ב-JS --></div>
+  </section>
+
+  <!-- ========== מפת העולם ========== -->
+  <section id="screen-map" class="screen hidden">
+    <div class="map-world" id="map-world">
+      <div class="map-sky">
+        <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+        <div class="sun"></div>
+      </div>
+      <div class="map-ground"></div>
+      <svg class="map-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <polyline id="map-path" points="" fill="none" />
+      </svg>
+      <div class="map-banner">
+        <span class="banner-leaf">🍃</span>מפת ההתקדמות שלי<span class="banner-leaf">🍃</span>
+      </div>
+      <div id="map-stations"><!-- תחנות נבנות ב-JS --></div>
+      <div id="map-avatar" class="map-avatar" title="זה אני!"><!-- דמות --></div>
+    </div>
+
+    <!-- HUD עליון -->
+    <header class="hud">
+      <button class="hud-chip hud-player" id="btn-avatar" aria-label="הדמות שלי">
+        <span class="hud-mini-avatar" id="hud-mini-avatar"></span>
+        <span id="hud-name"></span>
+      </button>
+      <div class="hud-left">
+        <div class="hud-chip hud-coins" aria-label="מטבעות"><span class="coin-ico">🪙</span><span id="hud-coins">0</span></div>
+        <button class="hud-chip hud-btn" id="btn-book" aria-label="ספר המסע">📖 <span class="hud-btn-txt">ספר המסע</span></button>
+        <button class="hud-chip hud-btn" id="btn-shop" aria-label="החנות">🛍️ <span class="hud-btn-txt">החנות</span></button>
+        <button class="hud-chip hud-btn" id="btn-mute" aria-label="הפעלה או השתקה של צלילים">🔊</button>
+        <button class="hud-chip hud-btn hud-gear" id="btn-reset" aria-label="התחלה מחדש">⚙️</button>
+      </div>
+    </header>
+  </section>
+
+  <!-- ========== מסך יחידה ========== -->
+  <section id="screen-unit" class="screen hidden">
+    <header class="unit-header">
+      <button class="unit-exit" id="btn-unit-exit" aria-label="חזרה למפה">🗺️ למפה</button>
+      <div class="unit-progress" id="unit-progress" aria-label="התקדמות ביחידה"></div>
+      <div class="unit-hud">
+        <span class="unit-strikes" id="unit-strikes" aria-label="פסילות"></span>
+        <span class="hud-chip hud-coins small"><span class="coin-ico">🪙</span><span id="unit-coins">0</span></span>
+        <button class="hud-chip hud-btn small" id="btn-mute-unit" aria-label="הפעלה או השתקה של צלילים">🔊</button>
+      </div>
+    </header>
+    <div class="unit-stage">
+      <div class="unit-card" id="unit-card"><!-- תוכן החלק הנוכחי --></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ========== חלונות צפים ========== -->
+<div class="overlay hidden" id="overlay-shop">
+  <div class="panel">
+    <button class="panel-close" data-close aria-label="סגירה">✕</button>
+    <h2 class="panel-title">🛍️ החנות</h2>
+    <p class="panel-sub">אוספים מטבעות ביחידות, ומשדרגים את הדמות!</p>
+    <div class="shop-avatar-preview" id="shop-avatar-preview"></div>
+    <div id="shop-grid"></div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="overlay-book">
+  <div class="panel book-panel">
+    <button class="panel-close" data-close aria-label="סגירה">✕</button>
+    <h2 class="panel-title">📖 ספר המסע שלי</h2>
+    <h3 class="book-section">🎁 הפריטים שאספתי</h3>
+    <div id="book-items"></div>
+    <h3 class="book-section">✨ מילים שלקחתי איתי</h3>
+    <div id="book-words"></div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="overlay-avatar">
+  <div class="panel">
+    <button class="panel-close" data-close aria-label="סגירה">✕</button>
+    <h2 class="panel-title">הדמות שלי</h2>
+    <div class="shop-avatar-preview big" id="avatar-preview"></div>
+    <p class="panel-sub" id="avatar-stats"></p>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden" role="status"></div>
+<div id="confetti-layer" aria-hidden="true"></div>
+
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/world.js"></script>
+</body>
+</html>
