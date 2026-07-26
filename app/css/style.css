@@ -375,20 +375,84 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .unit-hud { display: flex; align-items: center; gap: 8px; }
 .unit-strikes { font-size: 1.05rem; letter-spacing: 2px; }
 
+/* אפס גלילה: הכרטיס מתכווץ אוטומטית להתאים למסך (fit-to-screen כמו מצגת) */
 .unit-stage {
-  flex: 1; overflow-y: auto;
+  flex: 1; overflow: hidden;
   display: flex; justify-content: center; align-items: flex-start;
-  padding: 6px 12px calc(24px + env(safe-area-inset-bottom));
+  padding: 4px 12px 10px;
 }
-/* גודל מצגת: הכרטיס רחב, אבל טקסט רץ נשאר ברוחב קריא באמצע */
-.unit-card {
-  width: min(1240px, 98%);
+
+/* פריסת משחק: שליש ימני קבוע לאלף ולהנחיות, שני שלישים לפעילות */
+.unit-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) 2.3fr;
+  gap: 14px;
+  width: min(1420px, 100%);
+  height: 100%;
+  align-items: start;
+}
+.unit-side {
   background: var(--cream);
   border: 4px solid var(--wood);
   border-radius: 24px;
   box-shadow: var(--shadow);
-  padding: 26px clamp(18px, 3vw, 48px) 30px;
+  padding: 16px 14px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-align: center;
+}
+.side-kicker {
+  background: linear-gradient(180deg, var(--wood-light), var(--wood));
+  border: 2px solid var(--wood-dark);
+  border-radius: 10px; padding: 5px 16px;
+  font-family: 'Rubik'; font-weight: 700; font-size: .88rem;
+  color: #fdf0d0;
+  box-shadow: 0 3px 0 var(--wood-dark);
+}
+.side-kicker:empty { display: none; }
+.side-title {
+  font-family: 'Rubik'; font-weight: 900;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  color: var(--wood-dark);
+  min-height: 0;
+}
+.side-title:empty { display: none; }
+.side-owl .guide-owl { width: auto; }
+.side-owl svg { width: 104px; height: 114px; }
+.side-owl img.owl-img { width: 104px; }
+.side-bubble {
+  border-radius: 16px;
+  font-size: .98rem;
+  width: 100%;
+}
+.side-bubble::before {
+  bottom: auto; right: 50%;
+  top: -17px;
+  transform: translateX(50%);
+  border: 9px solid transparent;
+  border-left-color: transparent;
+  border-bottom-color: var(--blue-btn);
+}
+
+@media (max-width: 900px) {
+  .unit-layout { grid-template-columns: 1fr; gap: 8px; }
+  .unit-side { flex-direction: row; flex-wrap: wrap; text-align: right; padding: 10px 12px; gap: 8px; align-items: center; justify-content: flex-start; }
+  .side-owl svg { width: 52px; height: 58px; }
+  .side-owl img.owl-img { width: 52px; }
+  .side-owl .guide-name { display: none; }
+  .side-title { font-size: 1.05rem; }
+  .side-bubble { width: auto; flex: 1; min-width: 200px; font-size: .9rem; }
+  .side-bubble::before { display: none; }
+}
+/* גודל מצגת: הכרטיס רחב, אבל טקסט רץ נשאר ברוחב קריא באמצע */
+.unit-card {
+  width: 100%;
+  background: var(--cream);
+  border: 4px solid var(--wood);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 18px clamp(18px, 3vw, 48px) 20px;
   animation: card-in .4s cubic-bezier(.2,1.4,.4,1);
+  transform-origin: top center;
 }
 /* רקע איור בתוך הכרטיס — שכבת קרם שקופה שומרת על קריאות הטקסט */
 .unit-card.photo-card {
@@ -440,7 +504,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .part-actions {
   display: flex; justify-content: center; align-items: center;
   flex-wrap: wrap; gap: 12px;
-  margin-top: 22px;
+  margin-top: 14px;
 }
 
 /* --- מסך intro של יחידה --- */
@@ -460,13 +524,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border: 3px solid var(--wood-light);
   margin-bottom: 16px;
   background: #dff0fb;
-  max-height: clamp(200px, 34vh, 340px);
+  max-height: clamp(180px, 30vh, 300px);
   display: flex; align-items: center; justify-content: center;
 }
 .hunt-scene svg,
 .hunt-scene img {
   display: block; width: 100%;
-  max-height: clamp(200px, 34vh, 340px);
+  max-height: clamp(180px, 30vh, 300px);
   object-fit: cover; object-position: center;
 }
 .hunt-words { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }

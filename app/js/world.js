@@ -418,6 +418,7 @@ function init() {
     saveState();
     paintNikud();
     applyNikudToDom(document.getElementById('unit-card'), S.nikud);
+    applyNikudToDom(document.querySelector('.unit-side'), S.nikud);
     applyNikudToDom(document.getElementById('map-stations'), S.nikud);
     Sound.play('click');
     toast(S.nikud ? 'גלגל הצלה פתוח: הטקסט מוצג עם ניקוד 🛟' : 'הניקוד הוסתר');

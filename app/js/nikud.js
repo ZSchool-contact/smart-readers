@@ -155,6 +155,7 @@ function applyNikudToDom(root, on) {
 function refreshNikud() {
   if (typeof S === 'undefined') return;
   applyNikudToDom(document.getElementById('unit-card'), S.nikud);
+  applyNikudToDom(document.querySelector('.unit-side'), S.nikud);
 }
 
 /* עוזר לטקסט שנוצר דינמית (מילים בארקייד, מילת ההאכלה, טוסטים) */

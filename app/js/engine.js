@@ -40,6 +40,30 @@ function stopPartActivities() {
   if (partCleanup) { partCleanup(); partCleanup = null; }
 }
 
+/* ---------- אפס גלילה: הכרטיס מתכווץ להתאים למסך, כמו שקופית ---------- */
+let fitObserverStarted = false;
+
+function fitUnitCard() {
+  const stage = document.querySelector('.unit-stage');
+  const card = document.getElementById('unit-card');
+  if (!stage || !card) return;
+  card.style.transform = '';
+  const avail = stage.clientHeight - 14;
+  const h = card.offsetHeight;
+  if (h > avail && avail > 100) {
+    card.style.transform = `scale(${Math.max(.5, avail / h)})`;
+  }
+}
+
+function startFitObserver() {
+  if (fitObserverStarted) return;
+  fitObserverStarted = true;
+  /* כל שינוי בגובה התוכן (פידבק שנוסף, משפט שנחשף) מפעיל התאמה מחדש */
+  new ResizeObserver(() => requestAnimationFrame(fitUnitCard))
+    .observe(document.getElementById('unit-card'));
+  window.addEventListener('resize', fitUnitCard);
+}
+
 /* נצנוצים סביב אלמנט — חגיגה קטנה על כל הצלחה */
 function sparkleBurst(el, count = 6) {
   const r = el.getBoundingClientRect();
@@ -95,6 +119,7 @@ function startUnit(id) {
   currentUnit = UNITS[id];
   if (!currentUnit) { toast('היחידה הזו עוד בבנייה, נפתח אותה בקרוב! 🔧'); return; }
   partIndex = -1;
+  startFitObserver();
   /* רקע איור ליחידה: ייעודי אם קיים, אחרת ברירת המחדל של העולם */
   const unitScreen = document.getElementById('screen-unit');
   if (unitScreen.classList.contains('photo-bg')) {
@@ -162,37 +187,36 @@ function nextPart() {
   renderers[part.type](part);
   refreshNikud();
   animateGuideBubble();
-  document.querySelector('.unit-stage').scrollTop = 0;
+  fitUnitCard();
 }
 
-/* כותרת חלק: אלף הינשוף מדבר בבועה */
+/* הפאנל הצדדי הקבוע: שלב, כותרת, אלף הינשוף וההנחיה */
 function owlMarkup() {
   return ASSETS.owl ? `<img class="owl-img" src="${OWL_IMAGE}" alt="">` : OWL_SVG;
 }
 
 function partHeader(part) {
-  return `
-    <div class="part-kicker">${part.kicker || ''}</div>
-    <h2 class="part-title">${part.title || ''}</h2>
-    ${part.guide ? `
-    <div class="guide-row">
-      <div class="guide-owl">${owlMarkup()}<span class="guide-name">${GUIDE_NAME}</span></div>
-      <div class="guide-bubble">${part.guide}</div>
-    </div>` : ''}
-  `;
+  document.getElementById('side-kicker').textContent = part.kicker || '';
+  document.getElementById('side-title').textContent = part.title || '';
+  document.getElementById('side-owl').innerHTML =
+    `<div class="guide-owl">${owlMarkup()}<span class="guide-name">${GUIDE_NAME}</span></div>`;
+  const bubble = document.getElementById('side-bubble');
+  bubble.textContent = part.guide || '';
+  bubble.style.display = part.guide ? '' : 'none';
+  return '';
 }
 
 /* ---------- מסך פתיחת יחידה ---------- */
 function renderIntro() {
   updateProgress();
+  partHeader({
+    kicker: `יחידה ${currentUnit.id} · ${currentUnit.topic}`,
+    title: currentUnit.title,
+    guide: `שלום ${S.name}! היום נתחיל בקטן ונגדל: משפט אחד, אחר כך קטע קצר, ובסוף פסקה שלמה. ובדרך? נתפוס מילים באוויר! 🎈`,
+  });
   $card().innerHTML = `
     <div class="intro-emoji">${currentUnit.emoji}</div>
     <h2 class="part-title" style="text-align:center">יחידה ${currentUnit.id}: ${currentUnit.title}</h2>
-    <div class="intro-topic">נושא: ${currentUnit.topic}</div>
-    <div class="guide-row">
-      <div class="guide-owl">${owlMarkup()}<span class="guide-name">${GUIDE_NAME}</span></div>
-      <div class="guide-bubble">שלום ${S.name}! היום נתחיל בקטן ונגדל: משפט אחד, אחר כך קטע קצר, ובסוף פסקה שלמה. ובדרך? נתפוס מילים באוויר! 🎈</div>
-    </div>
     <div class="objectives">
       <h3>בסוף היחידה אדע:</h3>
       <ul>${currentUnit.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
@@ -202,6 +226,7 @@ function renderIntro() {
   refreshNikud();
   animateGuideBubble();
   showNikudCoach();
+  fitUnitCard();
   document.getElementById('btn-start-unit').onclick = nextPart;
 }
 
@@ -603,7 +628,6 @@ function renderReading(part) {
   $card().innerHTML = `
     ${partHeader(part)}
     ${part.sceneSvg || part.sceneImage ? '<div class="hunt-scene" id="read-scene"></div>' : ''}
-    <h3 class="read-title">${part.title}</h3>
     <div id="read-paras"></div>
     <p class="read-hint">💡 לחיצה על משפט מסמנת אותו. אפשר לשנות בחירה בכל רגע</p>
     <div class="part-actions">
@@ -845,10 +869,9 @@ function renderSortFamilies(part) {
 /* ---------- אנקדוטה ---------- */
 function renderAnecdote(part) {
   $card().innerHTML = `
-    <div class="part-kicker">${part.kicker}</div>
+    ${partHeader(part)}
     <div class="anecdote-card">
       <span class="bulb">💡</span>
-      <h3 class="part-title" style="text-align:center">${part.title}</h3>
       <div class="anecdote-words">${part.words.map(w => `<span>${w}</span>`).join('')}</div>
       <p class="anecdote-text">${part.text.replace(/\n/g, '<br>')}</p>
       <div class="anecdote-tip">${part.tip}</div>
@@ -892,6 +915,11 @@ function renderRewards() {
   confettiBurst(100);
   setStrikes(0, null);
 
+  partHeader({
+    kicker: 'סיום היחידה 🏁',
+    title: currentUnit.title,
+    guide: 'התחלת ממשפט אחד וסיימת פסקה שלמה. אני גאה בך! נתראה בתחנה הבאה 🦉',
+  });
   $card().innerHTML = `
     <div class="reward-stage">
       <h2 class="part-title" style="text-align:center">🎉 כל הכבוד, ${S.name}!</h2>
@@ -899,14 +927,11 @@ function renderRewards() {
       <div class="reward-item-circle">${item.emoji}</div>
       <p><strong>${item.name}</strong> נוסף לספר המסע שלך!</p>
       <div class="reward-coins">${alreadyDone ? 'היחידה הושלמה שוב, איזה תרגול!' : '‏+50 🪙 בונוס השלמת יחידה'}</div>
-      <div class="guide-row">
-        <div class="guide-owl">${owlMarkup()}<span class="guide-name">${GUIDE_NAME}</span></div>
-        <div class="guide-bubble">התחלת ממשפט אחד וסיימת פסקה שלמה. אני גאה בך! נתראה בתחנה הבאה 🦉</div>
-      </div>
       <div class="part-actions"><button class="btn-main" id="btn-back-map">חוזרים למפה 🗺️</button></div>
     </div>
   `;
   refreshNikud();
   animateGuideBubble();
+  fitUnitCard();
   document.getElementById('btn-back-map').onclick = () => showMap(true);
 }
