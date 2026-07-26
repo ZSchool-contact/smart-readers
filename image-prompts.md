@@ -15,6 +15,13 @@
 **פרומפט:**
 > Vast cheerful fantasy meadow landscape viewed from above at a gentle angle, rolling green hills, scattered pine and oak trees, colorful wildflowers, a winding blue river with a small wooden bridge on the right side, waterfall in the far distance, bright blue sky with fluffy clouds and warm sunlight, open grassy areas in the center left empty for game elements, cheerful children's game illustration, storybook style, vibrant saturated colors, soft painterly texture, no text, no characters, no paths, high quality digital art
 
+### תמונה 2א — דרקון הקריאה: גיליון התפתחות (5 שלבים × 5 צבעים) 🐉
+**קבצים:** `creature-{color}-{stage}.png` (למשל `creature-blue-0.png`) | רקע שקוף, 512px
+**שימוש:** הדמות המתפתחת של הילד — מחליף את `CREATURE_SVG` ב-data.js
+**חמשת השלבים:** 0 ביצת פלא עם נצנוץ · 1 ראש מציץ מביצה בקועה · 2 דרקון גור עם קרניים קטנות וזנב · 3 דרקון עם כנפיים קטנות · 4 דרקון מלכותי עם כנפיים פרושות וקרן זהב
+**פרומפט (לכל צבע, לצרף את גיליון המפלצות כרפרנס סגנון):**
+> Character evolution sheet of a cute BLUE baby dragon for a children's reading game, same illustration style as the reference. Show 5 stages in a row on white background: 1) a magical spotted egg with sparkles, 2) the egg cracked open with a cute baby dragon head peeking out with big eyes, 3) a chubby toddler dragon with tiny horn nubs and a small tail, 4) the young dragon with small wings, 5) a majestic young dragon with spread wings and a small golden horn. Same character growing up, big friendly eyes, rounded and adorable, NOT scary. No text.
+
 ### תמונה 2 — הדמות (5 גרסאות צבע)
 **קבצים:** `avatar-blue.png`, `avatar-green.png`, `avatar-purple.png`, `avatar-orange.png`, `avatar-pink.png`
 **יחס:** 1:1, רקע שקוף | **שימוש:** מחליף את ה-SVG של הדמות בכל מקום

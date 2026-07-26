@@ -887,7 +887,10 @@ function renderRewards() {
   updateProgress();
   const item = JOURNEY_ITEMS[currentUnit.id];
   const alreadyDone = isUnitDone(currentUnit.id);
+  const stageBefore = creatureStage(contentUnitsDone());
   completeUnit(currentUnit.id);
+  const stageAfter = creatureStage(contentUnitsDone());
+  const evolved = stageAfter > stageBefore;
   if (!alreadyDone) { S.coins += 50; saveState(); }
   updateCoinDisplays();
   Sound.play('fanfare');
@@ -905,6 +908,16 @@ function renderRewards() {
       <p>סיימת את יחידה ${currentUnit.id}: ${currentUnit.title}</p>
       <div class="reward-item-circle">${item.emoji}</div>
       <p><strong>${item.name}</strong> נוסף לספר המסע שלך!</p>
+      ${evolved ? `
+      <div class="evolution-box">
+        <div class="evolution-title">✨ רגע... משהו קורה! ✨</div>
+        <div class="evolution-pair">
+          <div class="avatar-box evo-old">${CREATURE_SVG(S.avatar.color, stageBefore)}</div>
+          <div class="evo-arrow">⬅</div>
+          <div class="avatar-box evo-new">${CREATURE_SVG(S.avatar.color, stageAfter)}</div>
+        </div>
+        <div class="evolution-name">היצור שלך התפתח: <strong>${CREATURE_STAGES[stageAfter].name}</strong>!</div>
+      </div>` : ''}
       <div class="reward-coins">${alreadyDone ? 'היחידה הושלמה שוב, איזה תרגול!' : '‏+50 🪙 בונוס השלמת יחידה'}</div>
       <div class="part-actions"><button class="btn-main" id="btn-back-map">חוזרים למפה 🗺️</button></div>
     </div>

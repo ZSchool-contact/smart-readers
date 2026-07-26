@@ -37,9 +37,10 @@ function itemEmoji(id) {
 
 function renderAvatar(el, cls = '') {
   const a = S.avatar;
+  const stage = creatureStage(contentUnitsDone());
   el.innerHTML = `
     <div class="avatar-box ${cls}">
-      ${avatarSVG(a.color)}
+      ${CREATURE_SVG(a.color, stage)}
       ${a.hat ? `<span class="avatar-hat">${itemEmoji(a.hat)}</span>` : ''}
       ${a.face ? `<span class="avatar-face">${itemEmoji(a.face)}</span>` : ''}
       ${a.pet ? `<span class="avatar-pet">${itemEmoji(a.pet)}</span>` : ''}
@@ -120,15 +121,15 @@ function startOnboarding() {
     },
     color() {
       card.innerHTML = `
-        <h1 class="ob-title">בחרו את הדמות שלכם</h1>
-        <p class="ob-sub">הדמות תלווה אתכם לאורך כל המסע (אפשר לשדרג אותה בחנות!)</p>
+        <h1 class="ob-title">בחרו את ביצת הפלא שלכם 🥚</h1>
+        <p class="ob-sub">בתוך הביצה מסתתר יצור! הוא יבקע ויגדל ככל שתתקדמו במסע.<br>מי הוא יהיה? נגלה יחד...</p>
         <div class="ob-avatar-row" id="ob-avatar-preview"></div>
         <div class="ob-choices" id="ob-colors"></div>
-        <button class="btn-main" id="ob-next">ממשיכים ⬅</button>`;
+        <button class="btn-main" id="ob-next">בחרתי! ממשיכים ⬅</button>`;
       const preview = card.querySelector('#ob-avatar-preview');
       const colorsEl = card.querySelector('#ob-colors');
       function paint() {
-        preview.innerHTML = `<div class="avatar-box">${avatarSVG(picked.color)}</div>`;
+        preview.innerHTML = `<div class="avatar-box">${CREATURE_SVG(picked.color, 0)}</div>`;
         colorsEl.querySelectorAll('.ob-choice').forEach(c =>
           c.classList.toggle('selected', c.dataset.color === picked.color));
       }
@@ -136,7 +137,7 @@ function startOnboarding() {
         const btn = document.createElement('button');
         btn.className = 'ob-choice';
         btn.dataset.color = key;
-        btn.innerHTML = `<span class="big" style="display:inline-block;width:34px;height:34px;border-radius:50%;background:${c.body};border:3px solid ${c.dark}"></span>${c.name}`;
+        btn.innerHTML = `<span class="big" style="display:inline-block;width:40px;height:48px">${CREATURE_SVG(key, 0)}</span>${c.name}`;
         btn.onclick = () => { picked.color = key; paint(); };
         colorsEl.appendChild(btn);
       });
@@ -402,8 +403,18 @@ function init() {
   document.getElementById('btn-book').onclick = () => { openBook(); openOverlay('overlay-book'); };
   document.getElementById('btn-avatar').onclick = () => {
     renderAvatar(document.getElementById('avatar-preview'), '');
-    document.getElementById('avatar-stats').innerHTML =
-      `🪙 ${S.coins} מטבעות · ✅ ${S.completed.length} תחנות הושלמו · 🎁 ${S.items.length} פריטים בספר המסע`;
+    const n = contentUnitsDone();
+    const stage = creatureStage(n);
+    const cur = CREATURE_STAGES[stage];
+    const next = CREATURE_STAGES[stage + 1];
+    document.getElementById('avatar-stats').innerHTML = `
+      <div class="creature-stage-name">${cur.name} · ${cur.tease}</div>
+      ${next ? `
+      <div class="creature-next">
+        <div class="creature-silhouette">${CREATURE_SVG(S.avatar.color, stage + 1)}</div>
+        <div>עוד <strong>${next.need - n}</strong> יחידות ומשהו מסתורי יקרה... 👀</div>
+      </div>` : '<div class="creature-next">🏆 היצור שלך הגיע לשיא ההתפתחות!</div>'}
+      <div style="margin-top:10px">🪙 ${S.coins} מטבעות · ✅ ${S.completed.length} תחנות · 🎁 ${S.items.length} פריטים</div>`;
     openOverlay('overlay-avatar');
   };
 

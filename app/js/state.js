@@ -76,6 +76,9 @@ function flyCoin(el, n) {
 /* --- התקדמות יחידות --- */
 function isUnitDone(id) { return S.completed.includes(id); }
 
+/* יחידות תוכן שהושלמו (בלי יחידה 0) — קובע את שלב ההתפתחות של הדרקון */
+function contentUnitsDone() { return S.completed.filter(i => i > 0).length; }
+
 function unitStatus(id) {
   if (isUnitDone(id)) return 'done';
   /* יחידה פתוחה: הראשונה שעוד לא הושלמה */

@@ -38,6 +38,96 @@ const INTEREST_WORLDS = [
   { id: 'tech',   emoji: '💻', name: 'טכנולוגיה' },
 ];
 
+/* --- דרקון הקריאה: יצור שמתפתח עם ההתקדמות בקורס --- */
+const CREATURE_STAGES = [
+  { need: 0, name: 'ביצת פלא', tease: 'מי מסתתר בפנים? 🥚' },
+  { need: 1, name: 'בקיע קטן', tease: 'משהו בקע מהביצה!' },
+  { need: 3, name: 'דרקון צעיר', tease: 'היצור גדל ולמד ללכת!' },
+  { need: 5, name: 'דרקון מכונף', tease: 'צמחו לו כנפיים!' },
+  { need: 7, name: 'דרקון הקריאה', tease: 'הדרקון המלכותי במלוא הדרו!' },
+];
+
+function creatureStage(unitsDone) {
+  let s = 0;
+  CREATURE_STAGES.forEach((st, i) => { if (unitsDone >= st.need) s = i; });
+  return s;
+}
+
+function CREATURE_SVG(colorKey, stage) {
+  const c = AVATAR_COLORS[colorKey] || AVATAR_COLORS.blue;
+  const eyes = `
+    <circle cx="46" cy="64" r="11" fill="#fff"/><circle cx="74" cy="64" r="11" fill="#fff"/>
+    <circle cx="48" cy="66" r="5" fill="#2b2b2b"/><circle cx="72" cy="66" r="5" fill="#2b2b2b"/>
+    <circle cx="50" cy="64" r="1.8" fill="#fff"/><circle cx="74" cy="64" r="1.8" fill="#fff"/>`;
+  const smile = `<path d="M50 84 Q60 93 70 84" fill="none" stroke="#2b2b2b" stroke-width="3.5" stroke-linecap="round"/>`;
+  const cheeks = `<circle cx="36" cy="76" r="4.5" fill="#ff8fa0" opacity=".6"/><circle cx="84" cy="76" r="4.5" fill="#ff8fa0" opacity=".6"/>`;
+
+  switch (stage) {
+    case 0: /* ביצת פלא */
+      return `<svg viewBox="0 0 120 140" aria-hidden="true">
+        <ellipse cx="60" cy="128" rx="34" ry="8" fill="rgba(0,0,0,.12)"/>
+        <path d="M60 22 C88 22 96 62 96 88 C96 114 80 130 60 130 C40 130 24 114 24 88 C24 62 32 22 60 22 Z" fill="${c.body}"/>
+        <circle cx="46" cy="62" r="9" fill="#fff" opacity=".55"/>
+        <circle cx="74" cy="88" r="7" fill="#fff" opacity=".45"/>
+        <circle cx="52" cy="104" r="5" fill="#fff" opacity=".4"/>
+        <ellipse cx="46" cy="44" rx="10" ry="16" fill="#fff" opacity=".5" transform="rotate(-20 46 44)"/>
+        <text x="60" y="88" font-size="26" text-anchor="middle">✨</text>
+      </svg>`;
+    case 1: /* בקיע קטן — ראש מציץ מהביצה */
+      return `<svg viewBox="0 0 120 140" aria-hidden="true">
+        <ellipse cx="60" cy="130" rx="36" ry="8" fill="rgba(0,0,0,.12)"/>
+        <circle cx="60" cy="66" r="34" fill="${c.body}"/>
+        <path d="M44 36 Q46 24 54 30 Z" fill="${c.dark}"/>
+        <path d="M76 36 Q74 24 66 30 Z" fill="${c.dark}"/>
+        ${eyes}${cheeks}${smile}
+        <path d="M28 96 L38 108 L48 96 L60 110 L72 96 L82 108 L92 96 L92 112 C92 126 78 134 60 134 C42 134 28 126 28 112 Z" fill="#fdf6e3" stroke="#e3cb96" stroke-width="3"/>
+      </svg>`;
+    case 2: /* דרקון צעיר */
+      return `<svg viewBox="0 0 120 140" aria-hidden="true">
+        <ellipse cx="60" cy="130" rx="38" ry="8" fill="rgba(0,0,0,.12)"/>
+        <path d="M96 100 Q116 96 112 78 Q124 92 110 106 Z" fill="${c.dark}"/>
+        <ellipse cx="44" cy="126" rx="12" ry="8" fill="${c.dark}"/>
+        <ellipse cx="76" cy="126" rx="12" ry="8" fill="${c.dark}"/>
+        <ellipse cx="60" cy="86" rx="42" ry="46" fill="${c.body}"/>
+        <ellipse cx="60" cy="100" rx="26" ry="24" fill="#fff" opacity=".35"/>
+        <path d="M44 44 Q46 28 56 36 Z" fill="${c.dark}"/>
+        <path d="M76 44 Q74 28 64 36 Z" fill="${c.dark}"/>
+        ${eyes}${cheeks}${smile}
+      </svg>`;
+    case 3: /* דרקון מכונף */
+      return `<svg viewBox="0 0 120 140" aria-hidden="true">
+        <ellipse cx="60" cy="130" rx="38" ry="8" fill="rgba(0,0,0,.12)"/>
+        <path d="M18 70 Q0 56 8 38 Q20 52 30 56 Q22 64 24 76 Z" fill="${c.dark}"/>
+        <path d="M102 70 Q120 56 112 38 Q100 52 90 56 Q98 64 96 76 Z" fill="${c.dark}"/>
+        <path d="M96 102 Q116 98 112 80 Q124 94 110 108 Z" fill="${c.dark}"/>
+        <ellipse cx="44" cy="126" rx="12" ry="8" fill="${c.dark}"/>
+        <ellipse cx="76" cy="126" rx="12" ry="8" fill="${c.dark}"/>
+        <ellipse cx="60" cy="86" rx="42" ry="46" fill="${c.body}"/>
+        <ellipse cx="60" cy="100" rx="26" ry="24" fill="#fff" opacity=".35"/>
+        <path d="M42 42 Q44 24 56 34 Z" fill="${c.dark}"/>
+        <path d="M78 42 Q76 24 64 34 Z" fill="${c.dark}"/>
+        ${eyes}${cheeks}${smile}
+      </svg>`;
+    default: /* דרקון הקריאה המלכותי */
+      return `<svg viewBox="0 0 120 140" aria-hidden="true">
+        <ellipse cx="60" cy="132" rx="40" ry="8" fill="rgba(0,0,0,.12)"/>
+        <path d="M14 66 Q-6 48 4 26 Q18 44 32 48 Q22 58 24 74 Z" fill="${c.dark}"/>
+        <path d="M106 66 Q126 48 116 26 Q102 44 88 48 Q98 58 96 74 Z" fill="${c.dark}"/>
+        <path d="M96 104 Q118 100 114 80 Q128 96 112 112 Z" fill="${c.dark}"/>
+        <ellipse cx="44" cy="128" rx="13" ry="8" fill="${c.dark}"/>
+        <ellipse cx="76" cy="128" rx="13" ry="8" fill="${c.dark}"/>
+        <ellipse cx="60" cy="86" rx="44" ry="48" fill="${c.body}"/>
+        <ellipse cx="60" cy="102" rx="27" ry="24" fill="#fff" opacity=".35"/>
+        <path d="M40 40 Q42 20 54 32 Z" fill="${c.dark}"/>
+        <path d="M80 40 Q78 20 66 32 Z" fill="${c.dark}"/>
+        <path d="M56 34 Q60 18 64 34 Z" fill="var(--gold, #f5b301)"/>
+        ${eyes}${cheeks}${smile}
+        <text x="18" y="34" font-size="14">✨</text>
+        <text x="94" y="28" font-size="14">✨</text>
+      </svg>`;
+  }
+}
+
 /* --- צבעי דמות --- */
 const AVATAR_COLORS = {
   blue:   { body: '#4aa3e8', dark: '#2f7fc2', name: 'כחול' },

@@ -710,6 +710,35 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .word-input-wrap { text-align: center; margin-top: 6px; }
 .word-input-wrap label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 1.1rem; }
 
+/* --- התפתחות הדרקון --- */
+.evolution-box {
+  background: linear-gradient(135deg, #fff8dd, #ffe9f5);
+  border: 3px solid var(--gold);
+  border-radius: 20px;
+  padding: 14px 18px;
+  margin: 12px auto;
+  max-width: 440px;
+  animation: pop-in .6s cubic-bezier(.2,1.6,.4,1);
+}
+.evolution-title { font-family: 'Rubik'; font-weight: 900; font-size: 1.15rem; color: var(--wood-dark); }
+.evolution-pair { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 8px 0; }
+.evolution-pair .avatar-box { width: 84px; height: 98px; }
+.evo-old { opacity: .55; filter: grayscale(.4); transform: scale(.85); }
+.evo-new { animation: evo-pop 1s cubic-bezier(.2,1.8,.4,1); filter: drop-shadow(0 0 14px rgba(245,179,1,.8)); }
+@keyframes evo-pop { 0% { transform: scale(0) rotate(-20deg); } 60% { transform: scale(1.25); } }
+.evo-arrow { font-size: 1.6rem; color: var(--wood-dark); }
+.evolution-name { font-size: 1.05rem; }
+
+/* פרופיל הדמות: השלב הבא בצללית */
+.creature-stage-name { font-family: 'Rubik'; font-weight: 700; color: var(--wood-dark); margin-bottom: 8px; }
+.creature-next {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: #fff8dd; border: 2px dashed var(--gold); border-radius: 14px;
+  padding: 8px 14px;
+}
+.creature-silhouette { width: 54px; height: 62px; }
+.creature-silhouette svg { width: 100%; height: 100%; filter: brightness(0) opacity(.25); }
+
 /* --- מסך פרס --- */
 .reward-stage { text-align: center; }
 .reward-item-circle {
