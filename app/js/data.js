@@ -294,6 +294,7 @@ UNITS[1] = {
         {
           label: 'מידע מפורש',
           q: 'למה רוצים לנסות שוב ושוב אחרי שנכשלים במשחק?',
+          img: 'assets/img/unit1-retry.png',
           refText: 'כשמצליחים לעבור שלב קשה במשחק, המוח משחרר חומרים שגורמים להרגשה טובה. זו הסיבה שרוצים לנסות שוב ושוב גם אחרי שנכשלים. שחקנים טובים הם אלה שממשיכים לנסות.',
           options: [
             'כי המשחק קל מאוד',
@@ -329,6 +330,9 @@ UNITS[1] = {
       kicker: 'שלב 7 · עכשיו אנחנו מוכנים!',
       title: 'בונים עולמות',
       guide: 'אחרי כל האימונים, הגיע הזמן לפסקה אמיתית וגדולה. אתם כבר מכירים את המילים שלה! סמנו את המשפט הכי חשוב. טיפ ממני: הרבה פעמים המשפט החשוב מתחבא בתחילת הפסקה, אבל לא תמיד. לפעמים הוא דווקא מחכה בסוף!',
+      sceneImage: 'assets/img/unit1-priming.png',
+      sceneSvg: 'UNIT1_SCENE_SVG',
+      sceneSize: 'small',
       paragraphs: [
         [
           'יש ילדים שמצליחים לבנות עולמות שלמים בתוך משחקי מחשב, ולא מדובר רק בכמה בתים קטנים.',
@@ -350,6 +354,7 @@ UNITS[1] = {
         {
           label: 'הקטע הקצר שקראנו',
           q: 'איזו כותרת הכי מתאימה לקטע על המוח והניסיונות?',
+          img: 'assets/img/unit1-retry.png',
           refText: 'כשמצליחים לעבור שלב קשה במשחק, המוח משחרר חומרים שגורמים להרגשה טובה. זו הסיבה שרוצים לנסות שוב ושוב גם אחרי שנכשלים.',
           options: ['איך ללמוד מתמטיקה', 'משחקים מפחידים', 'למה המוח אוהב להצליח'],
           correct: 2,
@@ -358,6 +363,7 @@ UNITS[1] = {
         {
           label: 'הפסקה הגדולה',
           q: 'איזו כותרת הכי מתאימה לפסקה על העולמות במשחקים?',
+          img: 'assets/img/unit1-priming.png',
           refText: 'יש ילדים שמצליחים לבנות עולמות שלמים בתוך משחקי מחשב... הם מתכננים ערים עם כבישים, גשרים ואפילו מבנים מורכבים במיוחד... כך משחק הופך למשהו הרבה יותר גדול ממשחק רגיל.',
           options: ['ילדים שאוהבים לישון', 'בונים עולמות דיגיטליים', 'משחקים פשוטים'],
           correct: 1,
@@ -395,12 +401,14 @@ UNITS[1] = {
       type: 'mcq-set',
       kicker: 'שלב 10 · טעות בכוונה',
       title: 'מצאו את השגיאה! ❌',
-      guide: 'מישהו כתב כאן משפט עם שגיאה אחת. רק אתם יכולים לתקן אותה!',
+      guide: 'אוי לא, מפלצת השגיאות כתבה משפט עם טעות אחת! רק אתם יכולים לתקן אותה.',
       strikes: 3,
       questions: [
         {
-          label: 'המשפט השגוי',
+          label: 'המשפט של מפלצת השגיאות',
           q: '"הוא עשה הרבה ניסיון ולבסוף הצליח"',
+          img: 'assets/img/monster-2.png',
+          imgSmall: true,
           options: [
             '"הוא עשה הרבה ניסיונות ולבסוף הצליח"',
             '"הוא עשה הרבה ניסיון ולבסוף הצלחה"',
@@ -492,6 +500,38 @@ const MONSTER_IMAGES = [
 const OWL_IMAGE = 'assets/img/owl-idle.png';
 const MAP_BG_IMAGE = 'assets/img/map-background.png';
 const UNIT_BG_IMAGE = 'assets/img/unit-background.png';
+
+/* תיבות אוצר — שאלות רב ברירה משחקיות */
+function CHEST_CLOSED_SVG(letter) {
+  return `
+<svg viewBox="0 0 120 96" aria-hidden="true">
+  <ellipse cx="60" cy="90" rx="44" ry="5" fill="rgba(0,0,0,.14)"/>
+  <path d="M16 40 Q16 18 60 18 Q104 18 104 40 L104 48 L16 48 Z" fill="#a06a34"/>
+  <path d="M16 40 Q16 18 60 18 Q104 18 104 40" fill="none" stroke="#6b4423" stroke-width="4"/>
+  <rect x="16" y="48" width="88" height="40" rx="7" fill="#8a5a2b"/>
+  <line x1="16" y1="60" x2="104" y2="60" stroke="#6b4423" stroke-width="2.5"/>
+  <line x1="16" y1="74" x2="104" y2="74" stroke="#6b4423" stroke-width="2.5"/>
+  <rect x="14" y="44" width="92" height="8" rx="4" fill="#f5b301" stroke="#c78e00" stroke-width="2"/>
+  <circle cx="60" cy="56" r="13" fill="#f5b301" stroke="#c78e00" stroke-width="3"/>
+  <text x="60" y="62" font-size="15" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="bold" fill="#5f3d00">${letter}</text>
+</svg>`;
+}
+
+const CHEST_OPEN_SVG = `
+<svg viewBox="0 0 120 96" aria-hidden="true">
+  <ellipse cx="60" cy="90" rx="44" ry="5" fill="rgba(0,0,0,.14)"/>
+  <ellipse cx="60" cy="46" rx="40" ry="18" fill="#ffe27a"/>
+  <ellipse cx="60" cy="44" rx="30" ry="12" fill="#fff3b0"/>
+  <path d="M18 34 Q14 6 60 8 Q106 6 102 34 L96 40 Q60 24 24 40 Z" fill="#a06a34" stroke="#6b4423" stroke-width="3"/>
+  <circle cx="46" cy="44" r="7" fill="#f5b301" stroke="#c78e00" stroke-width="2"/>
+  <circle cx="62" cy="40" r="6" fill="#f5b301" stroke="#c78e00" stroke-width="2"/>
+  <circle cx="76" cy="45" r="7" fill="#f5b301" stroke="#c78e00" stroke-width="2"/>
+  <rect x="16" y="48" width="88" height="40" rx="7" fill="#8a5a2b"/>
+  <line x1="16" y1="62" x2="104" y2="62" stroke="#6b4423" stroke-width="2.5"/>
+  <rect x="14" y="46" width="92" height="7" rx="3.5" fill="#f5b301" stroke="#c78e00" stroke-width="2"/>
+  <text x="24" y="24" font-size="13">✨</text>
+  <text x="86" y="20" font-size="13">✨</text>
+</svg>`;
 
 /* צבעי מפלצות למשחקוני הארקייד */
 const ARCADE_MONSTER_COLORS = [

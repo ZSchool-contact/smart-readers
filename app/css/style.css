@@ -582,6 +582,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* --- שאלות רב ברירה --- */
 .q-count { text-align: center; color: var(--ink-soft); font-weight: 700; font-size: .9rem; margin-bottom: 10px; }
+/* תמונה קטנה לשאלה */
+.q-img {
+  display: block;
+  max-height: clamp(110px, 18vh, 170px);
+  max-width: 90%;
+  margin: 0 auto 10px;
+  border-radius: 14px;
+  border: 3px solid var(--wood-light);
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  object-fit: cover;
+}
+.q-img.tiny { max-height: 110px; border: none; box-shadow: none; }
+/* תמונת סצנה קטנה בקטעי קריאה */
+.hunt-scene.small,
+.hunt-scene.small svg,
+.hunt-scene.small img { max-height: clamp(110px, 18vh, 170px); }
 /* השאלה — משימת קווסט */
 .q-text { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
 .q-text::before { content: '🎯 '; }
@@ -594,7 +610,25 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .q-ref summary { cursor: pointer; font-weight: 700; color: var(--blue-btn); }
 .q-options { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
-/* תשובות — כפתורי משחק שמנמנים */
+/* תשובות — תיבות אוצר */
+.q-options.chests {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+.q-opt.chest {
+  flex-direction: column;
+  gap: 4px;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 10px 12px 12px;
+}
+.chest-box { width: 92px; display: block; }
+.chest-box svg { width: 100%; height: auto; }
+.chest-label { font-size: 1.02rem; font-weight: 500; line-height: 1.5; }
+.q-opt.opened { border-color: var(--green-ok); background: linear-gradient(180deg, #f2fbf0, #dff3da); }
+.q-opt.opened .chest-box { animation: chest-pop .5s cubic-bezier(.2,1.8,.4,1); }
+@keyframes chest-pop { 40% { transform: scale(1.18) rotate(-3deg); } }
 .q-opt {
   display: flex; align-items: center; gap: 12px;
   background: linear-gradient(180deg, #ffffff, #f6ecd2);

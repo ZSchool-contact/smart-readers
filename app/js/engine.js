@@ -83,19 +83,23 @@ function sparkleBurst(el, count = 6) {
 }
 
 /* אלף הינשוף "מדבר": הבועה נכתבת אות אחרי אות בקצב קריאה של ילד (לחיצה מדלגת) */
+let guideTypeTimer = null;
+
 function animateGuideBubble() {
   const b = document.querySelector('.guide-bubble');
   if (!b) return;
+  /* עוצרים הקלדה קודמת שעוד רצה — אחרת היא תדרוס את הטקסט החדש */
+  clearInterval(guideTypeTimer);
   const full = b.textContent;
   b.textContent = '';
   b.classList.add('typing');
   let i = 0;
-  const iv = setInterval(() => {
+  guideTypeTimer = setInterval(() => {
     i += 1;
     b.textContent = full.slice(0, i);
-    if (i >= full.length) { clearInterval(iv); b.classList.remove('typing'); }
+    if (i >= full.length) { clearInterval(guideTypeTimer); b.classList.remove('typing'); }
   }, 45);
-  b.onclick = () => { clearInterval(iv); b.textContent = full; b.classList.remove('typing'); };
+  b.onclick = () => { clearInterval(guideTypeTimer); b.textContent = full; b.classList.remove('typing'); };
 }
 
 /* תמונת סצנה לחלק: תמונת AI אם קיימת, אחרת ה-SVG המצויר */
@@ -627,7 +631,7 @@ function renderFeedGame(part) {
 function renderReading(part) {
   $card().innerHTML = `
     ${partHeader(part)}
-    ${part.sceneSvg || part.sceneImage ? '<div class="hunt-scene" id="read-scene"></div>' : ''}
+    ${part.sceneSvg || part.sceneImage ? `<div class="hunt-scene${part.sceneSize === 'small' ? ' small' : ''}" id="read-scene"></div>` : ''}
     <div id="read-paras"></div>
     <p class="read-hint">💡 לחיצה על משפט מסמנת אותו. אפשר לשנות בחירה בכל רגע</p>
     <div class="part-actions">
@@ -681,9 +685,10 @@ function renderMcqSet(part) {
       ${partHeader(part)}
       ${part.questions.length > 1 ? `<div class="q-count">שאלה ${qi + 1} מתוך ${part.questions.length}</div>` : ''}
       <div class="part-kicker">🔎 ${q.label}</div>
+      ${q.img ? `<img class="q-img${q.imgSmall ? ' tiny' : ''}" src="${q.img}" alt="" onerror="this.remove()">` : ''}
       <div class="q-text">${q.q}</div>
       ${q.refText ? `<div class="q-ref">📖 ${q.refText}</div>` : ''}
-      <div class="q-options" id="q-options"></div>
+      <div class="q-options chests" id="q-options"></div>
       <div id="q-feedback"></div>
       <div class="part-actions"><button class="btn-main hidden" id="btn-q-next"></button></div>
     `;
@@ -695,18 +700,21 @@ function renderMcqSet(part) {
     const order = q.options.map((_, i) => i).sort(() => Math.random() - .5);
     order.forEach((oi, pos) => {
       const btn = document.createElement('button');
-      btn.className = 'q-opt';
-      btn.innerHTML = `<span class="opt-letter">${letters[pos]}</span><span>${q.options[oi]}</span>`;
+      btn.className = 'q-opt chest';
+      btn.innerHTML = `
+        <span class="chest-box">${CHEST_CLOSED_SVG(letters[pos])}</span>
+        <span class="chest-label">${q.options[oi]}</span>`;
       btn.onclick = () => answer(btn, oi);
       optsEl.appendChild(btn);
     });
 
     function answer(btn, oi) {
       if (oi === q.correct) {
-        btn.classList.add('correct');
+        btn.classList.add('correct', 'opened');
+        btn.querySelector('.chest-box').innerHTML = CHEST_OPEN_SVG;
         optsEl.querySelectorAll('.q-opt').forEach(b => b.disabled = true);
         Sound.play('correct');
-        sparkleBurst(btn);
+        sparkleBurst(btn, 8);
         addCoins(firstTry ? 10 : 5, btn);
         document.getElementById('q-feedback').innerHTML =
           `<div class="feedback-box good">✅ ${q.fbGood}</div>`;
