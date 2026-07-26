@@ -338,8 +338,21 @@ function openBook() {
 function openOverlay(id) { document.getElementById(id).classList.remove('hidden'); }
 function closeOverlays() { document.querySelectorAll('.overlay').forEach(o => o.classList.add('hidden')); }
 
+/* טעינה מוקדמת של נכסי ה-GPT — קובץ שנטען מדליק דגל, קובץ חסר משאיר SVG */
+function preloadAssets(done) {
+  const defs = [['mapBg', MAP_BG_IMAGE], ['owl', OWL_IMAGE], ['monsters', MONSTER_IMAGES[0]]];
+  let left = defs.length;
+  defs.forEach(([key, src]) => {
+    const img = new Image();
+    img.onload = () => { ASSETS[key] = true; if (--left === 0) done(); };
+    img.onerror = () => { if (--left === 0) done(); };
+    img.src = src;
+  });
+}
+
 function init() {
   buildMapOnce();
+  if (ASSETS.mapBg) document.getElementById('map-world').classList.add('photo-bg');
 
   document.getElementById('btn-shop').onclick = () => { openShop(); openOverlay('overlay-shop'); };
   document.getElementById('btn-book').onclick = () => { openBook(); openOverlay('overlay-book'); };
@@ -410,4 +423,4 @@ function init() {
   else startOnboarding();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => preloadAssets(init));

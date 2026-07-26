@@ -152,13 +152,17 @@ function nextPart() {
 }
 
 /* כותרת חלק: אלף הינשוף מדבר בבועה */
+function owlMarkup() {
+  return ASSETS.owl ? `<img class="owl-img" src="${OWL_IMAGE}" alt="">` : OWL_SVG;
+}
+
 function partHeader(part) {
   return `
     <div class="part-kicker">${part.kicker || ''}</div>
     <h2 class="part-title">${part.title || ''}</h2>
     ${part.guide ? `
     <div class="guide-row">
-      <div class="guide-owl">${OWL_SVG}<span class="guide-name">${GUIDE_NAME}</span></div>
+      <div class="guide-owl">${owlMarkup()}<span class="guide-name">${GUIDE_NAME}</span></div>
       <div class="guide-bubble">${part.guide}</div>
     </div>` : ''}
   `;
@@ -172,7 +176,7 @@ function renderIntro() {
     <h2 class="part-title" style="text-align:center">יחידה ${currentUnit.id}: ${currentUnit.title}</h2>
     <div class="intro-topic">נושא: ${currentUnit.topic}</div>
     <div class="guide-row">
-      <div class="guide-owl">${OWL_SVG}<span class="guide-name">${GUIDE_NAME}</span></div>
+      <div class="guide-owl">${owlMarkup()}<span class="guide-name">${GUIDE_NAME}</span></div>
       <div class="guide-bubble">שלום ${S.name}! היום נתחיל בקטן ונגדל: משפט אחד, אחר כך קטע קצר, ובסוף פסקה שלמה. ובדרך? נתפוס מילים באוויר! 🎈</div>
     </div>
     <div class="objectives">
@@ -335,11 +339,14 @@ function renderCatchGame(part) {
     const { w, ok } = pickWord();
     const el = document.createElement('button');
     el.className = 'arcade-item ' + theme.vessel;
-    const [mc, md] = ARCADE_MONSTER_COLORS[colorIdx++ % ARCADE_MONSTER_COLORS.length];
-    const variant = colorIdx % 3;
+    const mi = colorIdx++;
+    const [mc, md] = ARCADE_MONSTER_COLORS[mi % ARCADE_MONSTER_COLORS.length];
+    const monsterHtml = ASSETS.monsters
+      ? `<img class="monster-img" src="${MONSTER_IMAGES[mi % MONSTER_IMAGES.length]}" alt="">`
+      : MONSTER_SVG(mc, md, mi % 3);
     el.innerHTML = `
       ${theme.vessel === 'monster-balloon' ? '<span class="mini-balloon">🎈</span>' : '<span class="mini-wings">🦇</span>'}
-      <span class="monster-body">${MONSTER_SVG(mc, md, variant)}</span>
+      <span class="monster-body">${monsterHtml}</span>
       <span class="vessel-word">${NK(w)}</span>`;
     const bw = box.clientWidth, bh = box.clientHeight;
     const item = { el, w, ok, alive: true };
@@ -491,7 +498,9 @@ function renderFeedGame(part) {
       m.className = 'feed-monster';
       m.dataset.fam = fi;
       m.innerHTML = `
-        ${MONSTER_SVG(e.color, e.dark, fi % 3)}
+        ${ASSETS.monsters
+          ? `<img class="monster-img" src="${MONSTER_IMAGES[fi % MONSTER_IMAGES.length]}" alt="">`
+          : MONSTER_SVG(e.color, e.dark, fi % 3)}
         <span class="feed-family">${e.family}</span>
         <span class="fed-count" id="fed-count-${fi}"></span>`;
       m.onclick = () => feed(fi, m);
@@ -876,7 +885,7 @@ function renderRewards() {
       <p><strong>${item.name}</strong> נוסף לספר המסע שלך!</p>
       <div class="reward-coins">${alreadyDone ? 'היחידה הושלמה שוב, איזה תרגול!' : '‏+50 🪙 בונוס השלמת יחידה'}</div>
       <div class="guide-row">
-        <div class="guide-owl">${OWL_SVG}<span class="guide-name">${GUIDE_NAME}</span></div>
+        <div class="guide-owl">${owlMarkup()}<span class="guide-name">${GUIDE_NAME}</span></div>
         <div class="guide-bubble">התחלת ממשפט אחד וסיימת פסקה שלמה. אני גאה בך! נתראה בתחנה הבאה 🦉</div>
       </div>
       <div class="part-actions"><button class="btn-main" id="btn-back-map">חוזרים למפה 🗺️</button></div>
