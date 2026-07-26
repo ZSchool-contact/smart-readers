@@ -335,6 +335,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     linear-gradient(180deg, var(--sky-top), var(--sky-bottom) 45%, var(--grass) 46%, var(--grass-dark));
   display: flex; flex-direction: column;
 }
+/* רקע איור למסך השיעור (מוצב ב-JS לפי הנכס הזמין) */
+#screen-unit.photo-bg {
+  background-image:
+    linear-gradient(rgba(20, 35, 15, .28), rgba(20, 35, 15, .28)),
+    var(--unit-bg-url);
+  background-size: cover;
+  background-position: center;
+}
+#screen-onboarding .ob-sky.photo-bg {
+  background:
+    linear-gradient(rgba(20, 35, 15, .22), rgba(20, 35, 15, .22)),
+    var(--unit-bg-url) center / cover no-repeat;
+}
 .unit-header {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 14px;
@@ -363,14 +376,31 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex; justify-content: center; align-items: flex-start;
   padding: 6px 12px calc(24px + env(safe-area-inset-bottom));
 }
+/* גודל מצגת: הכרטיס רחב, אבל טקסט רץ נשאר ברוחב קריא באמצע */
 .unit-card {
-  width: min(760px, 100%);
+  width: min(1240px, 98%);
   background: var(--cream);
   border: 4px solid var(--wood);
   border-radius: 24px;
   box-shadow: var(--shadow);
-  padding: 26px clamp(16px, 4vw, 34px) 30px;
+  padding: 26px clamp(18px, 3vw, 48px) 30px;
   animation: card-in .4s cubic-bezier(.2,1.4,.4,1);
+}
+.unit-card .guide-row,
+.unit-card .part-inst,
+.unit-card .q-text,
+.unit-card .q-ref,
+.unit-card .q-options,
+.unit-card .feedback-box,
+.unit-card .read-para,
+.unit-card .read-title,
+.unit-card .objectives,
+.unit-card .summary-checks,
+.unit-card .anecdote-card,
+.unit-card .sentence-big {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 @keyframes card-in { from { transform: translateY(26px) scale(.97); opacity: 0; } }
 
@@ -730,7 +760,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .arcade-count { font-weight: 700; color: var(--ink-soft); }
 .arcade {
   position: relative;
-  height: clamp(300px, 48vh, 400px);
+  height: clamp(320px, 52vh, 470px);
   border-radius: 18px;
   border: 4px solid var(--wood);
   overflow: hidden;
@@ -836,7 +866,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .feed-monster:hover { transform: translateY(-4px); border-color: var(--blue-btn); }
 .feed-monster svg,
-.feed-monster img.monster-img { width: clamp(64px, 12vw, 96px); height: auto; }
+.feed-monster img.monster-img { width: clamp(64px, 12vw, 120px); height: auto; }
 .feed-monster .feed-family {
   font-family: 'Rubik'; font-weight: 900; font-size: 1.05rem;
   color: var(--wood-dark);

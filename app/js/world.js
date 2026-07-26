@@ -340,7 +340,7 @@ function closeOverlays() { document.querySelectorAll('.overlay').forEach(o => o.
 
 /* טעינה מוקדמת של נכסי ה-GPT — קובץ שנטען מדליק דגל, קובץ חסר משאיר SVG */
 function preloadAssets(done) {
-  const defs = [['mapBg', MAP_BG_IMAGE], ['owl', OWL_IMAGE], ['monsters', MONSTER_IMAGES[0]]];
+  const defs = [['mapBg', MAP_BG_IMAGE], ['owl', OWL_IMAGE], ['monsters', MONSTER_IMAGES[0]], ['unitBg', UNIT_BG_IMAGE]];
   let left = defs.length;
   defs.forEach(([key, src]) => {
     const img = new Image();
@@ -353,6 +353,14 @@ function preloadAssets(done) {
 function init() {
   buildMapOnce();
   if (ASSETS.mapBg) document.getElementById('map-world').classList.add('photo-bg');
+
+  /* הרקע של מסך השיעור וההרשמה — תמיד איור: רקע ייעודי, ואם אין אז רקע המפה */
+  const bg = ASSETS.unitBg ? UNIT_BG_IMAGE : (ASSETS.mapBg ? MAP_BG_IMAGE : null);
+  if (bg) {
+    document.documentElement.style.setProperty('--unit-bg-url', `url('${bg}')`);
+    document.getElementById('screen-unit').classList.add('photo-bg');
+    document.querySelector('#screen-onboarding .ob-sky').classList.add('photo-bg');
+  }
 
   document.getElementById('btn-shop').onclick = () => { openShop(); openOverlay('overlay-shop'); };
   document.getElementById('btn-book').onclick = () => { openBook(); openOverlay('overlay-book'); };

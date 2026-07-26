@@ -392,13 +392,14 @@ function MONSTER_SVG(color, dark, variant = 0) {
 const SCENE_SVGS = {};
 
 /* --- נכסי תמונה שנוצרו ב-GPT. אם קובץ חסר, הקוד נופל חזרה ל-SVG --- */
-const ASSETS = { mapBg: false, owl: false, monsters: false };
+const ASSETS = { mapBg: false, owl: false, monsters: false, unitBg: false };
 const MONSTER_IMAGES = [
   'assets/img/monster-1.png', 'assets/img/monster-2.png', 'assets/img/monster-3.png',
   'assets/img/monster-4.png', 'assets/img/monster-5.png', 'assets/img/monster-6.png',
 ];
 const OWL_IMAGE = 'assets/img/owl-idle.png';
 const MAP_BG_IMAGE = 'assets/img/map-background.png';
+const UNIT_BG_IMAGE = 'assets/img/unit-background.png';
 
 /* צבעי מפלצות למשחקוני הארקייד */
 const ARCADE_MONSTER_COLORS = [
