@@ -878,6 +878,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .combo-badge.pulse { animation: combo-pop .5s cubic-bezier(.2,1.8,.4,1); }
 @keyframes combo-pop { from { transform: scale(.4); } 60% { transform: scale(1.25); } }
 
+/* ============ גלגל הצלה: ניקוד ============ */
+.hud-btn.active {
+  border-color: var(--gold);
+  background: #fff8dd;
+  box-shadow: 0 0 0 3px rgba(245, 179, 1, .35);
+}
+/* טקסט מנוקד צריך יותר אוויר */
+.nikud-on .unit-card { line-height: 2; }
+.nikud-on .read-para { line-height: 2.4; font-size: 1.14rem; }
+.nikud-on .read-para.short { line-height: 2.5; font-size: 1.28rem; }
+.nikud-on .sentence-word { line-height: 1.9; }
+.nikud-on .q-opt, .nikud-on .q-text, .nikud-on .guide-bubble { line-height: 2; }
+
 /* ============ בועת הינשוף — כתיבה חיה ============ */
 .guide-bubble { min-height: 2.6em; cursor: pointer; }
 .guide-bubble.typing::after {

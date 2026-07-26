@@ -14,6 +14,7 @@ const DEFAULT_STATE = {
   completed: [],               /* מזהי יחידות שהושלמו */
   onboarded: false,
   muted: false,
+  nikud: false,                /* גלגל הצלה: תצוגת ניקוד */
 };
 
 let S = loadState();

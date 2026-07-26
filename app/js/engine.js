@@ -14,7 +14,7 @@ const $card = () => document.getElementById('unit-card');
 /* ---------- עזרים כלליים ---------- */
 function toast(msg, ms = 2600) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
+  t.textContent = typeof NK === 'function' ? NK(msg) : msg;
   t.classList.remove('hidden');
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.add('hidden'), ms);
@@ -146,6 +146,7 @@ function nextPart() {
     'summary': renderSummary,
   };
   renderers[part.type](part);
+  refreshNikud();
   animateGuideBubble();
   document.querySelector('.unit-stage').scrollTop = 0;
 }
@@ -180,6 +181,7 @@ function renderIntro() {
     </div>
     <div class="part-actions"><button class="btn-main" id="btn-start-unit">יוצאים לדרך! 🚀</button></div>
   `;
+  refreshNikud();
   animateGuideBubble();
   document.getElementById('btn-start-unit').onclick = nextPart;
 }
@@ -338,7 +340,7 @@ function renderCatchGame(part) {
     el.innerHTML = `
       ${theme.vessel === 'monster-balloon' ? '<span class="mini-balloon">🎈</span>' : '<span class="mini-wings">🦇</span>'}
       <span class="monster-body">${MONSTER_SVG(mc, md, variant)}</span>
-      <span class="vessel-word">${w}</span>`;
+      <span class="vessel-word">${NK(w)}</span>`;
     const bw = box.clientWidth, bh = box.clientHeight;
     const item = { el, w, ok, alive: true };
     if (theme.dir === 'up') {
@@ -497,6 +499,7 @@ function renderFeedGame(part) {
     });
 
     document.getElementById('btn-feed-next').onclick = nextPart;
+    refreshNikud();
     showWord();
   }
 
@@ -504,7 +507,7 @@ function renderFeedGame(part) {
     const status = document.getElementById('feed-status');
     status.textContent = `מילה ${idx + 1} מתוך ${queue.length}`;
     const wEl = document.getElementById('feed-word');
-    wEl.textContent = queue[idx].w;
+    wEl.textContent = NK(queue[idx].w);
     wEl.classList.remove('word-in');
     void wEl.offsetWidth;
     wEl.classList.add('word-in');
@@ -658,6 +661,7 @@ function renderMcqSet(part) {
       <div class="part-actions"><button class="btn-main hidden" id="btn-q-next"></button></div>
     `;
 
+    refreshNikud();
     const letters = ['א', 'ב', 'ג', 'ד'];
     const optsEl = document.getElementById('q-options');
     /* ערבוב סדר התשובות — שהתשובה הנכונה לא תהיה תמיד באותו מקום */
@@ -878,6 +882,7 @@ function renderRewards() {
       <div class="part-actions"><button class="btn-main" id="btn-back-map">חוזרים למפה 🗺️</button></div>
     </div>
   `;
+  refreshNikud();
   animateGuideBubble();
   document.getElementById('btn-back-map').onclick = () => showMap(true);
 }

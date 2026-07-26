@@ -350,6 +350,25 @@ function init() {
     openOverlay('overlay-avatar');
   };
 
+  /* גלגל הצלה: תצוגת ניקוד */
+  function paintNikud() {
+    ['btn-nikud', 'btn-nikud-unit'].forEach(id =>
+      document.getElementById(id).classList.toggle('active', S.nikud));
+    document.body.classList.toggle('nikud-on', S.nikud);
+  }
+  function toggleNikud() {
+    S.nikud = !S.nikud;
+    saveState();
+    paintNikud();
+    applyNikudToDom(document.getElementById('unit-card'), S.nikud);
+    applyNikudToDom(document.getElementById('map-stations'), S.nikud);
+    Sound.play('click');
+    toast(S.nikud ? 'גלגל הצלה פתוח: הטקסט מוצג עם ניקוד 🛟' : 'הניקוד הוסתר');
+  }
+  document.getElementById('btn-nikud').onclick = toggleNikud;
+  document.getElementById('btn-nikud-unit').onclick = toggleNikud;
+  paintNikud();
+
   /* השתקה / הפעלת צלילים */
   function paintMute() {
     const icon = S.muted ? '🔇' : '🔊';
