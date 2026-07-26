@@ -357,7 +357,9 @@ function init() {
   /* הרקע של מסך השיעור וההרשמה — תמיד איור: רקע ייעודי, ואם אין אז רקע המפה */
   const bg = ASSETS.unitBg ? UNIT_BG_IMAGE : (ASSETS.mapBg ? MAP_BG_IMAGE : null);
   if (bg) {
-    document.documentElement.style.setProperty('--unit-bg-url', `url('${bg}')`);
+    window.DEFAULT_UNIT_BG = bg;
+    /* url() בתוך custom property נפתר יחסית לגיליון הסגנון — לכן ממירים לכתובת מלאה */
+    document.documentElement.style.setProperty('--unit-bg-url', `url('${new URL(bg, document.baseURI).href}')`);
     document.getElementById('screen-unit').classList.add('photo-bg');
     document.querySelector('#screen-onboarding .ob-sky').classList.add('photo-bg');
   }

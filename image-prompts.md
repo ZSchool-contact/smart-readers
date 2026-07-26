@@ -68,11 +68,14 @@
 מחושים, פה ענק. תוספת קבועה לפרומפטים של מפלצות:
 > silly funny cute monster, round blob body, big googly eyes, tiny antennae, huge open mouth, gross-funny but friendly, NOT scary, for children ages 8-10
 
-### תמונה 5 — רקע מסך יחידה (אופציונלי)
-**קובץ:** `unit-background.png` | **יחס:** 16:9
-**שימוש:** רקע מטושטש מאחורי כרטיס הלמידה במסך היחידה
-**פרומפט:**
+### תמונה 5 — רקע מסך יחידה
+**קובץ:** `unit-background.png` (כללי) או `unit{N}-background.png` (פר יחידה) | **יחס:** 16:9
+**שימוש:** רקע איור מאחורי כרטיס הלמידה. סדר עדיפויות בקוד: רקע ייעודי ליחידה ← רקע כללי ← רקע המפה
+**סטטוס:** ליחידה 1 קיים `unit1-background.png` שנגזר מסצנת העיר (טשטוש רך). כשמייצרים גרסה ייעודית ב-GPT — לשמור באותו שם והיא תחליף אוטומטית.
+**פרומפט (כללי):**
 > Soft dreamy meadow landscape with gentle hills and trees, slightly blurred as a background for a learning card, muted pleasant colors, bright sky, cheerful children's game illustration, storybook style, no text, no characters
+**פרומפט (יחידה 1):**
+> Same illustration style: a wide 16:9 soft dreamy background for a learning screen, a calm blocky video game landscape at the edges, soft pixel clouds, gentle block hills, hint of colorful block towers in the far distance, hazy muted pastel colors, calm uncluttered center, no text, no characters, no crane
 
 ---
 

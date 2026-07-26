@@ -338,10 +338,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* רקע איור למסך השיעור (מוצב ב-JS לפי הנכס הזמין) */
 #screen-unit.photo-bg {
   background-image:
-    linear-gradient(rgba(20, 35, 15, .28), rgba(20, 35, 15, .28)),
+    linear-gradient(rgba(20, 35, 15, .16), rgba(20, 35, 15, .16)),
     var(--unit-bg-url);
   background-size: cover;
-  background-position: center;
+  background-position: center bottom;
 }
 #screen-onboarding .ob-sky.photo-bg {
   background:

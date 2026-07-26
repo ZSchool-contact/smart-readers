@@ -95,6 +95,12 @@ function startUnit(id) {
   currentUnit = UNITS[id];
   if (!currentUnit) { toast('היחידה הזו עוד בבנייה, נפתח אותה בקרוב! 🔧'); return; }
   partIndex = -1;
+  /* רקע איור ליחידה: ייעודי אם קיים, אחרת ברירת המחדל של העולם */
+  const unitScreen = document.getElementById('screen-unit');
+  if (unitScreen.classList.contains('photo-bg')) {
+    const bg = currentUnit.bg || window.DEFAULT_UNIT_BG;
+    if (bg) document.documentElement.style.setProperty('--unit-bg-url', `url('${new URL(bg, document.baseURI).href}')`);
+  }
   showScreen('unit');
   updateCoinDisplays();
   buildProgress();
