@@ -201,6 +201,7 @@ function renderIntro() {
   `;
   refreshNikud();
   animateGuideBubble();
+  showNikudCoach();
   document.getElementById('btn-start-unit').onclick = nextPart;
 }
 

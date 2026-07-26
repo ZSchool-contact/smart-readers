@@ -46,6 +46,40 @@ function renderAvatar(el, cls = '') {
     </div>`;
 }
 
+/* ---------- אונבורדינג גלגל ההצלה: בועת הזמנה בכניסה הראשונה ליחידה ---------- */
+let nikudCoachTimer = null;
+
+function dismissNikudCoach() {
+  const coach = document.getElementById('nikud-coach');
+  if (coach.classList.contains('hidden')) return;
+  coach.classList.add('hidden');
+  document.getElementById('btn-nikud-unit').classList.remove('attention');
+  clearTimeout(nikudCoachTimer);
+  S.nikudTipSeen = true;
+  saveState();
+}
+
+function showNikudCoach() {
+  if (S.nikudTipSeen) return;
+  const btn = document.getElementById('btn-nikud-unit');
+  const coach = document.getElementById('nikud-coach');
+  setTimeout(() => {
+    /* אם בינתיים יצאו מהיחידה — לא מציגים */
+    if (document.getElementById('screen-unit').classList.contains('hidden')) return;
+    const r = btn.getBoundingClientRect();
+    coach.classList.remove('hidden');
+    btn.classList.add('attention');
+    /* ממקמים מתחת לכפתור, מיושר לצד שלו */
+    const cw = coach.offsetWidth;
+    coach.style.top = (r.bottom + 12) + 'px';
+    coach.style.left = Math.max(10, Math.min(r.left + r.width / 2 - cw / 2, window.innerWidth - cw - 10)) + 'px';
+    coach.querySelector('.coach-arrow').style.left = (r.left + r.width / 2 - parseFloat(coach.style.left)) + 'px';
+    coach.onclick = dismissNikudCoach;
+    btn.addEventListener('click', dismissNikudCoach, { once: true });
+    nikudCoachTimer = setTimeout(dismissNikudCoach, 14000);
+  }, 1500);
+}
+
 /* ---------- מעבר בין מסכים ---------- */
 function showScreen(name) {
   ['onboarding', 'map', 'unit'].forEach(s =>
@@ -427,7 +461,7 @@ function init() {
     o.addEventListener('click', e => { if (e.target === o) closeOverlays(); }));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlays(); });
 
-  document.getElementById('btn-unit-exit').onclick = () => { stopPartActivities(); showMap(false); };
+  document.getElementById('btn-unit-exit').onclick = () => { dismissNikudCoach(); stopPartActivities(); showMap(false); };
 
   if (S.onboarded) showMap(false);
   else startOnboarding();

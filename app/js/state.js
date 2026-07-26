@@ -15,6 +15,7 @@ const DEFAULT_STATE = {
   onboarded: false,
   muted: false,
   nikud: false,                /* גלגל הצלה: תצוגת ניקוד */
+  nikudTipSeen: false,         /* האם הוצג האונבורדינג של גלגל ההצלה */
 };
 
 let S = loadState();
