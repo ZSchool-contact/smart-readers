@@ -623,7 +623,7 @@ function renderFeedGame(part) {
   build();
 }
 
-/* ---------- קריאה וסימון משפט מרכזי (המשפטים נחשפים בקצב קריאה של ילד) ---------- */
+/* ---------- קריאה וסימון משפט מרכזי ---------- */
 function renderReading(part) {
   $card().innerHTML = `
     ${partHeader(part)}
@@ -631,7 +631,6 @@ function renderReading(part) {
     <div id="read-paras"></div>
     <p class="read-hint">💡 לחיצה על משפט מסמנת אותו. אפשר לשנות בחירה בכל רגע</p>
     <div class="part-actions">
-      <button class="btn-soft" id="btn-reveal-all">להצגת כל הקטע מיד ⏩</button>
       <button class="btn-main" id="btn-read-next" disabled>סיימתי לקרוא ולסמן ⬅</button>
     </div>
   `;
@@ -640,8 +639,6 @@ function renderReading(part) {
   const wrap = document.getElementById('read-paras');
   const marked = new Array(part.paragraphs.length).fill(false);
   const single = part.paragraphs.length === 1;
-  const timers = [];
-  const allSpans = [];
 
   part.paragraphs.forEach((sentences, pi) => {
     const p = document.createElement('div');
@@ -649,10 +646,9 @@ function renderReading(part) {
     if (!single) p.innerHTML = `<span class="para-num">פסקה ${pi + 1}</span>`;
     sentences.forEach(s => {
       const span = document.createElement('span');
-      span.className = 'sentence pending';
+      span.className = 'sentence';
       span.textContent = s + ' ';
       span.onclick = () => {
-        if (span.classList.contains('pending')) return;
         p.querySelectorAll('.sentence').forEach(x => x.classList.remove('marked'));
         span.classList.add('marked');
         Sound.play('click');
@@ -661,26 +657,9 @@ function renderReading(part) {
         if (marked.every(Boolean)) document.getElementById('btn-read-next').disabled = false;
       };
       p.appendChild(span);
-      allSpans.push(span);
     });
     wrap.appendChild(p);
   });
-
-  /* חשיפה הדרגתית: כל משפט מופיע, ואז יש זמן לקרוא אותו לפני שהבא מגיע.
-     קצב קריאה של ילד: בערך שתי מילים בשנייה. */
-  let t = 500;
-  allSpans.forEach(span => {
-    timers.push(setTimeout(() => span.classList.remove('pending'), t));
-    const wordCount = span.textContent.trim().split(/\s+/).length;
-    t += 600 + wordCount * 520;
-  });
-  partCleanup = () => timers.forEach(clearTimeout);
-
-  document.getElementById('btn-reveal-all').onclick = () => {
-    timers.forEach(clearTimeout);
-    allSpans.forEach(s => s.classList.remove('pending'));
-    document.getElementById('btn-reveal-all').classList.add('hidden');
-  };
 
   document.getElementById('btn-read-next').onclick = () => {
     toast(single ? 'יפה מאוד! סימנתם את המשפט המרכזי 🌟' : 'איזו קריאה! סימנתם משפט מרכזי בכל פסקה 🌟');

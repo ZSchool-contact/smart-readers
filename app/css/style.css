@@ -575,8 +575,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: .75rem; font-weight: 700;
 }
 .read-para.marked { border-color: var(--gold); }
-.sentence { cursor: pointer; border-radius: 6px; padding: 1px 3px; transition: background .15s, opacity .6s, transform .6s; }
-.sentence.pending { opacity: 0; transform: translateY(8px); pointer-events: none; }
+.sentence { cursor: pointer; border-radius: 6px; padding: 1px 3px; transition: background .15s; }
 .sentence:hover { background: #fff3c4; }
 .sentence.marked { background: linear-gradient(180deg, #ffe58a, #ffd94d); box-shadow: 0 1px 0 #d8a800; font-weight: 500; }
 .read-hint { text-align: center; color: var(--ink-soft); font-size: .92rem; margin-top: 4px; }
