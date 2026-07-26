@@ -122,7 +122,8 @@ UNITS[1] = {
   title: 'בונים עולמות',
   topic: 'משחקי מחשב',
   emoji: '🎮',
-  bg: 'assets/img/unit1-background.png',   /* רקע איור ייעודי ליחידה */
+  bg: 'assets/img/unit1-background.png',       /* רקע איור למסך, מסביב לכרטיס */
+  cardBg: 'assets/img/unit1-card-bg.png',      /* רקע איור בתוך כרטיס השיעור עצמו */
   objectives: [
     'למצוא מידע שכתוב בטקסט',
     'לבחור כותרת מתאימה לקטע',

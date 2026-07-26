@@ -386,6 +386,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: 26px clamp(18px, 3vw, 48px) 30px;
   animation: card-in .4s cubic-bezier(.2,1.4,.4,1);
 }
+/* רקע איור בתוך הכרטיס — שכבת קרם שקופה שומרת על קריאות הטקסט */
+.unit-card.photo-card {
+  background-image:
+    linear-gradient(rgba(253, 246, 227, .58), rgba(253, 246, 227, .58)),
+    var(--unit-card-bg);
+  background-size: cover;
+  background-position: center;
+}
 .unit-card .guide-row,
 .unit-card .part-inst,
 .unit-card .q-text,

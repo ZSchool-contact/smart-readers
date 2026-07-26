@@ -101,6 +101,14 @@ function startUnit(id) {
     const bg = currentUnit.bg || window.DEFAULT_UNIT_BG;
     if (bg) document.documentElement.style.setProperty('--unit-bg-url', `url('${new URL(bg, document.baseURI).href}')`);
   }
+  /* רקע איור בתוך הכרטיס עצמו (אם ליחידה יש) */
+  const card = document.getElementById('unit-card');
+  if (currentUnit.cardBg) {
+    document.documentElement.style.setProperty('--unit-card-bg', `url('${new URL(currentUnit.cardBg, document.baseURI).href}')`);
+    card.classList.add('photo-card');
+  } else {
+    card.classList.remove('photo-card');
+  }
   showScreen('unit');
   updateCoinDisplays();
   buildProgress();
