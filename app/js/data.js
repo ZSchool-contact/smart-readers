@@ -165,7 +165,7 @@ const SHOP_CATS = [
 const JOURNEY_ITEMS = {
   0: { emoji: '🎒', name: 'תיק המסע' },
   1: { emoji: '👒', name: 'כובע צהוב' },
-  2: { emoji: '🔍', name: 'זכוכית מגדלת' },
+  2: { emoji: '<img class="journey-item-img" src="assets/img/item-2.png" alt="">', name: 'זכוכית מגדלת' },
   3: { emoji: '🌱', name: 'זרע שורש' },
   4: { emoji: '🗝️', name: 'מפתח מילים' },
   5: { emoji: '⭐', name: 'כוכב נסתר' },
@@ -446,6 +446,248 @@ UNITS[1] = {
   ],
 };
 
+/* ============================================================
+   יחידה 2 — בעלי חיים מדהימים
+   מבנה מדורג: משפט ← משחקון ← קטע קצר ← משחקון ← פסקה ← איסוף
+   משפחות: ר־ו־צ / ז־נ־ב / ח־י־ה · כתיב: מילות טבע עם ט׳
+   ============================================================ */
+UNITS[2] = {
+  id: 2,
+  title: 'בעלי חיים מדהימים',
+  topic: 'עולם הטבע',
+  emoji: '🐾',
+  cardBg: 'assets/img/unit2-card-bg.png',
+  objectives: [
+    'למצוא מידע שכתוב בטקסט',
+    'לבחור כותרת מתאימה לקטע',
+    'לזהות מילים ממשפחות ז־נ־ב, ר־ו־צ ו־ח־י־ה',
+    'לגלות אילו מילות טבע נכתבות עם האות ט׳',
+  ],
+  parts: [
+    /* ---- 1. הטרמה: ציד מילים בתמונה ---- */
+    {
+      type: 'word-hunt',
+      kicker: 'שלב 1 · חימום',
+      title: 'מי מסתתר בתמונה?',
+      guide: 'ברוכים הבאים לעולם הטבע! היום נכיר חיות מדהימות. לחצו על כל המילים שמתאימות למה שרואים בתמונה!',
+      sceneImage: 'assets/img/unit2-priming.png',
+      sceneSvg: 'UNIT2_SCENE_SVG',
+      words: [
+        { w: 'זנב', ok: true }, { w: 'קוף', ok: true },
+        { w: 'מקרר', ok: false }, { w: 'ריצה', ok: true },
+        { w: 'ספר', ok: false }, { w: 'עצים', ok: true },
+        { w: 'בריכה', ok: false }, { w: 'שמש', ok: true },
+      ],
+      doneFeedback: 'מעולה! את כל אלה נפגוש היום מקרוב 🐾',
+    },
+    /* ---- 2. משפט אחד: מציאת משפחה ---- */
+    {
+      type: 'sentence-hunt',
+      kicker: 'שלב 2 · משפט ראשון',
+      title: 'משפחת ז־נ־ב מתחבאת במשפט!',
+      guide: 'מתחילים בקטן: משפט אחד בלבד. מצאו בו את שתי המילים ממשפחת השורש ז־נ־ב ולחצו עליהן!',
+      family: 'ז־נ־ב',
+      sceneImage: 'assets/img/unit2-tails.png',
+      sceneSvg: 'TAILS_SCENE_SVG',
+      words: ['לקוף', 'יש', 'זנב', 'ארוך,', 'והסוס', 'מנפנף', 'בזנבו', 'לכל', 'הצדדים.'],
+      targetIdx: [2, 6],
+      fbGood: 'מצוין! זנב ובזנבו, שתיהן ממשפחת ז־נ־ב. אותו שורש בתוך שתי מילים שונות!',
+      fbBad: 'המילה הזו לא ממשפחת ז־נ־ב. חפשו את האותיות ז, נ, ב בתוך המילה 🔎',
+    },
+    /* ---- 3. משחקון ארקייד: מפלצות בלונים ---- */
+    {
+      type: 'catch-game',
+      theme: 'balloons',
+      kicker: 'שלב 3 · משחקון!',
+      title: '🎈 מפלצות הבלונים של ר־ו־צ',
+      guide: 'עכשיו זזים! מפלצות קטנות בורחות למעלה עם בלונים, וכל אחת מחזיקה מילה. תפסו רק מפלצות עם מילים ממשפחת ר־ו־צ, מהר כמו ברדלס!',
+      family: 'ר־ו־צ',
+      strikes: 3,
+      goal: 10,
+      targets: ['רץ', 'רצה', 'ריצה', 'לרוץ', 'רצים', 'מרוץ'],
+      distractors: ['עץ', 'פרח', 'נהר', 'שמש', 'ענן', 'סלע', 'עלה', 'דשא'],
+      fbBad: 'למפלצת הזו אין מילה ממשפחת ר־ו־צ!',
+      restartMsg: 'המפלצות חוזרות! הפעם חפשו את האותיות ר, צ בתוך המילה 🔄',
+      doneFeedback: 'תפסתם 10 מפלצות של משפחת ר־ו־צ! 🎈',
+    },
+    /* ---- 4. קטע קצר ---- */
+    {
+      type: 'reading',
+      kicker: 'שלב 4 · קטע קצר',
+      title: 'מי הכי מהיר ביבשה?',
+      guide: 'עכשיו קטע קצרצר, רק שלושה משפטים. קראו וסמנו בלחיצה את המשפט שנראה לכם הכי חשוב.',
+      sceneImage: 'assets/img/unit2-cheetah-rest.png',
+      sceneSvg: 'CHEETAH_SCENE_SVG',
+      paragraphs: [
+        [
+          'הברדלס הוא בעל החיים המהיר ביותר ביבשה.',
+          'בזמן ריצה הוא מגיע למהירות של מכונית בכביש מהיר.',
+          'אבל אחרי ריצה קצרה הוא חייב לעצור ולנוח.',
+        ],
+      ],
+      shortMode: true,
+    },
+    /* ---- 5. שאלה אחת על הקטע ---- */
+    {
+      type: 'mcq-set',
+      kicker: 'שלב 5 · שאלת הבנה',
+      title: 'רגע של חשיבה',
+      guide: 'שאלה אחת על הברדלס. אפשר להציץ בקטע שוב, הוא ממש כאן למטה!',
+      strikes: 3,
+      questions: [
+        {
+          label: 'מידע מפורש',
+          q: 'מה הברדלס חייב לעשות אחרי ריצה קצרה?',
+          img: 'assets/img/unit2-cheetah.png',
+          refText: 'הברדלס הוא בעל החיים המהיר ביותר ביבשה. בזמן ריצה הוא מגיע למהירות של מכונית בכביש מהיר. אבל אחרי ריצה קצרה הוא חייב לעצור ולנוח.',
+          options: [
+            'לעצור ולנוח',
+            'להמשיך לרוץ עוד שעה ארוכה',
+            'לטפס על עץ גבוה',
+          ],
+          correct: 0,
+          fbGood: 'בדיוק! זה כתוב בסוף הקטע. גם האצן המהיר בעולם צריך מנוחה 🐆',
+        },
+      ],
+      fbBadDefault: 'כמעט! התשובה מתחבאת בקטע שלמעלה 💪',
+      restartMsg: 'קוראים את הקטע עוד פעם אחת ומנסים שוב 🔄',
+    },
+    /* ---- 6. משחקון ארקייד: מפלצות לילה מעופפות ---- */
+    {
+      type: 'catch-game',
+      theme: 'night',
+      kicker: 'שלב 6 · משחקון!',
+      title: '🌙 מפלצות הלילה של ח־י־ה',
+      guide: 'ירד הלילה ביער, ובדיוק עכשיו מתעוררות חיות הלילה! תפסו רק מפלצות שמחזיקות מילים ממשפחת ח־י־ה!',
+      family: 'ח־י־ה',
+      strikes: 3,
+      goal: 10,
+      targets: ['חיה', 'חיות', 'חי', 'חיים', 'לחיות', 'החיות'],
+      distractors: ['כוכב', 'עלה', 'ענף', 'סלע', 'ענן', 'אבן', 'שביל', 'פרח'],
+      fbBad: 'למפלצת הזו אין מילה ממשפחת ח־י־ה!',
+      restartMsg: 'המפלצות ממריאות שוב! חפשו את האותיות ח, י בתוך המילה 🔄',
+      doneFeedback: 'תפסתם 10 מפלצות לילה של משפחת ח־י־ה! 🌙',
+    },
+    /* ---- 7. הפסקה הגדולה ---- */
+    {
+      type: 'reading',
+      kicker: 'שלב 7 · עכשיו אנחנו מוכנים!',
+      title: 'סיפור הזנבות',
+      guide: 'אחרי כל האימונים, הגיע הזמן לפסקה אמיתית וגדולה. אתם כבר מכירים את המילים שלה! סמנו את המשפט הכי חשוב. זוכרים את הטיפ שלי? המשפט החשוב לא תמיד מחכה בהתחלה. לפעמים הוא מתחבא דווקא בסוף!',
+      sceneImage: 'assets/img/unit2-tails-parade.png',
+      sceneSvg: 'TAILS_SCENE_SVG',
+      sceneSize: 'small',
+      paragraphs: [
+        [
+          'לקוף יש זנב ארוך וחזק שעוזר לו להיתלות על ענפים גבוהים.',
+          'הסוס מגרש זבובים טורדניים בעזרת נפנוף של הזנב.',
+          'הדג שוחה קדימה בזכות תנועות מהירות של הזנב שלו.',
+          'ולברדלס? הזנב עוזר לו לשמור על שיווי משקל בזמן ריצה מהירה.',
+          'אצל כל חיה, הזנב הוא כלי חשוב עם תפקיד מיוחד משלו.',
+        ],
+      ],
+    },
+    /* ---- 8. כותרות לשני הקטעים ---- */
+    {
+      type: 'mcq-set',
+      kicker: 'שלב 8 · בוחרים כותרת',
+      title: 'איזו כותרת הכי מדויקת?',
+      guide: 'כותרת טובה אומרת את הרעיון הגדול של הקטע, לא רק פרט אחד ממנו. בהצלחה!',
+      strikes: 3,
+      questions: [
+        {
+          label: 'הקטע הקצר שקראנו',
+          q: 'איזו כותרת הכי מתאימה לקטע על הברדלס?',
+          img: 'assets/img/unit2-cheetah.png',
+          refText: 'הברדלס הוא בעל החיים המהיר ביותר ביבשה. בזמן ריצה הוא מגיע למהירות של מכונית בכביש מהיר. אבל אחרי ריצה קצרה הוא חייב לעצור ולנוח.',
+          options: ['החיה המהירה ביבשה', 'איך מטפלים בחתול', 'מכוניות בכביש מהיר'],
+          correct: 0,
+          fbGood: 'נכון מאוד! כל הקטע מדבר על המהירות של הברדלס 🐆',
+        },
+        {
+          label: 'הפסקה הגדולה',
+          q: 'איזו כותרת הכי מתאימה לפסקה על הזנבות?',
+          img: 'assets/img/unit2-tails.png',
+          refText: 'לקוף יש זנב ארוך וחזק שעוזר לו להיתלות על ענפים גבוהים... הדג שוחה קדימה בזכות תנועות מהירות של הזנב שלו... אצל כל חיה, הזנב הוא כלי חשוב עם תפקיד מיוחד משלו.',
+          options: ['הקוף אוהב בננות', 'לכל זנב יש תפקיד משלו', 'איך דגים ישנים בלילה'],
+          correct: 1,
+          fbGood: 'בדיוק! הפסקה כולה מספרת מה הזנב עושה אצל כל חיה 🐒',
+        },
+      ],
+      fbBadDefault: 'כמעט! כותרת טובה אומרת את הרעיון הגדול, לא רק פרט אחד',
+      restartMsg: 'לפני שבוחרים, קראו את הקטע ושאלו: על מה כולו מדבר? 🔄',
+    },
+    /* ---- 9. המפלצות הרעבות: מאכילים כל מפלצת במשפחה שלה ---- */
+    {
+      type: 'feed-game',
+      kicker: 'שלב 9 · המפלצות הרעבות!',
+      title: '👾 כל מפלצת אוכלת רק משפחה אחת',
+      guide: 'המפלצות רעבות שוב, והן עדיין בררניות: כל מפלצת אוכלת רק מילים מהמשפחה שלה! לחצו על המפלצת הנכונה כדי להאכיל אותה במילה.',
+      strikes: 3,
+      eaters: [
+        { family: 'ר־ו־צ', color: '#4aa3e8', dark: '#2f7fc2' },
+        { family: 'ז־נ־ב', color: '#a06ae0', dark: '#7d48bd' },
+        { family: 'ח־י־ה', color: '#5cbb4e', dark: '#3f9433' },
+      ],
+      words: [
+        { w: 'רץ', fam: 0 }, { w: 'ריצה', fam: 0 }, { w: 'מרוץ', fam: 0 },
+        { w: 'זנב', fam: 1 }, { w: 'זנבות', fam: 1 },
+        { w: 'חיה', fam: 2 }, { w: 'חיים', fam: 2 }, { w: 'חיות', fam: 2 },
+      ],
+      fbBad: 'איכס! המפלצת הזו לא אוכלת את המשפחה הזו. חפשו את אותיות השורש 🔎',
+      restartMsg: 'המפלצות שוב רעבות! טיפ: חפשו את אותיות השורש בתוך המילה 🔄',
+      doneFeedback: 'כל המפלצות שבעות! אתם אלופי משפחות המילים 👾',
+    },
+    /* ---- 10. טעות בכוונה ---- */
+    {
+      type: 'mcq-set',
+      kicker: 'שלב 10 · טעות בכוונה',
+      title: 'מצאו את השגיאה! ❌',
+      guide: 'אוי לא, מפלצת השגיאות שוב כתבה משפט עם טעות אחת! רק אתם יכולים לתקן אותה.',
+      strikes: 3,
+      questions: [
+        {
+          label: 'המשפט של מפלצת השגיאות',
+          q: '"יצאנו לתיול בטבע וראינו חיות בר"',
+          img: 'assets/img/monster-4.png',
+          imgSmall: true,
+          options: [
+            '"יצאנו לטיול בטבע וראינו חיות בר"',
+            '"יצאנו לתיול בתבע וראינו חיות בר"',
+            '"יצאנו לטיול בטבע וראינו חייות בר"',
+          ],
+          correct: 0,
+          fbGood: 'בדיוק! "טיול" נכתב עם ט׳, בדיוק כמו "טבע". מילות הטבע אוהבות את האות ט׳ 💡',
+        },
+      ],
+      fbBadDefault: 'קראו שוב בקול. איזו מילה נראית מוזרה?',
+      restartMsg: 'ננסה שוב מההתחלה 🔄',
+    },
+    /* ---- 11. אנקדוטה ---- */
+    {
+      type: 'anecdote',
+      kicker: 'שלב 11 · תגלית של היום',
+      title: 'שמתם לב למשהו מגניב? 💡',
+      words: ['טל', 'טיול', 'טבע', 'טחב'],
+      text: 'ארבע מילים מעולם הטבע, וכולן נכתבות עם האות ט׳.\nכשפוגשים מילה חדשה מהטבע, יש סיכוי טוב שהאות ט׳ מסתתרת בה.',
+      tip: '🔍 לא בטוחים אם כותבים ט׳ או ת׳? היזכרו בחברות מהטבע: טל, טיול, טבע!',
+    },
+    /* ---- 12. סיכום ---- */
+    {
+      type: 'summary',
+      kicker: 'שלב 12 · סיכום',
+      title: 'ספר המסע 📖',
+      guide: 'איזה מסע עברנו היום בעולם הטבע! מסמנים מה למדנו, בוחרים מילה אחת לקחת, וזוכים בפרס!',
+      checks: [
+        'קראתי על הברדלס המהיר ועל הזנבות המדהימים של החיות',
+        'תפסתי והאכלתי מפלצות במילים ממשפחות ר־ו־צ, ז־נ־ב ו־ח־י־ה',
+        'גיליתי שמילות טבע כמו טל, טיול וטבע נכתבות עם ט׳',
+      ],
+      wordPrompt: 'מילה אחת שאקח איתי מהיחידה:',
+    },
+  ],
+};
+
 /* מפלצת מצחיקה — המוטיב המרכזי של כל משחקוני הקורס.
    variant: 0 רגילה · 1 קיקלופ (עין אחת) · 2 שלוש עיניים ולשון בחוץ */
 function MONSTER_SVG(color, dark, variant = 0) {
@@ -629,7 +871,116 @@ const UNIT1_SCENE_SVG = `
   <text x="60" y="310" font-size="30">🌼</text>
 </svg>`;
 
+/* placeholder לתמונת ההטרמה של יחידה 2 — סוואנה: ברדלס, קוף על עץ, שמש (עד תמונת ה-AI) */
+const UNIT2_SCENE_SVG = `
+<svg viewBox="0 0 800 340" role="img" aria-label="סוואנה: ברדלס רץ, קוף עם זנב ארוך יושב על עץ, עצים ושמש">
+  <rect width="800" height="340" fill="#cfeef7"/>
+  <circle cx="700" cy="60" r="34" fill="#ffd94d"/>
+  <ellipse cx="170" cy="55" rx="52" ry="16" fill="#fff" opacity=".9"/>
+  <ellipse cx="430" cy="42" rx="42" ry="14" fill="#fff" opacity=".9"/>
+  <rect y="250" width="800" height="90" fill="#a8d46a"/>
+  <ellipse cx="400" cy="255" rx="420" ry="22" fill="#c2e08a"/>
+  <!-- שני עצים -->
+  <rect x="600" y="130" width="24" height="130" rx="8" fill="#8a5a2b"/>
+  <circle cx="612" cy="112" r="52" fill="#5cbb4e"/>
+  <circle cx="572" cy="132" r="34" fill="#6ec95e"/>
+  <circle cx="652" cy="132" r="34" fill="#6ec95e"/>
+  <rect x="90" y="160" width="20" height="100" rx="7" fill="#8a5a2b"/>
+  <circle cx="100" cy="146" r="42" fill="#5cbb4e"/>
+  <circle cx="70" cy="164" r="26" fill="#6ec95e"/>
+  <!-- קוף על העץ, עם זנב מסולסל -->
+  <ellipse cx="608" cy="180" rx="22" ry="24" fill="#b07b4f"/>
+  <circle cx="608" cy="152" r="16" fill="#b07b4f"/>
+  <circle cx="602" cy="150" r="4.5" fill="#fff"/><circle cx="614" cy="150" r="4.5" fill="#fff"/>
+  <circle cx="603" cy="151" r="2" fill="#222"/><circle cx="613" cy="151" r="2" fill="#222"/>
+  <path d="M602 160 Q608 165 614 160" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"/>
+  <path d="M628 190 Q656 186 654 162 Q652 146 640 150" fill="none" stroke="#b07b4f" stroke-width="8" stroke-linecap="round"/>
+  <!-- ברדלס רץ עם קווי מהירות -->
+  <path d="M480 262 L560 262 M500 282 L580 282" stroke="#9ec9dd" stroke-width="7" stroke-linecap="round"/>
+  <ellipse cx="330" cy="262" rx="72" ry="34" fill="#f2c94c"/>
+  <circle cx="266" cy="240" r="26" fill="#f2c94c"/>
+  <circle cx="252" cy="222" r="8" fill="#e0b53a"/><circle cx="278" cy="220" r="8" fill="#e0b53a"/>
+  <circle cx="258" cy="236" r="6" fill="#fff"/><circle cx="274" cy="236" r="6" fill="#fff"/>
+  <circle cx="259" cy="238" r="2.6" fill="#222"/><circle cx="273" cy="238" r="2.6" fill="#222"/>
+  <path d="M260 250 Q266 255 272 250" fill="none" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="316" cy="250" r="6" fill="#a9772e"/><circle cx="344" cy="264" r="5" fill="#a9772e"/>
+  <circle cx="362" cy="248" r="6" fill="#a9772e"/><circle cx="330" cy="278" r="5" fill="#a9772e"/>
+  <path d="M296 290 L282 314 M330 292 L330 316 M364 288 L378 312" stroke="#f2c94c" stroke-width="13" stroke-linecap="round"/>
+  <path d="M398 250 Q446 226 470 240" fill="none" stroke="#f2c94c" stroke-width="13" stroke-linecap="round"/>
+  <circle cx="472" cy="240" r="9" fill="#6b4423"/>
+  <text x="180" y="320" font-size="26">🌼</text>
+  <text x="530" y="330" font-size="24">🌺</text>
+</svg>`;
+
+/* הברדלס הרץ — תמונת הקטע הקצר של יחידה 2 (עד תמונת ה-AI) */
+const CHEETAH_SCENE_SVG = `
+<svg viewBox="0 0 800 300" role="img" aria-label="ברדלס רץ מהר בסוואנה עם קווי מהירות מאחוריו">
+  <rect width="800" height="300" fill="#cfeef7"/>
+  <circle cx="90" cy="55" r="30" fill="#ffd94d"/>
+  <ellipse cx="620" cy="50" rx="50" ry="16" fill="#fff" opacity=".9"/>
+  <rect y="230" width="800" height="70" fill="#e8d48a"/>
+  <ellipse cx="400" cy="236" rx="430" ry="16" fill="#d9c274"/>
+  <!-- קווי מהירות -->
+  <path d="M600 170 L740 170 M620 200 L760 200 M610 230 L750 230" stroke="#9ec9dd" stroke-width="9" stroke-linecap="round"/>
+  <!-- גוף הברדלס -->
+  <ellipse cx="430" cy="200" rx="95" ry="46" fill="#f2c94c"/>
+  <!-- נקודות -->
+  <circle cx="410" cy="185" r="7" fill="#a9772e"/><circle cx="450" cy="205" r="6" fill="#a9772e"/>
+  <circle cx="480" cy="180" r="7" fill="#a9772e"/><circle cx="430" cy="222" r="6" fill="#a9772e"/>
+  <circle cx="500" cy="212" r="6" fill="#a9772e"/><circle cx="385" cy="212" r="6" fill="#a9772e"/>
+  <!-- רגליים בתנועה -->
+  <path d="M370 236 L340 274 M410 242 L406 282 M460 242 L470 282 M500 232 L534 268" stroke="#f2c94c" stroke-width="16" stroke-linecap="round"/>
+  <!-- זנב ארוך עם קצה כהה -->
+  <path d="M520 180 Q590 146 640 164" fill="none" stroke="#f2c94c" stroke-width="15" stroke-linecap="round"/>
+  <circle cx="644" cy="165" r="10" fill="#6b4423"/>
+  <!-- ראש -->
+  <circle cx="342" cy="168" r="35" fill="#f2c94c"/>
+  <circle cx="322" cy="142" r="10" fill="#e0b53a"/><circle cx="360" cy="140" r="10" fill="#e0b53a"/>
+  <circle cx="330" cy="162" r="8" fill="#fff"/><circle cx="354" cy="162" r="8" fill="#fff"/>
+  <circle cx="332" cy="164" r="3.6" fill="#222"/><circle cx="352" cy="164" r="3.6" fill="#222"/>
+  <path d="M330 172 L326 184 M354 172 L358 184" stroke="#a9772e" stroke-width="3" stroke-linecap="round"/>
+  <path d="M334 188 Q342 195 350 188" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+  <text x="700" y="120" font-size="26">💨</text>
+</svg>`;
+
+/* סיפור הזנבות — קוף נתלה בזנב וסוס מנפנף בזנבו (עד תמונת ה-AI) */
+const TAILS_SCENE_SVG = `
+<svg viewBox="0 0 800 300" role="img" aria-label="קוף נתלה על ענף בעזרת הזנב וסוס מגרש זבובים בנפנוף הזנב">
+  <rect width="800" height="300" fill="#d8f0e2"/>
+  <rect y="240" width="800" height="60" fill="#a8d46a"/>
+  <!-- עץ עם ענף -->
+  <rect x="640" y="60" width="24" height="180" rx="8" fill="#8a5a2b"/>
+  <circle cx="652" cy="58" r="46" fill="#5cbb4e"/>
+  <circle cx="608" cy="80" r="32" fill="#6ec95e"/>
+  <line x1="642" y1="110" x2="470" y2="98" stroke="#8a5a2b" stroke-width="12" stroke-linecap="round"/>
+  <!-- קוף נתלה בזנב מהענף -->
+  <path d="M500 100 Q522 118 508 140" fill="none" stroke="#b07b4f" stroke-width="9" stroke-linecap="round"/>
+  <ellipse cx="504" cy="172" rx="26" ry="30" fill="#b07b4f"/>
+  <circle cx="504" cy="212" r="20" fill="#b07b4f"/>
+  <ellipse cx="504" cy="216" rx="12" ry="10" fill="#e8cfa8"/>
+  <circle cx="497" cy="206" r="5.5" fill="#fff"/><circle cx="511" cy="206" r="5.5" fill="#fff"/>
+  <circle cx="498" cy="207" r="2.5" fill="#222"/><circle cx="510" cy="207" r="2.5" fill="#222"/>
+  <path d="M498 220 Q504 224 510 220" fill="none" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M482 160 Q466 150 460 136 M526 160 Q542 150 548 136" fill="none" stroke="#b07b4f" stroke-width="8" stroke-linecap="round"/>
+  <!-- סוס -->
+  <ellipse cx="200" cy="196" rx="72" ry="42" fill="#c98a5b"/>
+  <path d="M160 232 L154 278 M190 238 L190 280 M226 238 L228 280 M250 228 L258 274" stroke="#c98a5b" stroke-width="15" stroke-linecap="round"/>
+  <circle cx="134" cy="152" r="30" fill="#c98a5b"/>
+  <ellipse cx="122" cy="164" rx="14" ry="10" fill="#e8cfa8"/>
+  <path d="M118 128 L112 108 M136 124 L136 104" stroke="#c98a5b" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="130" cy="146" r="6" fill="#fff"/><circle cx="131" cy="147" r="2.8" fill="#222"/>
+  <path d="M156 130 Q176 140 178 162" fill="none" stroke="#8a5a2b" stroke-width="10" stroke-linecap="round"/>
+  <!-- זנב הסוס מתנפנף -->
+  <path d="M268 180 Q308 160 316 128 M268 184 Q316 176 330 150 M268 190 Q320 194 336 176" fill="none" stroke="#8a5a2b" stroke-width="7" stroke-linecap="round"/>
+  <text x="330" y="120" font-size="20">🪰</text>
+  <text x="356" y="160" font-size="18">🪰</text>
+  <text x="60" y="290" font-size="24">🌼</text>
+</svg>`;
+
 /* רישום הסצנות במפתח (אחרי שכולן הוגדרו) */
 SCENE_SVGS.UNIT1_SCENE_SVG = UNIT1_SCENE_SVG;
 SCENE_SVGS.RONI_SCENE_SVG = RONI_SCENE_SVG;
 SCENE_SVGS.RETRY_SCENE_SVG = RETRY_SCENE_SVG;
+SCENE_SVGS.UNIT2_SCENE_SVG = UNIT2_SCENE_SVG;
+SCENE_SVGS.CHEETAH_SCENE_SVG = CHEETAH_SCENE_SVG;
+SCENE_SVGS.TAILS_SCENE_SVG = TAILS_SCENE_SVG;

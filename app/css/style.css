@@ -785,6 +785,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   animation: reward-pop .6s cubic-bezier(.2,1.8,.4,1), glow-spin 3s linear infinite;
   box-shadow: 0 0 40px rgba(245,179,1,.55);
 }
+.journey-item-img {
+  width: 1.35em;
+  height: 1.35em;
+  object-fit: contain;
+  vertical-align: middle;
+}
+.reward-item-circle .journey-item-img { width: 92px; height: 92px; }
 @keyframes reward-pop { from { transform: scale(0) rotate(-180deg); } }
 @keyframes glow-spin { 50% { box-shadow: 0 0 60px rgba(245,179,1,.8); } }
 .reward-coins { font-size: 1.3rem; font-weight: 700; color: var(--wood-dark); margin: 10px 0; }
@@ -947,16 +954,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   overflow: hidden;
   touch-action: manipulation;
 }
-.arcade-sky { background: linear-gradient(180deg, #6fc1ef 0%, #b8e4fa 70%, #d9f2ff 100%); }
+.arcade-sky {
+  background: url('../assets/img/arcade-sky.png') center / cover no-repeat;
+}
 .arcade-space {
-  background:
-    radial-gradient(1.5px 1.5px at 15% 25%, #fff 50%, transparent 51%),
-    radial-gradient(2px 2px at 45% 70%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 75% 20%, #ffe58a 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 88% 55%, #fff 50%, transparent 51%),
-    radial-gradient(2px 2px at 30% 85%, #cfe6ff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 60% 40%, #fff 50%, transparent 51%),
-    linear-gradient(180deg, #141a3d 0%, #2a2e66 100%);
+  background: url('../assets/img/arcade-night.png') center / cover no-repeat;
 }
 .arcade-item {
   position: absolute; top: 0; left: 0;
