@@ -253,10 +253,10 @@ function renderWordHunt(part) {
     img.src = part.sceneImage;
     img.alt = 'תמונת הנושא של היחידה';
     img.style.cssText = 'display:block;width:100%;height:auto';
-    img.onerror = () => { scene.innerHTML = UNIT1_SCENE_SVG; };
+    img.onerror = () => { scene.innerHTML = SCENE_SVGS[part.sceneSvg] || UNIT1_SCENE_SVG; };
     scene.appendChild(img);
   } else {
-    scene.innerHTML = UNIT1_SCENE_SVG;
+    scene.innerHTML = SCENE_SVGS[part.sceneSvg] || UNIT1_SCENE_SVG;
   }
 
   const wordsEl = document.getElementById('hunt-words');
@@ -345,6 +345,7 @@ function renderCatchGame(part) {
   const themes = {
     balloons: { dir: 'up', vessel: 'monster-balloon', bgClass: 'arcade-sky' },
     night:    { dir: 'left', vessel: 'monster-fly', bgClass: 'arcade-space' },
+    mail:     { dir: 'left', vessel: 'monster-mail', bgClass: 'arcade-mail' },
   };
   const theme = themes[part.theme] || themes.balloons;
   const goal = part.goal || part.targets.length;
@@ -389,7 +390,9 @@ function renderCatchGame(part) {
       ? `<img class="monster-img" src="${MONSTER_IMAGES[mi % MONSTER_IMAGES.length]}" alt="">`
       : MONSTER_SVG(mc, md, mi % 3);
     el.innerHTML = `
-      ${theme.vessel === 'monster-balloon' ? '<span class="mini-balloon">🎈</span>' : '<span class="mini-wings">🦇</span>'}
+      ${theme.vessel === 'monster-balloon' ? '<span class="mini-balloon">🎈</span>'
+        : theme.vessel === 'monster-mail' ? '<span class="mini-mail">✉️</span>'
+        : '<span class="mini-wings">🦇</span>'}
       <span class="monster-body">${monsterHtml}</span>
       <span class="vessel-word">${NK(w)}</span>`;
     const bw = box.clientWidth, bh = box.clientHeight;

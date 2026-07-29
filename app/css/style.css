@@ -960,6 +960,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .arcade-space {
   background: url('../assets/img/arcade-night.png') center / cover no-repeat;
 }
+.arcade-mail {
+  background: linear-gradient(180deg, #ffe9c7 0%, #cfeef7 55%, #a8d46a 100%);
+}
 .arcade-item {
   position: absolute; top: 0; left: 0;
   display: flex; flex-direction: column; align-items: center;
@@ -973,7 +976,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 /* מפלצות מעופפות — המוטיב האחיד של כל הארקיידים */
 .arcade-item.monster-balloon,
-.arcade-item.monster-fly { gap: 0; }
+.arcade-item.monster-fly,
+.arcade-item.monster-mail { gap: 0; }
 .arcade-item .monster-body { display: block; width: 74px; }
 .arcade-item .monster-body svg,
 .arcade-item .monster-body img.monster-img { width: 100%; height: auto; filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
@@ -989,8 +993,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   animation: wings-flap .5s ease-in-out infinite;
 }
 @keyframes wings-flap { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(.55); } }
+.arcade-item .mini-mail {
+  font-size: 1.5rem; line-height: 1;
+  margin-bottom: -8px;
+  animation: mail-bob 1.4s ease-in-out infinite;
+}
+@keyframes mail-bob { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-4px) rotate(6deg); } }
 .arcade-item.monster-balloon .vessel-word,
-.arcade-item.monster-fly .vessel-word {
+.arcade-item.monster-fly .vessel-word,
+.arcade-item.monster-mail .vessel-word {
   background: linear-gradient(180deg, #fdf6e3, #f3e6c8);
   border: 2px solid var(--gold);
   border-radius: 999px;

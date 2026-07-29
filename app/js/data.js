@@ -688,6 +688,271 @@ UNITS[2] = {
   ],
 };
 
+/* ============================================================
+   יחידה 3 — שפה שמחברת
+   המפגש הייעודי למשפחות מילים · ⭐⭐ · פריט: 🌱 זרע שורש
+   משפחות התקשורת: ש־מ־ע / ד־ב־ר / כ־ת־ב
+   עליית קושי: מסיחים "מתחפשים" בארקייד, השלמת משפט חסר,
+   כותרת מ-2 אפשרויות קרובות, שאלת הסקה ראשונה
+   ============================================================ */
+UNITS[3] = {
+  id: 3,
+  title: 'שפה שמחברת',
+  topic: 'תקשורת בין אנשים',
+  emoji: '🌱',
+  cardBg: 'assets/img/unit3-card-bg.png',
+  objectives: [
+    'למצוא בטקסט מילים מאותה משפחת שורש',
+    'למיין מילים מעורבבות לשלוש משפחות: ש־מ־ע, ד־ב־ר, כ־ת־ב',
+    'להשלים משפט עם המילה החסרה המתאימה',
+    'לבחור כותרת מדויקת מבין שתי אפשרויות קרובות',
+  ],
+  parts: [
+    /* ---- 1. הטרמה: ציד מילים בתמונה ---- */
+    {
+      type: 'word-hunt',
+      kicker: 'שלב 1 · חימום',
+      title: 'איך אנשים מתחברים?',
+      guide: 'ברוכים הבאים ליחידה מיוחדת! היום נגלה איך השפה מחברת בין אנשים, ואיך השורש מחבר בין מילים. קודם כל, לחצו על כל המילים שמתאימות למה שרואים בתמונה!',
+      sceneImage: 'assets/img/unit3-priming.png',
+      sceneSvg: 'UNIT3_SCENE_SVG',
+      words: [
+        { w: 'מכתב', ok: true }, { w: 'טלפון', ok: true },
+        { w: 'מקרר', ok: false }, { w: 'שיחה', ok: true },
+        { w: 'כדורגל', ok: false }, { w: 'יונה', ok: true },
+        { w: 'אופניים', ok: false }, { w: 'מעטפה', ok: true },
+      ],
+      doneFeedback: 'מעולה! כל הדברים האלה עוזרים לאנשים לדבר, לשמוע ולכתוב זה לזה 💌',
+    },
+    /* ---- 2. משפט אחד: מציאת משפחה ---- */
+    {
+      type: 'sentence-hunt',
+      kicker: 'שלב 2 · משפט ראשון',
+      title: 'משפחת ד־ב־ר מתחבאת במשפט!',
+      guide: 'מתחילים בקטן: משפט אחד בלבד. מצאו בו את שתי המילים ממשפחת השורש ד־ב־ר ולחצו עליהן!',
+      family: 'ד־ב־ר',
+      sceneImage: 'assets/img/unit3-phone.png',
+      sceneSvg: 'PHONE_SCENE_SVG',
+      words: ['דנה', 'מדברת', 'בטלפון', 'עם', 'סבתא,', 'ושתיהן', 'ממשיכות', 'לדבר', 'עוד', 'שעה', 'ארוכה.'],
+      targetIdx: [1, 7],
+      fbGood: 'מצוין! מדברת ולדבר, שתיהן ממשפחת ד־ב־ר. אותו שורש מתחבא בשתי מילים שונות!',
+      fbBad: 'המילה הזו לא ממשפחת ד־ב־ר. חפשו את האותיות ד, ב, ר בתוך המילה 🔎',
+    },
+    /* ---- 3. משחקון ארקייד: מפלצות בלונים ---- */
+    {
+      type: 'catch-game',
+      theme: 'balloons',
+      kicker: 'שלב 3 · משחקון!',
+      title: '🎈 מפלצות הבלונים של ש־מ־ע',
+      guide: 'עכשיו זזים! תפסו רק מפלצות עם מילים ממשפחת ש־מ־ע. אבל זהירות: אתם כבר בדרגת שני כוכבים, ולכן יש מילים שמתחפשות! שמש למשל נראית דומה, אבל היא לא מהמשפחה 😉',
+      family: 'ש־מ־ע',
+      strikes: 3,
+      goal: 10,
+      targets: ['שומע', 'שמע', 'שמיעה', 'שומעים', 'להשמיע', 'שמענו'],
+      distractors: ['שמש', 'שמלה', 'שם', 'טלפון', 'קול', 'אוזן', 'יונה', 'רעש'],
+      fbBad: 'למפלצת הזו אין מילה ממשפחת ש־מ־ע!',
+      restartMsg: 'המפלצות חוזרות! בדקו שכל שלוש אותיות השורש ש, מ, ע נמצאות במילה 🔄',
+      doneFeedback: 'תפסתם 10 מפלצות של משפחת ש־מ־ע! אף מילה מתחפשת לא עבדה עליכם 🎈',
+    },
+    /* ---- 4. קטע קצר ---- */
+    {
+      type: 'reading',
+      kicker: 'שלב 4 · קטע קצר',
+      title: 'איך שלחו הודעות פעם?',
+      guide: 'עכשיו קטע קצרצר, רק שלושה משפטים. קראו וסמנו בלחיצה את המשפט שנראה לכם הכי חשוב.',
+      sceneImage: 'assets/img/unit3-pigeon-flight.png',
+      sceneSvg: 'PIGEON_SCENE_SVG',
+      paragraphs: [
+        [
+          'לפני שנים רבות עוד לא היה טלפון בעולם.',
+          'מי שרצה למסור הודעה לעיר רחוקה, קשר מכתב קטן לרגל של יונת דואר.',
+          'היונה עפה מעל הרים ושדות, והמכתב חיבר בין אנשים רחוקים.',
+        ],
+      ],
+      shortMode: true,
+    },
+    /* ---- 5. שאלת הבנה + השלמת משפט חסר ---- */
+    {
+      type: 'mcq-set',
+      kicker: 'שלב 5 · שאלות על הקטע',
+      title: 'רגע של חשיבה',
+      guide: 'שתי שאלות על יונות הדואר. באחת מהן מחכה לכם משימה חדשה: להשלים מילה חסרה במשפט! אפשר להציץ בקטע, הוא ממש כאן למטה.',
+      strikes: 3,
+      questions: [
+        {
+          label: 'מידע מפורש',
+          q: 'איך מסרו הודעה לעיר רחוקה לפני שהיה טלפון?',
+          img: 'assets/img/unit3-pigeon.png',
+          refText: 'לפני שנים רבות עוד לא היה טלפון בעולם. מי שרצה למסור הודעה לעיר רחוקה, קשר מכתב קטן לרגל של יונת דואר. היונה עפה מעל הרים ושדות, והמכתב חיבר בין אנשים רחוקים.',
+          options: [
+            'קשרו מכתב קטן לרגל של יונת דואר',
+            'צעקו חזק מאוד מהגג',
+            'חיכו שמישהו ייסע לשם באוטובוס',
+          ],
+          correct: 0,
+          fbGood: 'בדיוק! זה כתוב בקטע. יונת הדואר הייתה הטלפון של פעם 🕊️',
+        },
+        {
+          label: 'השלמת משפט · משימה חדשה!',
+          q: 'השלימו את המילה החסרה: היונה עפה מעל הרים ושדות, והמכתב ___ בין אנשים רחוקים.',
+          img: 'assets/img/unit3-pigeon.png',
+          refText: 'היונה עפה מעל הרים ושדות, והמכתב חיבר בין אנשים רחוקים.',
+          options: ['חיבר', 'שבר', 'הפריד'],
+          correct: 0,
+          fbGood: 'יפה מאוד! המכתב חיבר בין אנשים, בדיוק כמו שהשורש מחבר בין מילים 🌱',
+        },
+      ],
+      fbBadDefault: 'כמעט! התשובה מתחבאת בקטע שלמעלה 💪',
+      restartMsg: 'קוראים את הקטע עוד פעם אחת ומנסים שוב 🔄',
+    },
+    /* ---- 6. משחקון ארקייד: מפלצות הדואר ---- */
+    {
+      type: 'catch-game',
+      theme: 'mail',
+      kicker: 'שלב 6 · משחקון!',
+      title: '✉️ מפלצות הדואר של כ־ת־ב',
+      guide: 'מפלצות הדואר עפות עם מעטפות, ובכל מעטפה מילה! תפסו רק מעטפות עם מילים ממשפחת כ־ת־ב. וזהירות, גם כאן יש מילים מתחפשות כמו כתר וכתום!',
+      family: 'כ־ת־ב',
+      strikes: 3,
+      goal: 10,
+      targets: ['כותב', 'כתב', 'מכתב', 'כתיבה', 'לכתוב', 'כתבו'],
+      distractors: ['כתר', 'כתום', 'כתף', 'בול', 'מעטפה', 'יונה', 'נייר', 'דואר'],
+      fbBad: 'במעטפה הזו אין מילה ממשפחת כ־ת־ב!',
+      restartMsg: 'המפלצות ממריאות שוב! בדקו שכל שלוש האותיות כ, ת, ב נמצאות במילה 🔄',
+      doneFeedback: 'תפסתם 10 מעטפות של משפחת כ־ת־ב! הדואר הגיע ליעד 📬',
+    },
+    /* ---- 7. הפסקה הגדולה ---- */
+    {
+      type: 'reading',
+      kicker: 'שלב 7 · עכשיו אנחנו מוכנים!',
+      title: 'מכתבים שמחברים',
+      guide: 'אחרי כל האימונים, הגיע הזמן לפסקה גדולה על כוחן של מילים. אתם כבר מכירים את כל המשפחות שלה! סמנו את המשפט הכי חשוב. טיפ קטן ממני: שאלו את עצמכם על מה כל הפסקה מדברת.',
+      sceneImage: 'assets/img/unit3-letters.png',
+      sceneSvg: 'LETTERS_SCENE_SVG',
+      sceneSize: 'small',
+      paragraphs: [
+        [
+          'תלמידי כיתה ג׳ רצו לשמח את הסבים והסבתות במועדון של השכונה.',
+          'כל תלמיד כתב מכתב, סיפר בו על עצמו ושאל שאלות.',
+          'אחרי שבוע הגיעו מכתבי תשובה, מלאים בסיפורים נפלאים מפעם.',
+          'בסוף השנה כולם נפגשו במועדון, דיברו ושמעו סיפורים במשך שעות.',
+          'כך המילים חיברו בין ילדים לסבים, והפכו שכנים רחוקים לחברים קרובים.',
+        ],
+      ],
+    },
+    /* ---- 8. כותרות מ-2 אפשרויות קרובות + שאלת הסקה ראשונה ---- */
+    {
+      type: 'mcq-set',
+      kicker: 'שלב 8 · בוחרים כותרת',
+      title: 'איזו כותרת מדויקת יותר?',
+      guide: 'שימו לב, עליית קושי! הפעם רק שתי אפשרויות לכל כותרת, ושתיהן קרובות. כותרת טובה אומרת את הרעיון הגדול של הקטע, לא רק פרט אחד ממנו. ובסוף מחכה שאלה מסוג חדש לגמרי!',
+      strikes: 3,
+      questions: [
+        {
+          label: 'הקטע על יונות הדואר',
+          q: 'איזו כותרת הכי מתאימה לקטע שקראנו על יונות הדואר?',
+          img: 'assets/img/unit3-pigeon.png',
+          refText: 'לפני שנים רבות עוד לא היה טלפון בעולם. מי שרצה למסור הודעה לעיר רחוקה, קשר מכתב קטן לרגל של יונת דואר. היונה עפה מעל הרים ושדות, והמכתב חיבר בין אנשים רחוקים.',
+          options: ['איך יונות הדואר חיברו בין אנשים', 'יונה אחת עפה מעל ההרים'],
+          correct: 0,
+          fbGood: 'נכון מאוד! היונה שעפה היא רק פרט אחד. כל הקטע מספר איך המכתבים חיברו בין אנשים 🕊️',
+        },
+        {
+          label: 'הפסקה הגדולה',
+          q: 'איזו כותרת הכי מתאימה לפסקה על התלמידים והסבים?',
+          img: 'assets/img/unit3-letters.png',
+          refText: 'תלמידי כיתה ג׳ רצו לשמח את הסבים והסבתות במועדון של השכונה... בסוף השנה כולם נפגשו במועדון, דיברו ושמעו סיפורים במשך שעות. כך המילים חיברו בין ילדים לסבים, והפכו שכנים רחוקים לחברים קרובים.',
+          options: ['מכתבים שהפכו רחוקים לחברים', 'תלמיד אחד כותב מכתב בכיתה'],
+          correct: 0,
+          fbGood: 'בדיוק! הכותרת הזו תופסת את הרעיון הגדול: המכתבים יצרו חברות חדשה 💛',
+        },
+        {
+          label: 'שאלת חשיבה · חדש!',
+          q: 'למה לדעתכם הסבים והסבתות שמחו כל כך לקבל מכתבים? (רמז: התשובה לא כתובה בקטע, צריך לחשוב!)',
+          img: 'assets/img/unit3-letters.png',
+          options: [
+            'כי נעים לדעת שמישהו צעיר חושב עליהם',
+            'כי הם אוספים בולים יפים',
+            'כי לא היה להם ספרים לקרוא',
+          ],
+          correct: 0,
+          fbGood: 'איזו חשיבה יפה! התשובה הזו לא כתובה בקטע, אבל הבנתם אותה מהלב של הסיפור. זו נקראת הסקת מסקנות, וזה כלי של קוראים חכמים באמת 🧠',
+        },
+      ],
+      fbBadDefault: 'כמעט! חשבו: על מה כל הקטע מדבר, ומה רק פרט קטן?',
+      restartMsg: 'לפני שבוחרים, קראו את הקטע ושאלו: על מה כולו מדבר? 🔄',
+    },
+    /* ---- 9. המפלצות הרעבות: שלוש משפחות מתערבבות ---- */
+    {
+      type: 'feed-game',
+      kicker: 'שלב 9 · המפלצות הרעבות!',
+      title: '👾 כל מפלצת אוכלת רק משפחה אחת',
+      guide: 'המפלצות רעבות והן בררניות כתמיד: כל מפלצת אוכלת רק מילים מהמשפחה שלה! הפעם כל שלוש משפחות היחידה מתערבבות יחד. לחצו על המפלצת הנכונה כדי להאכיל אותה במילה.',
+      strikes: 3,
+      eaters: [
+        { family: 'ש־מ־ע', color: '#4aa3e8', dark: '#2f7fc2' },
+        { family: 'ד־ב־ר', color: '#a06ae0', dark: '#7d48bd' },
+        { family: 'כ־ת־ב', color: '#5cbb4e', dark: '#3f9433' },
+      ],
+      words: [
+        { w: 'שומעים', fam: 0 }, { w: 'שמיעה', fam: 0 }, { w: 'שמענו', fam: 0 },
+        { w: 'דיבור', fam: 1 }, { w: 'מדברים', fam: 1 }, { w: 'דיברנו', fam: 1 },
+        { w: 'כתיבה', fam: 2 }, { w: 'מכתבים', fam: 2 }, { w: 'כתבנו', fam: 2 },
+      ],
+      fbBad: 'איכס! המפלצת הזו לא אוכלת את המשפחה הזו. חפשו את אותיות השורש 🔎',
+      restartMsg: 'המפלצות שוב רעבות! טיפ: חפשו את אותיות השורש בתוך המילה 🔄',
+      doneFeedback: 'כל המפלצות שבעות! מיינתם שלוש משפחות שלמות בלי להתבלבל 👾',
+    },
+    /* ---- 10. טעות בכוונה: בן משפחה לא נכון ---- */
+    {
+      type: 'mcq-set',
+      kicker: 'שלב 10 · טעות בכוונה',
+      title: 'מצאו את השגיאה! ❌',
+      guide: 'אוי לא, מפלצת השגיאות שוב כאן! הפעם היא לא טעתה בכתיב. היא בחרה מילה מהמשפחה הנכונה, אבל בן משפחה לא נכון! רק אתם יכולים לתקן אותה.',
+      strikes: 3,
+      questions: [
+        {
+          label: 'המשפט של מפלצת השגיאות',
+          q: '"סבא לא שומע טוב, אז אני שומע לו את השיר בקול רם"',
+          img: 'assets/img/monster-4.png',
+          imgSmall: true,
+          options: [
+            '"סבא לא שומע טוב, אז אני משמיע לו את השיר בקול רם"',
+            '"סבא לא שומע טוב, אז אני שומעים לו את השיר בקול רם"',
+            '"סבא לא שמע טוב, אז אני מדבר לו את השיר בקול רם"',
+          ],
+          correct: 0,
+          fbGood: 'בדיוק! שומע ומשמיע הן בנות אותה משפחה, אבל לכל אחת תפקיד משלה: אני משמיע את השיר, וסבא שומע אותו 💡',
+        },
+      ],
+      fbBadDefault: 'קראו שוב בקול. מי אמור לשמוע, ומי אמור להשמיע?',
+      restartMsg: 'ננסה שוב מההתחלה 🔄',
+    },
+    /* ---- 11. אנקדוטה ---- */
+    {
+      type: 'anecdote',
+      kicker: 'שלב 11 · תגלית של היום',
+      title: 'שמתם לב למשהו מגניב? 💡',
+      words: ['אמא', 'אבא', 'אח', 'אחות'],
+      text: 'האנשים הקרובים לנו ביותר, וכל המילים שלהם מתחילות באות א׳, האות הראשונה באלף בית.\nכמו שלמשפחה של מילים יש שורש משותף, גם למילים של המשפחה שלנו יש סוד קטן משותף.',
+      tip: '🦉 גם השם שלי, אלף, מתחיל באות א׳. אולי אני קצת משפחה שלכם?',
+    },
+    /* ---- 12. סיכום ---- */
+    {
+      type: 'summary',
+      kicker: 'שלב 12 · סיכום',
+      title: 'ספר המסע 📖',
+      guide: 'איזו יחידה! היום גילינו שהשפה באמת מחברת. מסמנים מה למדנו, בוחרים מילה אחת לקחת, וזוכים בפרס!',
+      checks: [
+        'קראתי איך יונות הדואר והמכתבים חיברו בין אנשים רחוקים',
+        'תפסתי והאכלתי מפלצות במילים ממשפחות ש־מ־ע, ד־ב־ר ו־כ־ת־ב',
+        'גיליתי שהשורש מחבר מילים למשפחה, כמו שמילים מחברות בין אנשים',
+      ],
+      wordPrompt: 'מילה אחת שאקח איתי מהיחידה:',
+    },
+  ],
+};
+
 /* מפלצת מצחיקה — המוטיב המרכזי של כל משחקוני הקורס.
    variant: 0 רגילה · 1 קיקלופ (עין אחת) · 2 שלוש עיניים ולשון בחוץ */
 function MONSTER_SVG(color, dark, variant = 0) {
@@ -977,6 +1242,152 @@ const TAILS_SCENE_SVG = `
   <text x="60" y="290" font-size="24">🌼</text>
 </svg>`;
 
+/* placeholder לתמונת ההטרמה של יחידה 3 — ילדים מתקשרים: טלפון, מכתב, יונה (עד תמונת ה-AI) */
+const UNIT3_SCENE_SVG = `
+<svg viewBox="0 0 800 340" role="img" aria-label="ילדים מתקשרים: ילדה מדברת בטלפון, ילד כותב מכתב, יונה עם מעטפה ותיבת דואר">
+  <rect width="800" height="340" fill="#e8ddf5"/>
+  <circle cx="700" cy="60" r="32" fill="#ffd94d"/>
+  <ellipse cx="170" cy="52" rx="50" ry="16" fill="#fff" opacity=".9"/>
+  <ellipse cx="430" cy="40" rx="40" ry="13" fill="#fff" opacity=".9"/>
+  <rect y="250" width="800" height="90" fill="#a8d46a"/>
+  <!-- ילדה מדברת בטלפון -->
+  <ellipse cx="130" cy="210" rx="38" ry="42" fill="#ef6fa7"/>
+  <circle cx="120" cy="192" r="9" fill="#fff"/><circle cx="142" cy="192" r="9" fill="#fff"/>
+  <circle cx="122" cy="194" r="4" fill="#222"/><circle cx="140" cy="194" r="4" fill="#222"/>
+  <path d="M120 216 Q131 224 142 216" fill="none" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+  <rect x="158" y="184" width="16" height="30" rx="5" fill="#3d3d4d"/>
+  <!-- בועות שיחה -->
+  <ellipse cx="215" cy="130" rx="34" ry="22" fill="#fff"/>
+  <ellipse cx="258" cy="94" rx="24" ry="16" fill="#fff" opacity=".85"/>
+  <text x="215" y="137" font-size="20" text-anchor="middle">💬</text>
+  <!-- ילד כותב מכתב ליד שולחן -->
+  <rect x="420" y="216" width="130" height="14" rx="6" fill="#8a5a2b"/>
+  <rect x="430" y="230" width="12" height="46" fill="#6b4423"/>
+  <rect x="528" y="230" width="12" height="46" fill="#6b4423"/>
+  <rect x="448" y="196" width="66" height="24" rx="4" fill="#fdf6e3" stroke="#c9b98a" stroke-width="2"/>
+  <ellipse cx="600" cy="212" rx="36" ry="40" fill="#4aa3e8"/>
+  <circle cx="590" cy="196" r="9" fill="#fff"/><circle cx="612" cy="196" r="9" fill="#fff"/>
+  <circle cx="592" cy="198" r="4" fill="#222"/><circle cx="610" cy="198" r="4" fill="#222"/>
+  <path d="M592 220 Q601 227 612 220" fill="none" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+  <ellipse cx="560" cy="208" rx="9" ry="13" fill="#4aa3e8" transform="rotate(35 560 208)"/>
+  <text x="470" y="214" font-size="14">✏️</text>
+  <!-- יונה עם מעטפה -->
+  <ellipse cx="360" cy="100" rx="30" ry="22" fill="#f4f4f4"/>
+  <circle cx="390" cy="88" r="13" fill="#f4f4f4"/>
+  <circle cx="394" cy="85" r="3" fill="#222"/>
+  <path d="M401 90 L412 93 L401 96 Z" fill="#f5953b"/>
+  <path d="M340 96 Q322 78 314 88 Q320 102 342 106" fill="#e2e2e2"/>
+  <rect x="348" y="118" width="34" height="22" rx="3" fill="#fdf6e3" stroke="#c9a94a" stroke-width="2"/>
+  <path d="M348 120 L365 132 L382 120" fill="none" stroke="#c9a94a" stroke-width="2"/>
+  <!-- תיבת דואר -->
+  <rect x="290" y="196" width="56" height="40" rx="8" fill="#e05c5c"/>
+  <rect x="310" y="236" width="14" height="40" fill="#8d8d8d"/>
+  <rect x="300" y="208" width="36" height="6" rx="3" fill="#8d2f2f"/>
+  <text x="60" y="310" font-size="26">🌼</text>
+  <text x="720" y="320" font-size="24">🌷</text>
+</svg>`;
+
+/* דנה וסבתא בטלפון — תמונת המשפט הראשון של יחידה 3 (עד תמונת ה-AI) */
+const PHONE_SCENE_SVG = `
+<svg viewBox="0 0 800 300" role="img" aria-label="ילדה מדברת בטלפון עם סבתא, וביניהן בועות דיבור">
+  <rect width="800" height="300" fill="#dff0fb"/>
+  <rect y="240" width="800" height="60" fill="#c2e08a"/>
+  <!-- דנה עם טלפון -->
+  <ellipse cx="160" cy="200" rx="42" ry="46" fill="#ef6fa7"/>
+  <circle cx="148" cy="182" r="10" fill="#fff"/><circle cx="172" cy="182" r="10" fill="#fff"/>
+  <circle cx="150" cy="184" r="4.5" fill="#222"/><circle cx="170" cy="184" r="4.5" fill="#222"/>
+  <path d="M148 208 Q160 217 172 208" fill="none" stroke="#222" stroke-width="4" stroke-linecap="round"/>
+  <rect x="192" y="172" width="17" height="32" rx="5" fill="#3d3d4d"/>
+  <!-- סבתא עם טלפון -->
+  <ellipse cx="640" cy="200" rx="42" ry="46" fill="#a06ae0"/>
+  <path d="M604 168 Q640 148 676 168" fill="none" stroke="#e8e8e8" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="628" cy="184" r="10" fill="#fff"/><circle cx="652" cy="184" r="10" fill="#fff"/>
+  <circle cx="630" cy="186" r="4.5" fill="#222"/><circle cx="650" cy="186" r="4.5" fill="#222"/>
+  <ellipse cx="628" cy="184" rx="12" ry="12" fill="none" stroke="#c9a94a" stroke-width="2.5"/>
+  <ellipse cx="652" cy="184" rx="12" ry="12" fill="none" stroke="#c9a94a" stroke-width="2.5"/>
+  <line x1="640" y1="184" x2="640" y2="186" stroke="#c9a94a" stroke-width="2.5"/>
+  <path d="M628 210 Q640 219 652 210" fill="none" stroke="#222" stroke-width="4" stroke-linecap="round"/>
+  <rect x="592" y="174" width="17" height="32" rx="5" fill="#3d3d4d"/>
+  <!-- בועות דיבור נפגשות באמצע -->
+  <ellipse cx="310" cy="110" rx="52" ry="34" fill="#fff"/>
+  <path d="M280 138 L262 160 L296 142 Z" fill="#fff"/>
+  <text x="310" y="119" font-size="26" text-anchor="middle">💬</text>
+  <ellipse cx="490" cy="110" rx="52" ry="34" fill="#fff"/>
+  <path d="M520 138 L538 160 L504 142 Z" fill="#fff"/>
+  <text x="490" y="119" font-size="26" text-anchor="middle">❤️</text>
+  <!-- קו חיבור מנוקד בין הבועות -->
+  <path d="M362 110 L438 110" stroke="#f5b301" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round"/>
+</svg>`;
+
+/* יונת הדואר — תמונת הקטע הקצר של יחידה 3 (עד תמונת ה-AI) */
+const PIGEON_SCENE_SVG = `
+<svg viewBox="0 0 800 300" role="img" aria-label="יונת דואר עפה מעל הרים ושדות עם מכתב קשור לרגל">
+  <rect width="800" height="300" fill="#cfeef7"/>
+  <circle cx="90" cy="60" r="30" fill="#ffd94d"/>
+  <ellipse cx="600" cy="55" rx="50" ry="16" fill="#fff" opacity=".9"/>
+  <ellipse cx="300" cy="40" rx="38" ry="12" fill="#fff" opacity=".85"/>
+  <!-- הרים -->
+  <path d="M0 260 L140 150 L280 260 Z" fill="#9ec98a"/>
+  <path d="M180 260 L340 120 L500 260 Z" fill="#7cb268"/>
+  <path d="M420 260 L560 170 L700 260 Z" fill="#9ec98a"/>
+  <rect y="252" width="800" height="48" fill="#a8d46a"/>
+  <!-- שדות קטנים -->
+  <ellipse cx="120" cy="278" rx="70" ry="12" fill="#c2e08a"/>
+  <ellipse cx="620" cy="282" rx="90" ry="13" fill="#c2e08a"/>
+  <!-- יונה גדולה עפה -->
+  <ellipse cx="400" cy="120" rx="52" ry="34" fill="#f7f7f7"/>
+  <circle cx="452" cy="100" r="20" fill="#f7f7f7"/>
+  <circle cx="459" cy="96" r="4" fill="#222"/>
+  <path d="M470 102 L488 107 L470 113 Z" fill="#f5953b"/>
+  <path d="M382 102 Q340 52 300 60 Q318 96 368 116" fill="#e6e6e6"/>
+  <path d="M398 148 Q382 176 356 180 Q374 154 386 144" fill="#e6e6e6"/>
+  <!-- מכתב קשור לרגל -->
+  <line x1="416" y1="150" x2="420" y2="172" stroke="#8a5a2b" stroke-width="3"/>
+  <rect x="404" y="172" width="40" height="26" rx="3" fill="#fdf6e3" stroke="#c9a94a" stroke-width="2.5"/>
+  <path d="M404 174 L424 190 L444 174" fill="none" stroke="#c9a94a" stroke-width="2.5"/>
+  <text x="700" y="120" font-size="24">💨</text>
+</svg>`;
+
+/* מכתבים שמחברים — ילדים וסבים במועדון (עד תמונת ה-AI) */
+const LETTERS_SCENE_SVG = `
+<svg viewBox="0 0 800 300" role="img" aria-label="ילדים וסבים יושבים יחד במועדון, מחזיקים מכתבים ומחייכים">
+  <rect width="800" height="300" fill="#fbeadd"/>
+  <rect y="240" width="800" height="60" fill="#e0c9a8"/>
+  <!-- חלון עם שמש -->
+  <rect x="330" y="46" width="140" height="100" rx="10" fill="#cfeef7" stroke="#b08a5a" stroke-width="6"/>
+  <circle cx="440" cy="76" r="18" fill="#ffd94d"/>
+  <!-- ילדה עם מכתב -->
+  <ellipse cx="150" cy="210" rx="40" ry="44" fill="#4aa3e8"/>
+  <circle cx="139" cy="192" r="9" fill="#fff"/><circle cx="161" cy="192" r="9" fill="#fff"/>
+  <circle cx="141" cy="194" r="4" fill="#222"/><circle cx="159" cy="194" r="4" fill="#222"/>
+  <path d="M139 216 Q150 224 161 216" fill="none" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+  <rect x="180" y="188" width="44" height="30" rx="3" fill="#fdf6e3" stroke="#c9a94a" stroke-width="2.5" transform="rotate(8 180 188)"/>
+  <!-- סבא עם מקל ומכתב -->
+  <ellipse cx="330" cy="206" rx="42" ry="46" fill="#5cbb4e"/>
+  <path d="M296 176 Q330 156 364 176" fill="none" stroke="#e8e8e8" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="318" cy="190" r="9" fill="#fff"/><circle cx="342" cy="190" r="9" fill="#fff"/>
+  <circle cx="320" cy="192" r="4" fill="#222"/><circle cx="340" cy="192" r="4" fill="#222"/>
+  <path d="M318 214 Q330 223 342 214" fill="none" stroke="#222" stroke-width="4" stroke-linecap="round"/>
+  <line x1="372" y1="210" x2="380" y2="266" stroke="#8a5a2b" stroke-width="7" stroke-linecap="round"/>
+  <!-- סבתא מספרת -->
+  <ellipse cx="520" cy="206" rx="42" ry="46" fill="#f5953b"/>
+  <path d="M486 176 Q520 156 554 176" fill="none" stroke="#e8e8e8" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="508" cy="190" r="9" fill="#fff"/><circle cx="532" cy="190" r="9" fill="#fff"/>
+  <circle cx="510" cy="192" r="4" fill="#222"/><circle cx="530" cy="192" r="4" fill="#222"/>
+  <path d="M508 214 Q520 224 532 214" fill="none" stroke="#222" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="588" cy="128" rx="40" ry="26" fill="#fff"/>
+  <path d="M566 150 L552 170 L582 156 Z" fill="#fff"/>
+  <text x="588" y="136" font-size="20" text-anchor="middle">📖✨</text>
+  <!-- ילד מקשיב -->
+  <ellipse cx="680" cy="214" rx="38" ry="42" fill="#a06ae0"/>
+  <circle cx="670" cy="196" r="9" fill="#fff"/><circle cx="690" cy="196" r="9" fill="#fff"/>
+  <circle cx="672" cy="198" r="4" fill="#222"/><circle cx="688" cy="198" r="4" fill="#222"/>
+  <path d="M670 220 Q680 228 690 220" fill="none" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- לבבות באוויר -->
+  <text x="240" y="110" font-size="22">💌</text>
+  <text x="620" y="90" font-size="18">❤️</text>
+</svg>`;
+
 /* רישום הסצנות במפתח (אחרי שכולן הוגדרו) */
 SCENE_SVGS.UNIT1_SCENE_SVG = UNIT1_SCENE_SVG;
 SCENE_SVGS.RONI_SCENE_SVG = RONI_SCENE_SVG;
@@ -984,3 +1395,7 @@ SCENE_SVGS.RETRY_SCENE_SVG = RETRY_SCENE_SVG;
 SCENE_SVGS.UNIT2_SCENE_SVG = UNIT2_SCENE_SVG;
 SCENE_SVGS.CHEETAH_SCENE_SVG = CHEETAH_SCENE_SVG;
 SCENE_SVGS.TAILS_SCENE_SVG = TAILS_SCENE_SVG;
+SCENE_SVGS.UNIT3_SCENE_SVG = UNIT3_SCENE_SVG;
+SCENE_SVGS.PHONE_SCENE_SVG = PHONE_SCENE_SVG;
+SCENE_SVGS.PIGEON_SCENE_SVG = PIGEON_SCENE_SVG;
+SCENE_SVGS.LETTERS_SCENE_SVG = LETTERS_SCENE_SVG;
