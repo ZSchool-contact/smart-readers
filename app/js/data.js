@@ -166,7 +166,7 @@ const JOURNEY_ITEMS = {
   0: { emoji: '🎒', name: 'תיק המסע' },
   1: { emoji: '👒', name: 'כובע צהוב' },
   2: { emoji: '<img class="journey-item-img" src="assets/img/item-2.png" alt="">', name: 'זכוכית מגדלת' },
-  3: { emoji: '🌱', name: 'זרע שורש' },
+  3: { emoji: '<img class="journey-item-img" src="assets/img/item-3.png" alt="">', name: 'זרע שורש' },
   4: { emoji: '🗝️', name: 'מפתח מילים' },
   5: { emoji: '⭐', name: 'כוכב נסתר' },
   6: { emoji: '🧭', name: 'מצפן' },

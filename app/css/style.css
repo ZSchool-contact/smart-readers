@@ -961,7 +961,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: url('../assets/img/arcade-night.png') center / cover no-repeat;
 }
 .arcade-mail {
-  background: linear-gradient(180deg, #ffe9c7 0%, #cfeef7 55%, #a8d46a 100%);
+  background: url('../assets/img/arcade-mail.png') center / cover no-repeat;
 }
 .arcade-item {
   position: absolute; top: 0; left: 0;
