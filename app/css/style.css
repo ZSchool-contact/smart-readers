@@ -595,9 +595,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .q-img.tiny { max-height: 110px; border: none; box-shadow: none; }
 /* תמונת סצנה קטנה בקטעי קריאה */
-.hunt-scene.small,
+/* סצנה "קטנה" (לצד פסקה גדולה): התמונה מוצגת שלמה, בלי חיתוך,
+   והמסגרת מתכווצת סביבה */
+.hunt-scene.small {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 16px;
+  max-height: clamp(150px, 27vh, 270px);
+}
 .hunt-scene.small svg,
-.hunt-scene.small img { max-height: clamp(110px, 18vh, 170px); }
+.hunt-scene.small img {
+  width: auto;
+  max-width: 100%;
+  max-height: clamp(150px, 27vh, 270px);
+  object-fit: contain;
+}
 /* השאלה — משימת קווסט */
 .q-text { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; }
 .q-text::before { content: '🎯 '; }
@@ -972,6 +984,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .arcade-item .vessel-word {
   font-family: 'Heebo'; font-weight: 700;
+  letter-spacing: .05em;   /* מרווח לניקוד קריא */
   white-space: nowrap;
 }
 /* מפלצות מעופפות — המוטיב האחיד של כל הארקיידים */
@@ -1020,6 +1033,60 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .arcade-item.wrong-hit .vessel-word { animation: shake .35s; background: #fdeaea !important; border-color: var(--red-err) !important; color: var(--red-err) !important; }
 .arcade-item.faded { opacity: 0; transition: opacity .3s; }
 
+/* ============================================================
+   משחקון המחבואים — מפלצות מציצות ממחילות (whack-a-mole)
+   ============================================================ */
+.mole-field {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 18px;
+  padding: 18px 16px 10px;
+  border-radius: 18px;
+  border: 4px solid var(--wood);
+  background: url('../assets/img/mole-field-bg.png') center / cover no-repeat;
+}
+.mole-hole {
+  position: relative;
+  height: clamp(120px, 17vh, 160px);
+  display: flex; align-items: flex-end; justify-content: center;
+  overflow: hidden;
+}
+.mole-mound {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 88%; height: 26px;
+  background: radial-gradient(ellipse at 50% 0%, var(--path-dark) 0%, var(--wood) 75%);
+  border-radius: 50% 50% 12px 12px / 100% 100% 12px 12px;
+  box-shadow: inset 0 5px 6px rgba(0,0,0,.35);
+  z-index: 1;
+}
+.mole-monster {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  padding: 0; margin-bottom: 8px;
+  transform: translateY(130%);
+  transition: transform .24s cubic-bezier(.2,1.4,.4,1);
+  pointer-events: none;
+}
+.mole-monster.up { transform: translateY(0); pointer-events: auto; }
+.mole-monster .monster-body { display: block; width: 64px; }
+.mole-monster .monster-body svg,
+.mole-monster .monster-body img.monster-img { width: 100%; height: auto; filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
+.mole-monster .vessel-word {
+  background: linear-gradient(180deg, #fdf6e3, #f3e6c8);
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-family: 'Heebo'; font-weight: 700;
+  letter-spacing: .05em;   /* מרווח לניקוד קריא */
+  font-size: .98rem; color: var(--ink);
+  white-space: nowrap;
+  box-shadow: 0 3px 8px rgba(0,0,0,.3);
+  margin-bottom: -6px;
+}
+.mole-monster.whacked { animation: catch-pop .35s forwards; }
+.mole-monster.whacked .vessel-word { background: var(--green-ok) !important; color: #fff; border-color: var(--green-ok) !important; }
+.mole-monster.wrong-hit .vessel-word { animation: shake .35s; background: #fdeaea !important; border-color: var(--red-err) !important; color: var(--red-err) !important; }
+
 /* קטע קצר — טקסט גדול ונדיב */
 .read-para.short { font-size: 1.22rem; line-height: 2.1; padding: 20px 22px; }
 
@@ -1029,13 +1096,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .feed-status { text-align: center; font-weight: 700; color: var(--ink-soft); margin-bottom: 8px; }
 .feed-word-zone { display: flex; justify-content: center; margin-bottom: 18px; min-height: 64px; }
 .feed-word {
-  font-family: 'Rubik'; font-weight: 900;
+  font-family: 'Rubik'; font-weight: 700;
   font-size: clamp(1.5rem, 5vw, 2.1rem);
+  letter-spacing: .08em;   /* מרווח לניקוד קריא */
   color: var(--wood-dark);
   background: linear-gradient(180deg, #fff8dd, #ffefb8);
   border: 3px solid var(--gold);
   border-radius: 18px;
-  padding: 10px 34px;
+  padding: 12px 34px 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,.15);
 }
 .feed-word.word-in { animation: word-drop .4s cubic-bezier(.2,1.6,.4,1); }

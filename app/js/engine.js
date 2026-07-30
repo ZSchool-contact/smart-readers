@@ -181,6 +181,7 @@ function nextPart() {
     'word-hunt': renderWordHunt,
     'sentence-hunt': renderSentenceHunt,
     'catch-game': renderCatchGame,
+    'mole-game': renderMoleGame,
     'feed-game': renderFeedGame,
     'reading': renderReading,
     'mcq-set': renderMcqSet,
@@ -512,6 +513,155 @@ function renderCatchGame(part) {
     running = false;
     clearInterval(spawnId);
     cancelAnimationFrame(rafId);
+  };
+
+  startRound();
+}
+
+/* ---------- משחקון מחבואים: מפלצות מציצות ממחילות (whack-a-mole) ---------- */
+function renderMoleGame(part) {
+  setStrikes(part.strikes, part.strikes);
+  const goal = part.goal || 10;
+  const holes = 6;
+  let caught, streak, running, spawnId, hideTimers = [], colorIdx = 0;
+
+  $card().innerHTML = `
+    ${partHeader(part)}
+    <div class="arcade-status">
+      <span class="family-tag">משפחת <strong>${part.family}</strong></span>
+      <span class="combo-badge hidden" id="combo-badge"></span>
+      <span class="arcade-count" id="mole-count"></span>
+    </div>
+    <div class="mole-field" id="mole-field">
+      ${Array.from({ length: holes }, (_, i) => `
+        <div class="mole-hole">
+          <button class="mole-monster" id="mole-${i}"></button>
+          <div class="mole-mound"></div>
+        </div>`).join('')}
+    </div>
+    <div id="mole-feedback"></div>
+    <div class="part-actions"><button class="btn-main" id="btn-mole-next" disabled>ממשיכים ⬅</button></div>
+  `;
+  document.getElementById('btn-mole-next').onclick = nextPart;
+
+  function updateCount() {
+    document.getElementById('mole-count').textContent = `נתפסו ${caught} מתוך ${goal}`;
+  }
+
+  function pickWord() {
+    if (Math.random() < .55) {
+      return { w: part.targets[Math.floor(Math.random() * part.targets.length)], ok: true };
+    }
+    return { w: part.distractors[Math.floor(Math.random() * part.distractors.length)], ok: false };
+  }
+
+  function hideMole(el) {
+    el.classList.remove('up');
+    el.onclick = null;
+    setTimeout(() => { if (!el.classList.contains('up')) el.innerHTML = ''; }, 260);
+  }
+
+  function popMole() {
+    if (!running) return;
+    const free = [];
+    for (let i = 0; i < holes; i++) {
+      const el = document.getElementById(`mole-${i}`);
+      if (el && !el.classList.contains('up')) free.push(el);
+    }
+    if (!free.length) return;
+    const el = free[Math.floor(Math.random() * free.length)];
+    const { w, ok } = pickWord();
+    const mi = colorIdx++;
+    const [mc, md] = ARCADE_MONSTER_COLORS[mi % ARCADE_MONSTER_COLORS.length];
+    const monsterHtml = ASSETS.monsters
+      ? `<img class="monster-img" src="${MONSTER_IMAGES[mi % MONSTER_IMAGES.length]}" alt="">`
+      : MONSTER_SVG(mc, md, mi % 3);
+    el.innerHTML = `
+      <span class="vessel-word">${NK(w)}</span>
+      <span class="monster-body">${monsterHtml}</span>`;
+    el.classList.add('up');
+    el.onclick = () => whack(el, ok);
+    const upFor = 1400 + Math.random() * 700;
+    hideTimers.push(setTimeout(() => { if (running) hideMole(el); }, upFor));
+  }
+
+  function whack(el, ok) {
+    if (!running || !el.classList.contains('up')) return;
+    el.onclick = null;   /* מניעת לחיצה כפולה על אותה מפלצת */
+    if (ok) {
+      caught++;
+      streak++;
+      const bonus = streak >= 3 ? 5 : 0;
+      if (streak >= 3) {
+        Sound.play('streak');
+        const badge = document.getElementById('combo-badge');
+        badge.textContent = `🔥 רצף ×${streak}!`;
+        badge.classList.remove('hidden');
+        badge.classList.remove('pulse');
+        void badge.offsetWidth;
+        badge.classList.add('pulse');
+      } else {
+        Sound.play('pop');
+      }
+      el.classList.add('whacked');
+      sparkleBurst(el, 4);
+      addCoins(10 + bonus, el);
+      updateCount();
+      setTimeout(() => { el.classList.remove('whacked'); hideMole(el); }, 320);
+      if (caught >= goal) win();
+    } else {
+      el.classList.add('wrong-hit');
+      streak = 0;
+      document.getElementById('combo-badge').classList.add('hidden');
+      Sound.play('wrong');
+      setStrikes(strikesLeft - 1, part.strikes);
+      toast(part.fbBad);
+      setTimeout(() => { el.classList.remove('wrong-hit'); hideMole(el); }, 500);
+      if (strikesLeft <= 0) {
+        running = false;
+        setTimeout(() => { toast(part.restartMsg, 3200); startRound(); }, 900);
+      }
+    }
+  }
+
+  function hideAll() {
+    hideTimers.forEach(clearTimeout);
+    hideTimers = [];
+    for (let i = 0; i < holes; i++) {
+      const el = document.getElementById(`mole-${i}`);
+      if (el) hideMole(el);
+    }
+  }
+
+  function win() {
+    running = false;
+    clearInterval(spawnId);
+    hideAll();
+    Sound.play('correct');
+    confettiBurst(50);
+    document.getElementById('mole-feedback').innerHTML =
+      `<div class="feedback-box good">🏆 ${part.doneFeedback}</div>`;
+    document.getElementById('btn-mole-next').disabled = false;
+  }
+
+  function startRound() {
+    clearInterval(spawnId);
+    hideAll();
+    caught = 0;
+    streak = 0;
+    document.getElementById('combo-badge').classList.add('hidden');
+    setStrikes(part.strikes, part.strikes);
+    updateCount();
+    running = true;
+    popMole();
+    setTimeout(popMole, 400);
+    spawnId = setInterval(popMole, 850);
+  }
+
+  partCleanup = () => {
+    running = false;
+    clearInterval(spawnId);
+    hideTimers.forEach(clearTimeout);
   };
 
   startRound();
