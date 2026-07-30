@@ -184,6 +184,8 @@ function nextPart() {
     'catch-game': renderCatchGame,
     'mole-game': renderMoleGame,
     'feed-game': renderFeedGame,
+    'cloze-title': renderClozeTitle,
+    'family-expand': renderFamilyExpand,
     'reading': renderReading,
     'mcq-set': renderMcqSet,
     'sort-families': renderSortFamilies,
@@ -666,6 +668,187 @@ function renderMoleGame(part) {
   };
 
   startRound();
+}
+
+/* ---------- עזרי כתיבה חופשית (יחידה 5 ואילך) ---------- */
+/* נרמול מילה שהוקלדה: הסרת ניקוד ורווחים, אותיות סופיות -> רגילות */
+const FINAL_LETTERS = { 'ך': 'כ', 'ם': 'מ', 'ן': 'נ', 'ף': 'פ', 'ץ': 'צ' };
+function normalizeTyped(w) {
+  return denikkudize((w || '').trim())
+    .replace(/[ךםןףץ]/g, ch => FINAL_LETTERS[ch])
+    .replace(/[^א-ת]/g, '');
+}
+/* האם אותיות השורש (למשל "ב־ש־ל") מופיעות במילה לפי הסדר */
+function wordHasRoot(word, root) {
+  const letters = root.split('־');
+  let i = 0;
+  for (const ch of normalizeTyped(word)) {
+    if (ch === letters[i]) i++;
+    if (i === letters.length) return true;
+  }
+  return false;
+}
+
+/* ---------- השלמת כותרת חסרה: מקלידים את המילה בעצמם ---------- */
+function renderClozeTitle(part) {
+  let qi = 0;
+
+  function renderQuestion() {
+    const q = part.questions[qi];
+    let tries = 0;
+    const [before, after] = q.title.split('____');
+
+    $card().innerHTML = `
+      ${partHeader(part)}
+      ${part.questions.length > 1 ? `<div class="q-count">כותרת ${qi + 1} מתוך ${part.questions.length}</div>` : ''}
+      <div class="part-kicker">🔎 ${q.label}</div>
+      ${q.refText ? `<div class="q-ref">📖 ${q.refText}</div>` : ''}
+      <div class="cloze-line" dir="rtl">
+        <span>${before}</span><input class="cloze-input" id="cloze-input" maxlength="16"
+          autocomplete="off" aria-label="המילה החסרה בכותרת"><span>${after}</span>
+      </div>
+      <div id="cloze-feedback"></div>
+      <div class="part-actions">
+        <button class="btn-main" id="btn-cloze-check">בודקים! 🔍</button>
+        <button class="btn-main hidden" id="btn-cloze-next"></button>
+      </div>
+    `;
+    refreshNikud();
+
+    const input = document.getElementById('cloze-input');
+    const checkBtn = document.getElementById('btn-cloze-check');
+    const nextBtn = document.getElementById('btn-cloze-next');
+    const fb = document.getElementById('cloze-feedback');
+    input.focus();
+
+    function check() {
+      const typed = normalizeTyped(input.value);
+      if (!typed) { toast('כתבו את המילה החסרה בחלון הריק ✏️'); return; }
+      if (q.answers.some(a => normalizeTyped(a) === typed)) {
+        input.disabled = true;
+        input.classList.add('good');
+        checkBtn.classList.add('hidden');
+        Sound.play('correct');
+        sparkleBurst(input, 8);
+        addCoins(tries === 0 ? 10 : 5, input);
+        fb.innerHTML = `<div class="feedback-box good">✅ ${q.fbGood}</div>`;
+        const last = qi === part.questions.length - 1;
+        nextBtn.textContent = last ? 'סיימנו את הפעילות! ⬅' : 'לכותרת הבאה ⬅';
+        nextBtn.classList.remove('hidden');
+        nextBtn.onclick = () => { if (last) nextPart(); else { qi++; renderQuestion(); } };
+        refreshNikud();
+      } else {
+        tries++;
+        input.classList.add('miss');
+        setTimeout(() => input.classList.remove('miss'), 600);
+        Sound.play('wrong');
+        const hint = tries >= 2
+          ? ` רמז: המילה מתחילה באות "${q.answers[0][0]}"`
+          : '';
+        fb.innerHTML = `<div class="feedback-box bad">🤔 ${q.fbBad || part.fbBadDefault}${hint}</div>`;
+        refreshNikud();
+      }
+    }
+
+    checkBtn.onclick = check;
+    input.onkeydown = e => { if (e.key === 'Enter') check(); };
+  }
+
+  renderQuestion();
+}
+
+/* ---------- הרחבת משפחה עצמאית: כותבים מילים חדשות מהשורש ---------- */
+function renderFamilyExpand(part) {
+  let ri = 0;
+
+  function renderRound() {
+    const r = part.rounds[ri];
+    const accepted = [];
+    const taken = new Set(r.given.map(normalizeTyped));
+
+    $card().innerHTML = `
+      ${partHeader(part)}
+      ${part.rounds.length > 1 ? `<div class="q-count">משפחה ${ri + 1} מתוך ${part.rounds.length}</div>` : ''}
+      <div class="family-tag">משפחת <strong>${r.root}</strong></div>
+      <div class="fx-board">
+        <div class="fx-chips" id="fx-chips">
+          ${r.given.map(w => `<span class="fx-chip given">${w}</span>`).join('')}
+        </div>
+        <div class="fx-input-row">
+          <input class="cloze-input" id="fx-input" maxlength="14" autocomplete="off"
+            placeholder="מילה מהמשפחה..." aria-label="מילה חדשה מהמשפחה">
+          <button class="btn-main" id="btn-fx-add">מוסיפים! ➕</button>
+        </div>
+        <div class="fx-progress" id="fx-progress"></div>
+      </div>
+      <div id="fx-feedback"></div>
+      <div class="part-actions"><button class="btn-main hidden" id="btn-fx-next"></button></div>
+    `;
+    refreshNikud();
+
+    const input = document.getElementById('fx-input');
+    const addBtn = document.getElementById('btn-fx-add');
+    const nextBtn = document.getElementById('btn-fx-next');
+    const fb = document.getElementById('fx-feedback');
+    const progress = document.getElementById('fx-progress');
+    const rootLetters = r.root.split('־').join(', ');
+
+    function updateProgress() {
+      progress.textContent = accepted.length >= 2
+        ? '' : `נכתבו ${accepted.length} מתוך 2 מילים`;
+    }
+    updateProgress();
+    input.focus();
+
+    function add() {
+      const raw = (input.value || '').trim();
+      const norm = normalizeTyped(raw);
+      if (!norm) { toast('כתבו מילה בעברית ✏️'); return; }
+      if (norm.length < 3) { toast('מילה קצרה מדי, נסו מילה שלמה 😉'); return; }
+      if (taken.has(norm)) {
+        toast('המילה הזו כבר על הלוח! נסו מילה חדשה 😉');
+        input.value = '';
+        return;
+      }
+      if (!wordHasRoot(raw, r.root)) {
+        input.classList.add('miss');
+        setTimeout(() => input.classList.remove('miss'), 600);
+        Sound.play('wrong');
+        fb.innerHTML = `<div class="feedback-box bad">🤔 בדקו: האם האותיות ${rootLetters} מופיעות במילה לפי הסדר? נסו שוב, אתם קרובים!</div>`;
+        refreshNikud();
+        return;
+      }
+      taken.add(norm);
+      accepted.push(raw);
+      const chip = document.createElement('span');
+      chip.className = 'fx-chip mine';
+      chip.textContent = raw;
+      document.getElementById('fx-chips').appendChild(chip);
+      Sound.play('correct');
+      sparkleBurst(chip, 6);
+      addCoins(10, chip);
+      input.value = '';
+      fb.innerHTML = '';
+      updateProgress();
+      if (accepted.length >= 2) {
+        input.disabled = true;
+        addBtn.classList.add('hidden');
+        confettiBurst(40);
+        const moreIdeas = r.ideas.filter(w => !taken.has(normalizeTyped(w))).slice(0, 3);
+        fb.innerHTML = `<div class="feedback-box good">🏆 ${r.praise}${moreIdeas.length ? `<br>רעיונות נוספים מהמשפחה: ${moreIdeas.join(', ')}` : ''}</div>`;
+        const last = ri === part.rounds.length - 1;
+        nextBtn.textContent = last ? 'סיימנו את הפעילות! ⬅' : 'למשפחה הבאה ⬅';
+        nextBtn.classList.remove('hidden');
+        nextBtn.onclick = () => { if (last) nextPart(); else { ri++; renderRound(); } };
+        refreshNikud();
+      }
+    }
+
+    addBtn.onclick = add;
+    input.onkeydown = e => { if (e.key === 'Enter') add(); };
+  }
+
+  renderRound();
 }
 
 /* ---------- המפלצות הרעבות: מאכילים כל מפלצת במשפחה שלה ---------- */

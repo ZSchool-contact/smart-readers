@@ -1089,6 +1089,65 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .mole-monster.whacked .vessel-word { background: var(--green-ok) !important; color: #fff; border-color: var(--green-ok) !important; }
 .mole-monster.wrong-hit .vessel-word { animation: shake .35s; background: #fdeaea !important; border-color: var(--red-err) !important; color: var(--red-err) !important; }
 
+/* ============================================================
+   כתיבה חופשית — השלמת כותרת והרחבת משפחה (יחידה 5+)
+   ============================================================ */
+.cloze-line {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 8px;
+  font-family: 'Rubik'; font-weight: 700;
+  font-size: clamp(1.25rem, 3.4vw, 1.7rem);
+  color: var(--wood-dark);
+  background: linear-gradient(180deg, #fff8dd, #ffefb8);
+  border: 3px solid var(--gold);
+  border-radius: 18px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+.cloze-input {
+  font-family: 'Heebo'; font-weight: 700;
+  font-size: 1.15rem;
+  text-align: center;
+  width: min(180px, 45vw);
+  padding: 9px 12px;
+  border: 3px dashed var(--wood-light);
+  border-radius: 12px;
+  background: #fff;
+  outline: none;
+}
+.cloze-input:focus { border-color: var(--blue-btn); border-style: solid; }
+.cloze-input.good {
+  border-style: solid; border-color: var(--green-ok);
+  background: #eaf7ea; color: var(--green-ok);
+}
+.cloze-input.miss { animation: shake .35s; border-color: var(--red-err); background: #fdeaea; }
+
+.fx-board {
+  background: linear-gradient(180deg, #fffdf4, #fdf3da);
+  border: 3px solid var(--wood-light);
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.fx-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 14px; }
+.fx-chip {
+  font-weight: 700; font-size: 1.05rem;
+  padding: 8px 18px; border-radius: 999px;
+  letter-spacing: .04em;
+}
+.fx-chip.given {
+  background: #fff; color: var(--ink-soft);
+  border: 2px solid var(--cream-dark);
+}
+.fx-chip.mine {
+  background: linear-gradient(180deg, #eaf7ea, #d7efd7);
+  color: #226b24; border: 2px solid var(--green-ok);
+  animation: pop-in .35s cubic-bezier(.2,1.6,.4,1);
+}
+.fx-input-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; }
+.fx-progress { text-align: center; font-weight: 700; color: var(--ink-soft); margin-top: 10px; }
+
 /* קטע קצר — טקסט גדול ונדיב */
 .read-para.short { font-size: 1.22rem; line-height: 2.1; padding: 20px 22px; }
 

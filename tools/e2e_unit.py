@@ -155,6 +155,32 @@ with sync_playwright() as p:
                 page.wait_for_timeout(750)
             wait_enabled(page, "#btn-feed-next")
 
+        elif ptype == "cloze-title":
+            nq = page.evaluate("() => currentUnit.parts[partIndex].questions.length")
+            for _ in range(nq):
+                page.wait_for_timeout(250)
+                page.evaluate("""() => {
+                  const part = currentUnit.parts[partIndex];
+                  const shown = document.querySelector('.part-kicker').textContent;
+                  const q = part.questions.find(x => shown.includes(x.label));
+                  document.getElementById('cloze-input').value = q.answers[0];
+                  document.getElementById('btn-cloze-check').click();
+                }""")
+                wait_enabled(page, "#btn-cloze-next")
+
+        elif ptype == "family-expand":
+            nr = page.evaluate("() => currentUnit.parts[partIndex].rounds.length")
+            for ri in range(nr):
+                page.wait_for_timeout(250)
+                for wi in range(2):
+                    page.evaluate(f"""() => {{
+                      const part = currentUnit.parts[partIndex];
+                      document.getElementById('fx-input').value = part.rounds[{ri}].ideas[{wi}];
+                      document.getElementById('btn-fx-add').click();
+                    }}""")
+                    page.wait_for_timeout(200)
+                wait_enabled(page, "#btn-fx-next")
+
         elif ptype == "anecdote":
             wait_enabled(page, "#btn-anec-next")
 
