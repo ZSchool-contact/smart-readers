@@ -789,9 +789,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: contain;
+  object-position: bottom;   /* הרגליים על הקרקע, כמו ב-SVG */
 }
 .avatar-box img.creature-img { filter: drop-shadow(0 4px 4px rgba(0,0,0,.25)); }
 .creature-silhouette img.creature-img { filter: brightness(0) opacity(.25); }
+/* לתמונות ה-AI יש מרווח מעל הראש — מורידים את הכובע והפנים אל הדמות */
+.avatar-box:has(img.creature-img) .avatar-hat { top: 2%; }
+.avatar-box:has(img.creature-img) .avatar-face { top: 34%; }
 
 /* --- מסך פרס --- */
 .reward-stage { text-align: center; }
