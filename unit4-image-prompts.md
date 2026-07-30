@@ -104,3 +104,9 @@
 | `unit4-runner.png`, `unit4-victory.png` | אוטומטי — תמונות שאלות (`q.img`), נעלמות בשקט אם חסרות |
 | `item-4.png` | דורש החלפת האימוג'י ב-`JOURNEY_ITEMS` שב-data.js לתגית img (כמו item-2 ו-item-3) |
 | `mole-field-bg.png` | דורש חיבור ב-CSS: `.mole-field` ב-`app/css/style.css` (כרגע גרדיאנט) |
+
+<!-- flowpad:capsule identity
+version: 1
+data:
+  id: 0ab62eca-6a47-4a90-b07c-86e612780b30
+flowpad:endcapsule identity -->

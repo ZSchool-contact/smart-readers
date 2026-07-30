@@ -395,10 +395,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   overflow: hidden;
   transform-origin: top center;
 }
-/* רקע איור בתוך המסגרת המאוחדת */
+/* רקע איור בתוך המסגרת המאוחדת. עוצמת שכבת ההבהרה נשלטת פר יחידה
+   (cardBgOverlay ב-data.js) — רקע חיוור צריך שכבה עדינה כדי לא להימחק */
 .unit-layout.photo-card {
   background-image:
-    linear-gradient(rgba(253, 246, 227, .58), rgba(253, 246, 227, .58)),
+    linear-gradient(rgba(253, 246, 227, var(--unit-card-overlay, .58)),
+                    rgba(253, 246, 227, var(--unit-card-overlay, .58))),
     var(--unit-card-bg);
   background-size: cover;
   background-position: center;

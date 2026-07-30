@@ -137,3 +137,9 @@ syllabus.md       9 היחידות במלואן
 4. Supabase לשמירה חוצת מכשירים (~יום עבודה, מדריך PUBLISHING-TO-TEACHPAL.md בשורש)
 5. וידאו (פאזה 2 באפיון): אמביינט מפה, אינטרו עולם, חגיגת סיום
 6. פריטי חנות מאוירים במקום אימוג'י
+
+<!-- flowpad:capsule identity
+version: 1
+data:
+  id: ca346297-de98-4d0d-bf2e-0cac24fb8d7e
+flowpad:endcapsule identity -->

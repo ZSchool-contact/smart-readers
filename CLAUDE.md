@@ -104,3 +104,9 @@
 - `syllabus-smart-readers.docx` — הסילבוס המקורי (הומר ל-syllabus.md)
 - `unit1-smart-readers (1).docx` — מפרט מלא של יחידה 1 (מוטמע ב-app/js/data.js)
 - `קורס שיפור הבנת הנקרא שלושה ציר תוכן מרכזיים.docx` — ההיגיון הפדגוגי של הצירים
+
+<!-- flowpad:capsule identity
+version: 1
+data:
+  id: 42b92810-e95c-45da-a3bc-4e53d9f7793d
+flowpad:endcapsule identity -->

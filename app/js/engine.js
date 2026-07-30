@@ -134,6 +134,7 @@ function startUnit(id) {
   const layout = document.getElementById('unit-layout');
   if (currentUnit.cardBg) {
     document.documentElement.style.setProperty('--unit-card-bg', `url('${new URL(currentUnit.cardBg, document.baseURI).href}')`);
+    document.documentElement.style.setProperty('--unit-card-overlay', currentUnit.cardBgOverlay ?? .58);
     layout.classList.add('photo-card');
   } else {
     layout.classList.remove('photo-card');
