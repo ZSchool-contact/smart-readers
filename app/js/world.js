@@ -35,15 +35,23 @@ function itemEmoji(id) {
   return it ? it.emoji : '';
 }
 
+/* פריט חנות: תמונת AI אם קיימת (shop-{id}.png), אחרת האימוג'י.
+   האימוג'י מוסתר רק אחרי שהתמונה נטענה בהצלחה — אין הבהוב ואין שבר */
+function itemVisual(id) {
+  const it = SHOP_ITEMS.find(x => x.id === id);
+  if (!it) return '';
+  return `<span class="item-visual"><span class="iv-emoji">${it.emoji}</span><img src="assets/img/shop-${it.id}.png" alt="" onload="this.parentElement.classList.add('img-ok')" onerror="this.remove()"></span>`;
+}
+
 function renderAvatar(el, cls = '') {
   const a = S.avatar;
   const stage = creatureStage(contentUnitsDone());
   el.innerHTML = `
     <div class="avatar-box ${cls}">
       ${creatureMarkup(a.color, stage)}
-      ${a.hat ? `<span class="avatar-hat">${itemEmoji(a.hat)}</span>` : ''}
-      ${a.face ? `<span class="avatar-face">${itemEmoji(a.face)}</span>` : ''}
-      ${a.pet ? `<span class="avatar-pet">${itemEmoji(a.pet)}</span>` : ''}
+      ${a.hat ? `<span class="avatar-hat">${itemVisual(a.hat)}</span>` : ''}
+      ${a.face ? `<span class="avatar-face">${itemVisual(a.face)}</span>` : ''}
+      ${a.pet ? `<span class="avatar-pet">${itemVisual(a.pet)}</span>` : ''}
     </div>`;
 }
 
@@ -350,8 +358,8 @@ function openShop() {
       el.className = 'shop-item' + (equipped ? ' equipped' : owned ? ' owned' : (S.coins < item.price ? ' cant-afford' : ''));
       el.innerHTML = `
         ${item.slot === 'color'
-          ? `<span class="si-swatch" style="background:${AVATAR_COLORS[item.value].body}"></span>`
-          : `<span class="si-emoji">${item.emoji}</span>`}
+          ? `<span class="si-swatch" style="background:${AVATAR_COLORS[item.value].body}"><img class="si-color-dragon" src="assets/img/creature-s2-${item.value}.png" alt="" onerror="this.remove()"></span>`
+          : `<span class="si-emoji">${itemVisual(item.id)}</span>`}
         <span class="si-name">${item.name}</span>
         ${equipped ? '<span class="si-badge">✔ לבוש עליי</span>'
           : owned ? '<span class="si-badge">יש לי! (להלבשה)</span>'
