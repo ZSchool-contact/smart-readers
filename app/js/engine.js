@@ -1257,9 +1257,9 @@ function renderRewards() {
       <div class="evolution-box">
         <div class="evolution-title">✨ רגע... משהו קורה! ✨</div>
         <div class="evolution-pair">
-          <div class="avatar-box evo-old">${CREATURE_SVG(S.avatar.color, stageBefore)}</div>
+          <div class="avatar-box evo-old">${creatureMarkup(S.avatar.color, stageBefore)}</div>
           <div class="evo-arrow">⬅</div>
-          <div class="avatar-box evo-new">${CREATURE_SVG(S.avatar.color, stageAfter)}</div>
+          <div class="avatar-box evo-new">${creatureMarkup(S.avatar.color, stageAfter)}</div>
         </div>
         <div class="evolution-name">היצור שלך התפתח: <strong>${CREATURE_STAGES[stageAfter].name}</strong>!</div>
       </div>` : ''}

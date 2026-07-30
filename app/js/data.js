@@ -11,7 +11,7 @@ const MAP_STATIONS = [
   { id: 1, x: 62, y: 20, emoji: '🎮', title: 'בונים עולמות' },
   { id: 2, x: 40, y: 26, emoji: '🐾', title: 'בעלי חיים מדהימים' },
   { id: 3, x: 17, y: 22, emoji: '🌱', title: 'שפה שמחברת' },
-  { id: 4, x: 11, y: 48, emoji: '⚽', title: 'ספורט ומאמץ' },
+  { id: 4, x: 8, y: 44, emoji: '⚽', title: 'ספורט ומאמץ' },
   { id: 5, x: 34, y: 55, emoji: '🍜', title: 'אוכל מסביב לעולם' },
   { id: 6, x: 58, y: 50, emoji: '🚀', title: 'חלל ומסתורין' },
   { id: 7, x: 82, y: 58, emoji: '🤝', title: 'חברות ואמון' },
@@ -51,6 +51,13 @@ function creatureStage(unitsDone) {
   let s = 0;
   CREATURE_STAGES.forEach((st, i) => { if (unitsDone >= st.need) s = i; });
   return s;
+}
+
+/* הדמות: תמונת AI אם קיימת (creature-s{שלב}-{צבע}.png), אחרת ה-SVG המצויר.
+   התמונה יושבת מעל ה-SVG ונעלמת בשקט אם הקובץ חסר — כלום לא נשבר */
+function creatureMarkup(colorKey, stage) {
+  const src = `assets/img/creature-s${stage}-${colorKey || 'blue'}.png`;
+  return `${CREATURE_SVG(colorKey, stage)}<img class="creature-img" src="${src}" alt="" onerror="this.remove()">`;
 }
 
 function CREATURE_SVG(colorKey, stage) {

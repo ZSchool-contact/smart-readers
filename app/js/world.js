@@ -40,7 +40,7 @@ function renderAvatar(el, cls = '') {
   const stage = creatureStage(contentUnitsDone());
   el.innerHTML = `
     <div class="avatar-box ${cls}">
-      ${CREATURE_SVG(a.color, stage)}
+      ${creatureMarkup(a.color, stage)}
       ${a.hat ? `<span class="avatar-hat">${itemEmoji(a.hat)}</span>` : ''}
       ${a.face ? `<span class="avatar-face">${itemEmoji(a.face)}</span>` : ''}
       ${a.pet ? `<span class="avatar-pet">${itemEmoji(a.pet)}</span>` : ''}
@@ -205,14 +205,62 @@ function buildMapOnce() {
     world.appendChild(el);
   });
 
-  /* שביל: קו רחב + נקודות מקווקוות */
-  const pts = MAP_STATIONS.map(s => `${100 - s.x},${s.y}`).join(' ');
+  /* שביל אורגני: עקומה חלקה דרך התחנות + אבני דרך מפוזרות לאורכה.
+     נקודות ביניים עם סטייה מתחלפת יוצרות פיתולים טבעיים במקום קווים ישרים */
+  const NS = 'http://www.w3.org/2000/svg';
   const svg = document.querySelector('.map-path-svg');
-  document.getElementById('map-path').setAttribute('points', pts);
-  const dots = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-  dots.setAttribute('points', pts);
-  dots.setAttribute('class', 'path-dots');
-  svg.appendChild(dots);
+  svg.innerHTML = '';
+
+  const anchors = MAP_STATIONS.map(s => [100 - s.x, s.y]);
+  const pts = [];
+  anchors.forEach((p, i) => {
+    pts.push(p);
+    const n = anchors[i + 1];
+    if (!n) return;
+    /* נקודת אמצע מוסטת ניצב לקו — לסירוגין ימינה ושמאלה */
+    const mx = (p[0] + n[0]) / 2, my = (p[1] + n[1]) / 2;
+    const dx = n[0] - p[0], dy = n[1] - p[1];
+    const len = Math.hypot(dx, dy) || 1;
+    const bend = (i % 2 ? -1 : 1) * Math.min(3.2, len * .16);
+    pts.push([mx + (-dy / len) * bend, my + (dx / len) * bend]);
+  });
+
+  /* Catmull-Rom -> Bezier: עקומה חלקה דרך כל הנקודות */
+  let d = `M ${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    d += ` C ${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6},`
+       + ` ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6},`
+       + ` ${p2[0]} ${p2[1]}`;
+  }
+  const guide = document.createElementNS(NS, 'path');
+  guide.setAttribute('d', d);
+  guide.setAttribute('fill', 'none');
+  svg.appendChild(guide);   /* בלתי נראה — משמש רק לדגימת נקודות */
+
+  /* אבני דרך לאורך העקומה, עם פיזור קטן שנראה טבעי (דטרמיניסטי) */
+  const jitter = i => {
+    const f = Math.sin(i * 12.9898) * 43758.5453;
+    return (f - Math.floor(f)) - .5;
+  };
+  const total = guide.getTotalLength();
+  const step = 2.6;
+  for (let t = step / 2, i = 0; t < total; t += step, i++) {
+    const p = guide.getPointAtLength(t);
+    const x = p.x + jitter(i) * .9;
+    const y = p.y + jitter(i + 100) * .6;
+    const rx = 1 + jitter(i + 200) * .5;
+    const shadow = document.createElementNS(NS, 'ellipse');
+    shadow.setAttribute('cx', x); shadow.setAttribute('cy', y + .32);
+    shadow.setAttribute('rx', rx); shadow.setAttribute('ry', .62);
+    shadow.setAttribute('class', 'path-stone-shadow');
+    svg.appendChild(shadow);
+    const stone = document.createElementNS(NS, 'ellipse');
+    stone.setAttribute('cx', x); stone.setAttribute('cy', y);
+    stone.setAttribute('rx', rx); stone.setAttribute('ry', .6);
+    stone.setAttribute('class', 'path-stone' + (i % 3 === 1 ? ' alt' : ''));
+    svg.appendChild(stone);
+  }
 }
 
 function currentStationId() {
@@ -411,7 +459,7 @@ function init() {
       <div class="creature-stage-name">${cur.name} · ${cur.tease}</div>
       ${next ? `
       <div class="creature-next">
-        <div class="creature-silhouette">${CREATURE_SVG(S.avatar.color, stage + 1)}</div>
+        <div class="creature-silhouette">${creatureMarkup(S.avatar.color, stage + 1)}</div>
         <div>עוד <strong>${next.need - n}</strong> יחידות ומשהו מסתורי יקרה... 👀</div>
       </div>` : '<div class="creature-next">🏆 היצור שלך הגיע לשיא ההתפתחות!</div>'}
       <div style="margin-top:10px">🪙 ${S.coins} מטבעות · ✅ ${S.completed.length} תחנות · 🎁 ${S.items.length} פריטים</div>`;

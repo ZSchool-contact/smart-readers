@@ -198,21 +198,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .map-world.photo-bg .map-deco { display: none; }
 
 .map-path-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-#map-path {
-  stroke: var(--path);
-  stroke-width: 26;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-  opacity: .95;
+/* אבני הדרך של השביל — משתלבות בציור במקום רצועה ישרה */
+.map-path-svg .path-stone {
+  fill: #eed9ac;
+  stroke: #c2985f;
+  stroke-width: .16;
+  opacity: .92;
 }
-.map-path-svg .path-dots {
-  stroke: var(--path-dark);
-  stroke-width: 4;
-  stroke-dasharray: 1 14;
-  stroke-linecap: round;
-  fill: none;
-  vector-effect: non-scaling-stroke;
+.map-path-svg .path-stone.alt { fill: #e4c890; }
+.map-path-svg .path-stone-shadow {
+  fill: rgba(80, 52, 18, .28);
 }
 
 .map-banner {
@@ -784,8 +779,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: #fff8dd; border: 2px dashed var(--gold); border-radius: 14px;
   padding: 8px 14px;
 }
-.creature-silhouette { width: 54px; height: 62px; }
-.creature-silhouette svg { width: 100%; height: 100%; filter: brightness(0) opacity(.25); }
+.creature-silhouette { width: 54px; height: 62px; position: relative; }
+.creature-silhouette svg,
+.creature-silhouette img.creature-img { width: 100%; height: 100%; filter: brightness(0) opacity(.25); }
+
+/* תמונת AI של הדמות — מכסה את ה-SVG כשהקובץ קיים */
+.avatar-box img.creature-img,
+.creature-silhouette img.creature-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+.avatar-box img.creature-img { filter: drop-shadow(0 4px 4px rgba(0,0,0,.25)); }
+.creature-silhouette img.creature-img { filter: brightness(0) opacity(.25); }
 
 /* --- מסך פרס --- */
 .reward-stage { text-align: center; }
