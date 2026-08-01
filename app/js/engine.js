@@ -1078,11 +1078,14 @@ function renderFeedGame(part) {
 
 /* ---------- קריאה וסימון משפט מרכזי ---------- */
 function renderReading(part) {
+  /* טקסט ארוך (3+ פסקאות) מקבל גלילה פנימית — כך כפתור ההמשך
+     תמיד נשאר על המסך, גם במסכים נמוכים */
+  const longText = part.paragraphs.length >= 3;
   $card().innerHTML = `
     ${partHeader(part)}
     ${part.sceneSvg || part.sceneImage ? `<div class="hunt-scene${part.sceneSize === 'small' ? ' small' : ''}" id="read-scene"></div>` : ''}
-    <div id="read-paras"></div>
-    <p class="read-hint">💡 לחיצה על משפט מסמנת אותו. אפשר לשנות בחירה בכל רגע</p>
+    <div id="read-paras"${longText ? ' class="read-scroll"' : ''}></div>
+    <p class="read-hint">💡 לחיצה על משפט מסמנת אותו. אפשר לשנות בחירה בכל רגע${longText ? ' · גוללים בתוך הקטע לקריאת כל הפסקאות ⬇' : ''}</p>
     <div class="part-actions">
       <button class="btn-main" id="btn-read-next" disabled>סיימתי לקרוא ולסמן ⬅</button>
     </div>
