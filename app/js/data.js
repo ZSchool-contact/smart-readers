@@ -142,24 +142,38 @@ const AVATAR_COLORS = {
   purple: { body: '#a06ae0', dark: '#7d48bd', name: 'סגול' },
   orange: { body: '#f5953b', dark: '#d2751c', name: 'כתום' },
   pink:   { body: '#ef6fa7', dark: '#cc4d86', name: 'ורוד' },
+  /* צבעים נדירים — פריטי יוקרה שנפתחים בהמשך המסע */
+  silver: { body: '#c9d4e0', dark: '#93a5b8', name: 'כסוף' },
+  gold:   { body: '#f5b301', dark: '#c78e00', name: 'זהב' },
 };
 
-/* --- פריטי חנות --- */
+/* --- פריטי חנות ---
+   unlockUnit: הפריט מוצג נעול עד שמסיימים את התחנה הזו — יעדי חיסכון
+   שנפתחים ככל שמתקדמים במסע. פריטים בלי unlockUnit זמינים מההתחלה. */
 const SHOP_ITEMS = [
   { id: 'hat-cap',    cat: 'hats', slot: 'hat', emoji: '🧢', name: 'כובע מצחייה', price: 40 },
   { id: 'hat-party',  cat: 'hats', slot: 'hat', emoji: '🥳', name: 'כובע מסיבה', price: 60 },
   { id: 'hat-grad',   cat: 'hats', slot: 'hat', emoji: '🎓', name: 'כובע חכמים', price: 80 },
   { id: 'hat-crown',  cat: 'hats', slot: 'hat', emoji: '👑', name: 'כתר מלכותי', price: 150 },
+  { id: 'hat-magic',  cat: 'hats', slot: 'hat', emoji: '🎩', name: 'צילינדר קסמים', price: 250, unlockUnit: 3 },
+  { id: 'hat-star',   cat: 'hats', slot: 'hat', emoji: '🌟', name: 'כוכב זוהר לראש', price: 350, unlockUnit: 6 },
   { id: 'face-sun',   cat: 'face', slot: 'face', emoji: '🕶️', name: 'משקפי שמש', price: 50 },
   { id: 'face-nerd',  cat: 'face', slot: 'face', emoji: '👓', name: 'משקפי קריאה', price: 45 },
+  { id: 'face-pilot', cat: 'face', slot: 'face', emoji: '🥽', name: 'משקפי טיס', price: 220, unlockUnit: 4 },
+  { id: 'face-hero',  cat: 'face', slot: 'face', emoji: '🎭', name: 'מסכת גיבורים', price: 320, unlockUnit: 5 },
   { id: 'pet-dog',    cat: 'pets', slot: 'pet', emoji: '🐶', name: 'גור כלבים', price: 90 },
   { id: 'pet-cat',    cat: 'pets', slot: 'pet', emoji: '🐱', name: 'חתלתול', price: 90 },
   { id: 'pet-owl',    cat: 'pets', slot: 'pet', emoji: '🦉', name: 'ינשוף חכם', price: 120 },
   { id: 'pet-turtle', cat: 'pets', slot: 'pet', emoji: '🐢', name: 'צב מסע', price: 70 },
+  { id: 'pet-monster', cat: 'pets', slot: 'pet', emoji: '👾', name: 'מפלצת מחמד', price: 300, unlockUnit: 2 },
+  { id: 'pet-dolphin', cat: 'pets', slot: 'pet', emoji: '🐬', name: 'דולפין חכם', price: 400, unlockUnit: 8 },
+  { id: 'pet-dragon',  cat: 'pets', slot: 'pet', emoji: '🐲', name: 'גור דרקונים', price: 550, unlockUnit: 7 },
   { id: 'color-green',  cat: 'colors', slot: 'color', value: 'green',  name: 'ירוק', price: 60 },
   { id: 'color-purple', cat: 'colors', slot: 'color', value: 'purple', name: 'סגול', price: 60 },
   { id: 'color-orange', cat: 'colors', slot: 'color', value: 'orange', name: 'כתום', price: 60 },
   { id: 'color-pink',   cat: 'colors', slot: 'color', value: 'pink',   name: 'ורוד', price: 60 },
+  { id: 'color-silver', cat: 'colors', slot: 'color', value: 'silver', name: 'כסוף כוכבים', price: 450, unlockUnit: 6 },
+  { id: 'color-gold',   cat: 'colors', slot: 'color', value: 'gold',   name: 'זהב מלכותי', price: 600, unlockUnit: 7 },
 ];
 const SHOP_CATS = [
   { id: 'hats', name: '🎩 כובעים' },

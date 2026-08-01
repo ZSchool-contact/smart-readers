@@ -354,24 +354,32 @@ function openShop() {
       const equipped = item.slot === 'color'
         ? S.avatar.color === item.value
         : S.avatar[item.slot] === item.id;
+      /* פריטי יוקרה נעולים עד שמסיימים את התחנה שלהם — יעד חיסכון שמתגלה מראש */
+      const locked = item.unlockUnit && !S.completed.includes(item.unlockUnit);
       const el = document.createElement('button');
-      el.className = 'shop-item' + (equipped ? ' equipped' : owned ? ' owned' : (S.coins < item.price ? ' cant-afford' : ''));
+      el.className = 'shop-item' + (locked ? ' locked'
+        : equipped ? ' equipped' : owned ? ' owned' : (S.coins < item.price ? ' cant-afford' : ''));
       el.innerHTML = `
         ${item.slot === 'color'
           ? `<span class="si-swatch" style="background:${AVATAR_COLORS[item.value].body}"><img class="si-color-dragon" src="assets/img/creature-s2-${item.value}.png" alt="" onerror="this.remove()"></span>`
           : `<span class="si-emoji">${itemVisual(item.id)}</span>`}
         <span class="si-name">${item.name}</span>
-        ${equipped ? '<span class="si-badge">✔ לבוש עליי</span>'
+        ${locked ? `<span class="si-price">🪙 ${item.price}</span><span class="si-lock">🔒 נפתח בתחנה ${item.unlockUnit}</span>`
+          : equipped ? '<span class="si-badge">✔ לבוש עליי</span>'
           : owned ? '<span class="si-badge">יש לי! (להלבשה)</span>'
           : `<span class="si-price">🪙 ${item.price}</span>`}`;
-      el.onclick = () => shopClick(item, owned, equipped);
+      el.onclick = () => shopClick(item, owned, equipped, locked);
       row.appendChild(el);
     });
     grid.appendChild(row);
   });
 }
 
-function shopClick(item, owned, equipped) {
+function shopClick(item, owned, equipped, locked) {
+  if (locked) {
+    toast(`${item.name} נפתח אחרי תחנה ${item.unlockUnit} — ממשיכים במסע! 🗺️`);
+    return;
+  }
   if (!owned) {
     if (!spendCoins(item.price)) {
       toast(`חסרים עוד ${item.price - S.coins} מטבעות. אפשר להרוויח ביחידות! 💪`);

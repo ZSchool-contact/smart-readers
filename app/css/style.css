@@ -890,6 +890,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .shop-item.owned { border-color: var(--blue-btn); }
 .shop-item.equipped { border-color: var(--green-ok); background: #f0faf0; }
 .shop-item.cant-afford { opacity: .55; }
+/* פריט יוקרה נעול: רואים מה מחכה, אבל אי אפשר לקנות עדיין */
+.shop-item.locked { opacity: .65; filter: grayscale(.6); cursor: not-allowed; }
+.shop-item.locked:hover { transform: none; }
+.shop-item .si-lock { font-size: .74rem; font-weight: 700; color: var(--ink-soft); }
 .si-badge { font-size: .75rem; font-weight: 700; color: var(--green-ok); }
 
 .book-panel .book-section { font-family: 'Rubik'; color: var(--wood-dark); margin: 14px 4px 10px; }

@@ -83,6 +83,40 @@
 
 ---
 
+## 🆕 פריטי היוקרה (נוספו 1.8.2026 — נפתחים עם ההתקדמות במסע)
+
+7 אייקונים חדשים, אותו פורמט בדיוק: 1:1, רקע שקוף, הפריט לבדו בלי דמויות.
+
+### `shop-hat-magic.png` — צילינדר קסמים (250 🪙, תחנה 3)
+> A single magical black top hat with a shimmering purple ribbon, tiny golden sparkles and a small white magic wand tip peeking from inside, slight 3D depth, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
+
+### `shop-hat-star.png` — כוכב זוהר לראש (350 🪙, תחנה 6)
+> A single glowing golden star headpiece on a thin golden headband, radiating soft warm light and tiny sparkles, like a wearable shining star, slight 3D depth, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
+
+### `shop-face-pilot.png` — משקפי טיס (220 🪙, תחנה 4)
+> A single pair of aviator pilot goggles with shiny sky-blue glass lenses and a warm brown leather strap, small silver rivets, slight 3D depth, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
+
+### `shop-face-hero.png` — מסכת גיבורים (320 🪙, תחנה 5)
+> A single heroic eye mask in deep red with golden trim, theater-style with a tiny star on one corner, slightly curved as if worn, slight 3D depth, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
+
+### `shop-pet-monster.png` — מפלצת מחמד (300 🪙, תחנה 2)
+> A single adorable tiny round purple monster pet with one big friendly eye, two little antennae with glowing tips, a huge happy smile with one tooth, stubby arms raised in joy, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
+
+### `shop-pet-dolphin.png` — דולפין חכם (400 🪙, תחנה 8)
+> A single adorable tiny smiling dolphin pet leaping in a small arc with two tiny water droplets, smooth blue-gray body with a soft white belly, big friendly eyes, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
+
+### `shop-pet-dragon.png` — גור דרקונים (550 🪙, תחנה 7)
+> A single adorable baby dragon pet in emerald green with tiny folded wings, big sparkling friendly eyes, small rounded horns, sitting happily with a tiny puff of harmless smoke from its nose, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
+
+### אופציונלי: דרקוני הצבעים הנדירים (כסוף וזהב)
+שני צבעי היוקרה (כסוף כוכבים 450 🪙 · זהב מלכותי 600 🪙) עובדים כבר עכשיו עם דרקון
+ה-SVG המובנה. כדי שיהיו מרהיבים באמת אפשר לייצר גם להם את סדרת הדרקון המלאה
+(`creature-s0` עד `creature-s4`, בדיוק כמו ב-dragon-image-prompts.md) בשני צבעים:
+- **silver**: shimmering silver-white scales with icy blue accents, like moonlight
+- **gold**: radiant golden scales with warm amber glow, like a royal treasure
+
+10 קבצים: `creature-s{0-4}-silver.png` + `creature-s{0-4}-gold.png` — מתחברים אוטומטית.
+
 ## מה לא צריך לייצר
 - **צבעי הדמות (קטגוריית 🎨)** — מציגים אוטומטית את הדרקון עצמו בכל צבע, אין קובץ.
 - **פריטי המסע (ספר המסע)** — סדרה נפרדת (`item-0` עד `item-8`), רובם כבר קיימים.
