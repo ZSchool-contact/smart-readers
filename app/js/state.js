@@ -16,6 +16,7 @@ const DEFAULT_STATE = {
   muted: false,
   nikud: false,                /* גלגל הצלה: תצוגת ניקוד */
   nikudTipSeen: false,         /* האם הוצג האונבורדינג של גלגל ההצלה */
+  projectTrack: null,          /* יחידה 8: המסלול שנבחר לפרויקט (adventure/tech/animals) */
 };
 
 let S = loadState();

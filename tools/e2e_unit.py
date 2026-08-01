@@ -24,11 +24,17 @@ def wait_enabled(page, sel, timeout=15000):
     page.evaluate(f"document.querySelector('{sel}').click()")
 
 def cur_part(page):
-    return page.evaluate("() => partIndex >= 0 && currentUnit ? (currentUnit.parts[partIndex] || {}).type : 'intro'")
+    return page.evaluate("() => partIndex >= 0 && currentUnit ? (__part() || {}).type : 'intro'")
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
     page = browser.new_page(viewport={"width": 1400, "height": 900})
+    # פותר byTrack (יחידה 8): מחזיר את גרסת השלב של המסלול שנבחר
+    page.add_init_script("""window.__part = () => {
+      if (typeof partIndex === 'undefined' || typeof currentUnit === 'undefined' || !currentUnit) return undefined;
+      const p = currentUnit.parts[partIndex];
+      return p && p.byTrack ? (p.byTrack[S.projectTrack] || Object.values(p.byTrack)[0]) : p;
+    }""")
     page.on("console", on_console)
     page.on("pageerror", lambda e: errors.append("pageerror: " + str(e)))
 
@@ -67,7 +73,7 @@ with sync_playwright() as p:
 
         if ptype == "word-hunt":
             page.evaluate("""() => {
-              const part = currentUnit.parts[partIndex];
+              const part = __part();
               const ok = new Set(part.words.filter(w => w.ok).map(w => w.w));
               document.querySelectorAll('#hunt-words .hunt-word').forEach(b => {
                 if (ok.has(denikkudize(b.textContent.trim()))) b.click();
@@ -77,7 +83,7 @@ with sync_playwright() as p:
 
         elif ptype == "sentence-hunt":
             page.evaluate("""() => {
-              const part = currentUnit.parts[partIndex];
+              const part = __part();
               const btns = document.querySelectorAll('#sentence-big .sentence-word');
               part.targetIdx.forEach(i => btns[i].click());
             }""")
@@ -87,7 +93,7 @@ with sync_playwright() as p:
             t0 = time.time()
             while time.time() - t0 < 90:
                 done = page.evaluate("""() => {
-                  const part = currentUnit.parts[partIndex];
+                  const part = __part();
                   const t = new Set(part.targets);
                   document.querySelectorAll('.arcade-item').forEach(el => {
                     const w = el.querySelector('.vessel-word');
@@ -105,7 +111,7 @@ with sync_playwright() as p:
             t0 = time.time()
             while time.time() - t0 < 90:
                 done = page.evaluate("""() => {
-                  const part = currentUnit.parts[partIndex];
+                  const part = __part();
                   const t = new Set(part.targets);
                   document.querySelectorAll('.mole-monster.up').forEach(el => {
                     const w = el.querySelector('.vessel-word');
@@ -126,11 +132,11 @@ with sync_playwright() as p:
             wait_enabled(page, "#btn-read-next")
 
         elif ptype == "mcq-set":
-            nq = page.evaluate("() => currentUnit.parts[partIndex].questions.length")
+            nq = page.evaluate("() => __part().questions.length")
             for _ in range(nq):
                 page.wait_for_timeout(250)
                 clicked = page.evaluate("""() => {
-                  const part = currentUnit.parts[partIndex];
+                  const part = __part();
                   const shown = denikkudize(document.querySelector('.q-text').textContent.trim());
                   const q = part.questions.find(x => x.q === shown);
                   if (!q) return 'not-found: ' + shown;
@@ -144,10 +150,10 @@ with sync_playwright() as p:
                 wait_enabled(page, "#btn-q-next")
 
         elif ptype == "feed-game":
-            nw = page.evaluate("() => currentUnit.parts[partIndex].words.length")
+            nw = page.evaluate("() => __part().words.length")
             for _ in range(nw):
                 page.evaluate("""() => {
-                  const part = currentUnit.parts[partIndex];
+                  const part = __part();
                   const w = denikkudize(document.getElementById('feed-word').textContent.trim());
                   const item = part.words.find(x => x.w === w);
                   if (item) document.querySelector(`.feed-monster[data-fam="${item.fam}"]`).click();
@@ -156,11 +162,11 @@ with sync_playwright() as p:
             wait_enabled(page, "#btn-feed-next")
 
         elif ptype == "cloze-title":
-            nq = page.evaluate("() => currentUnit.parts[partIndex].questions.length")
+            nq = page.evaluate("() => __part().questions.length")
             for _ in range(nq):
                 page.wait_for_timeout(250)
                 page.evaluate("""() => {
-                  const part = currentUnit.parts[partIndex];
+                  const part = __part();
                   const shown = document.querySelector('.part-kicker').textContent;
                   const q = part.questions.find(x => shown.includes(x.label));
                   document.getElementById('cloze-input').value = q.answers[0];
@@ -168,12 +174,16 @@ with sync_playwright() as p:
                 }""")
                 wait_enabled(page, "#btn-cloze-next")
 
+        elif ptype == "track-select":
+            page.evaluate("() => document.querySelector('.track-card').click()")
+            wait_enabled(page, "#btn-track-next")
+
         elif ptype == "free-write":
-            nq = page.evaluate("() => currentUnit.parts[partIndex].questions.length")
+            nq = page.evaluate("() => __part().questions.length")
             for _ in range(nq):
                 page.wait_for_timeout(250)
                 page.evaluate("""() => {
-                  const part = currentUnit.parts[partIndex];
+                  const part = __part();
                   const shown = document.querySelector('.part-kicker').textContent;
                   const q = part.questions.find(x => shown.includes(x.label));
                   document.getElementById('fw-input').value = q.sample;
@@ -182,12 +192,12 @@ with sync_playwright() as p:
                 wait_enabled(page, "#btn-fw-next")
 
         elif ptype == "family-expand":
-            nr = page.evaluate("() => currentUnit.parts[partIndex].rounds.length")
+            nr = page.evaluate("() => __part().rounds.length")
             for ri in range(nr):
                 page.wait_for_timeout(250)
                 for wi in range(2):
                     page.evaluate(f"""() => {{
-                      const part = currentUnit.parts[partIndex];
+                      const part = __part();
                       document.getElementById('fx-input').value = part.rounds[{ri}].ideas[{wi}];
                       document.getElementById('btn-fx-add').click();
                     }}""")
@@ -212,7 +222,10 @@ with sync_playwright() as p:
     page.evaluate("() => document.getElementById('btn-back-map').click()")
     page.wait_for_timeout(500)
     nxt = UNIT + 1
-    assert page.evaluate(f"() => unitStatus({nxt})") == "open", f"תחנה {nxt} לא נפתחה"
+    if page.evaluate(f"() => MAP_STATIONS.some(s => s.id === {nxt})"):
+        assert page.evaluate(f"() => unitStatus({nxt})") == "open", f"תחנה {nxt} לא נפתחה"
+    else:
+        print("תחנה אחרונה במפה — אין תחנה הבאה לפתוח 🏁")
 
     browser.close()
 
