@@ -29,12 +29,10 @@ def cur_part(page):
 with sync_playwright() as p:
     browser = p.chromium.launch()
     page = browser.new_page(viewport={"width": 1400, "height": 900})
-    # פותר byTrack (יחידה 8): מחזיר את גרסת השלב של המסלול שנבחר
-    page.add_init_script("""window.__part = () => {
-      if (typeof partIndex === 'undefined' || typeof currentUnit === 'undefined' || !currentUnit) return undefined;
-      const p = currentUnit.parts[partIndex];
-      return p && p.byTrack ? (p.byTrack[S.projectTrack] || Object.values(p.byTrack)[0]) : p;
-    }""")
+    # עוזר גישה לשלב הנוכחי (מוגדר לפני טעינת הדף כדי לשרוד ריענונים)
+    page.add_init_script("""window.__part = () =>
+      (typeof partIndex === 'undefined' || typeof currentUnit === 'undefined' || !currentUnit)
+        ? undefined : currentUnit.parts[partIndex]""")
     page.on("console", on_console)
     page.on("pageerror", lambda e: errors.append("pageerror: " + str(e)))
 
@@ -44,7 +42,7 @@ with sync_playwright() as p:
     completed = list(range(UNIT))
     page.evaluate("""(completed) => {
       localStorage.setItem('smart-readers-save-v1', JSON.stringify({
-        name: 'בודק', world: 'sport',
+        name: 'בודק',
         avatar: { color: 'blue', hat: null, face: null, pet: null },
         coins: 0, owned: [], items: [], words: [],
         completed, onboarded: true, muted: true,
@@ -173,10 +171,6 @@ with sync_playwright() as p:
                   document.getElementById('btn-cloze-check').click();
                 }""")
                 wait_enabled(page, "#btn-cloze-next")
-
-        elif ptype == "track-select":
-            page.evaluate("() => document.querySelector('.track-card').click()")
-            wait_enabled(page, "#btn-track-next")
 
         elif ptype == "free-write":
             nq = page.evaluate("() => __part().questions.length")

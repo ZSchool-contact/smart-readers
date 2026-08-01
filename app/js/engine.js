@@ -176,10 +176,7 @@ function nextPart() {
   partIndex++;
   if (partIndex >= currentUnit.parts.length) { renderRewards(); return; }
   updateProgress();
-  let part = currentUnit.parts[partIndex];
-  /* הסתעפות לפי מסלול (יחידה 8): שלב עם byTrack מקבל את הגרסה
-     של המסלול שהלומד בחר ב-track-select */
-  if (part.byTrack) part = part.byTrack[S.projectTrack] || Object.values(part.byTrack)[0];
+  const part = currentUnit.parts[partIndex];
   setStrikes(0, null);
   const renderers = {
     'word-hunt': renderWordHunt,
@@ -190,7 +187,6 @@ function nextPart() {
     'cloze-title': renderClozeTitle,
     'family-expand': renderFamilyExpand,
     'free-write': renderFreeWrite,
-    'track-select': renderTrackSelect,
     'reading': renderReading,
     'mcq-set': renderMcqSet,
     'sort-families': renderSortFamilies,
@@ -954,41 +950,6 @@ function renderFreeWrite(part) {
   }
 
   renderQuestion();
-}
-
-/* ---------- בחירת מסלול (יחידה 8): הלומד בוחר את הטקסט של הפרויקט ---------- */
-function renderTrackSelect(part) {
-  $card().innerHTML = `
-    ${partHeader(part)}
-    <div class="q-options" id="track-options" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center">
-      ${part.tracks.map(t => `
-        <button class="q-opt track-card" data-track="${t.id}"
-          style="flex:1 1 180px;max-width:240px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 14px;text-align:center">
-          <span style="font-size:2.6rem" aria-hidden="true">${t.emoji}</span>
-          <strong>${t.name}</strong>
-          <span style="font-size:.85em;opacity:.85">${t.teaser}</span>
-        </button>`).join('')}
-    </div>
-    <div id="track-feedback"></div>
-    <div class="part-actions"><button class="btn-main hidden" id="btn-track-next">יוצאים להרפתקה! ⬅</button></div>
-  `;
-
-  document.querySelectorAll('.track-card').forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll('.track-card').forEach(b => b.classList.remove('correct'));
-      btn.classList.add('correct');
-      S.projectTrack = btn.dataset.track;
-      saveState();
-      Sound.play('correct');
-      sparkleBurst(btn, 8);
-      const t = part.tracks.find(x => x.id === S.projectTrack);
-      document.getElementById('track-feedback').innerHTML =
-        `<div class="feedback-box good">✅ בחירה מצוינת! ${t.emoji} ${t.name} — ${t.teaser}</div>`;
-      document.getElementById('btn-track-next').classList.remove('hidden');
-      refreshNikud();
-    };
-  });
-  document.getElementById('btn-track-next').onclick = nextPart;
 }
 
 /* ---------- המפלצות הרעבות: מאכילים כל מפלצת במשפחה שלה ---------- */

@@ -101,7 +101,7 @@ function showScreen(name) {
 function startOnboarding() {
   showScreen('onboarding');
   const card = document.getElementById('ob-card');
-  let picked = { name: '', color: 'blue', world: null };
+  let picked = { name: '', color: 'blue' };
 
   const steps = {
     welcome() {
@@ -141,7 +141,8 @@ function startOnboarding() {
         colorsEl.querySelectorAll('.ob-choice').forEach(c =>
           c.classList.toggle('selected', c.dataset.color === picked.color));
       }
-      Object.entries(AVATAR_COLORS).forEach(([key, c]) => {
+      /* צבעי פרימיום (כסוף/זהב) שמורים לחנות — לא מוצעים בהרשמה */
+      Object.entries(AVATAR_COLORS).filter(([, c]) => !c.premium).forEach(([key, c]) => {
         const btn = document.createElement('button');
         btn.className = 'ob-choice';
         btn.dataset.color = key;
@@ -150,35 +151,12 @@ function startOnboarding() {
         colorsEl.appendChild(btn);
       });
       paint();
-      card.querySelector('#ob-next').onclick = steps.world;
-    },
-    world() {
-      card.innerHTML = `
-        <h1 class="ob-title">מה הכי מעניין אתכם?</h1>
-        <p class="ob-sub">בחרו עולם תוכן אהוב. ניפגש איתו שוב בהמשך המסע!</p>
-        <div class="ob-choices" id="ob-worlds"></div>
-        <button class="btn-main" id="ob-next" disabled>ממשיכים ⬅</button>`;
-      const worldsEl = card.querySelector('#ob-worlds');
-      const btn = card.querySelector('#ob-next');
-      INTEREST_WORLDS.forEach(w => {
-        const b = document.createElement('button');
-        b.className = 'ob-choice';
-        b.innerHTML = `<span class="big">${w.emoji}</span>${w.name}`;
-        b.onclick = () => {
-          picked.world = w.id;
-          worldsEl.querySelectorAll('.ob-choice').forEach(x => x.classList.remove('selected'));
-          b.classList.add('selected');
-          btn.disabled = false;
-        };
-        worldsEl.appendChild(b);
-      });
-      btn.onclick = steps.done;
+      card.querySelector('#ob-next').onclick = steps.done;
     },
     done() {
       /* שמירת הפרופיל + פרס פתיחה */
       S.name = picked.name;
       S.avatar.color = picked.color;
-      S.world = picked.world;
       S.owned.push('color-' + picked.color); /* הצבע שנבחר שייך לשחקן */
       S.coins += 20;
       S.onboarded = true;
