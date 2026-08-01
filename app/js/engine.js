@@ -804,13 +804,16 @@ function renderFamilyExpand(part) {
       const raw = (input.value || '').trim();
       const norm = normalizeTyped(raw);
       if (!norm) { toast('כתבו מילה בעברית ✏️'); return; }
-      if (norm.length < 3) { toast('מילה קצרה מדי, נסו מילה שלמה 😉'); return; }
+      /* r.accept — מילים שמתקבלות גם בלי אותיות השורש לפי הסדר
+         (שורשים עלולים כמו ע־ו־פ: האות ו נעלמת בצורות עָף, עָפָה) */
+      const inAccept = (r.accept || []).some(a => normalizeTyped(a) === norm);
       if (taken.has(norm)) {
         toast('המילה הזו כבר על הלוח! נסו מילה חדשה 😉');
         input.value = '';
         return;
       }
-      if (!wordHasRoot(raw, r.root)) {
+      if (!inAccept && norm.length < 3) { toast('מילה קצרה מדי, נסו מילה שלמה 😉'); return; }
+      if (!inAccept && !wordHasRoot(raw, r.root)) {
         input.classList.add('miss');
         setTimeout(() => input.classList.remove('miss'), 600);
         Sound.play('wrong');
