@@ -186,6 +186,7 @@ function nextPart() {
     'feed-game': renderFeedGame,
     'cloze-title': renderClozeTitle,
     'family-expand': renderFamilyExpand,
+    'free-write': renderFreeWrite,
     'reading': renderReading,
     'mcq-set': renderMcqSet,
     'sort-families': renderSortFamilies,
@@ -678,9 +679,11 @@ function normalizeTyped(w) {
     .replace(/[ךםןףץ]/g, ch => FINAL_LETTERS[ch])
     .replace(/[^א-ת]/g, '');
 }
-/* האם אותיות השורש (למשל "ב־ש־ל") מופיעות במילה לפי הסדר */
+/* האם אותיות השורש (למשל "ב־ש־ל") מופיעות במילה לפי הסדר.
+   אותיות השורש מנורמלות כמו המילה — שורש שמסתיים באות סופית (א־מ־ן)
+   חייב להתאים גם ל"נאמן" שנורמל ל"נאמנ" */
 function wordHasRoot(word, root) {
-  const letters = root.split('־');
+  const letters = root.split('־').map(l => FINAL_LETTERS[l] || l);
   let i = 0;
   for (const ch of normalizeTyped(word)) {
     if (ch === letters[i]) i++;
@@ -852,6 +855,100 @@ function renderFamilyExpand(part) {
   }
 
   renderRound();
+}
+
+/* ---------- כתיבה חופשית פתוחה: כותרות עצמאיות, משפטים ותשובות (יחידה 7 ואילך) ---------- */
+/* מילת מפתח = רצף אותיות לפי הסדר בתוך מילה (כמו wordHasRoot),
+   כדי לתפוס נטיות: "סלח" תופס גם סליחה, סלחה ולסלוח */
+function typedHasKey(word, key) {
+  let i = 0;
+  for (const ch of normalizeTyped(word)) {
+    if (ch === key[i]) i++;
+    if (i === key.length) return true;
+  }
+  return false;
+}
+
+function renderFreeWrite(part) {
+  let qi = 0;
+
+  function renderQuestion() {
+    const q = part.questions[qi];
+    let misses = 0;
+    const minWords = q.minWords || 2;
+
+    $card().innerHTML = `
+      ${partHeader(part)}
+      ${part.questions.length > 1 ? `<div class="q-count">משימה ${qi + 1} מתוך ${part.questions.length}</div>` : ''}
+      <div class="part-kicker">✍️ ${q.label}</div>
+      ${q.refText ? `<div class="q-ref">📖 ${q.refText}</div>` : ''}
+      <div class="q-text">${q.prompt}</div>
+      <div class="fx-input-row">
+        <input class="cloze-input fw-input" id="fw-input" maxlength="90" autocomplete="off"
+          placeholder="${q.placeholder || 'כותבים כאן...'}" aria-label="${q.label}">
+      </div>
+      <div id="fw-feedback"></div>
+      <div class="part-actions">
+        <button class="btn-main" id="btn-fw-check">בודקים! 🔍</button>
+        <button class="btn-main hidden" id="btn-fw-next"></button>
+      </div>
+    `;
+    refreshNikud();
+
+    const input = document.getElementById('fw-input');
+    const checkBtn = document.getElementById('btn-fw-check');
+    const nextBtn = document.getElementById('btn-fw-next');
+    const fb = document.getElementById('fw-feedback');
+    input.focus();
+
+    function check() {
+      const raw = input.value.trim();
+      const words = raw.split(/\s+/).filter(w => normalizeTyped(w).length);
+      if (!words.length) { toast('כתבו את התשובה שלכם בחלון ✏️'); return; }
+      if (words.length < minWords) {
+        toast(`כתבו לפחות ${minWords} מילים — יש לכם עוד מה להגיד! ✏️`);
+        return;
+      }
+
+      let ok = true;
+      if (q.root) ok = words.some(w => wordHasRoot(w, q.root));
+      else if (q.keys) ok = words.some(w => q.keys.some(k => typedHasKey(w, normalizeTyped(k))));
+      /* חסד: בכתיבה פתוחה אין תשובה אחת נכונה — אחרי שני ניסיונות באורך תקין
+         מקבלים כל תשובה. חוץ ממשפטי שורש, שם מילת המשפחה היא כל המטרה */
+      if (!ok && !q.root && misses >= 2) ok = true;
+
+      if (!ok) {
+        misses++;
+        input.classList.add('miss');
+        setTimeout(() => input.classList.remove('miss'), 600);
+        Sound.play('wrong');
+        const extra = q.root && misses >= 2 && q.examples
+          ? ` נסו מילה כמו: ${q.examples.join(', ')}`
+          : '';
+        fb.innerHTML = `<div class="feedback-box bad">🤔 ${q.hint || part.fbBadDefault}${extra}</div>`;
+        refreshNikud();
+        return;
+      }
+
+      input.disabled = true;
+      input.classList.add('good');
+      checkBtn.classList.add('hidden');
+      Sound.play('correct');
+      sparkleBurst(input, 8);
+      addCoins(misses === 0 ? 10 : 5, input);
+      fb.innerHTML = `<div class="feedback-box good">✅ ${q.fbGood}${q.sample ? `<br>💡 עוד רעיון שחשבנו עליו: "${q.sample}"` : ''}</div>`;
+      const last = qi === part.questions.length - 1;
+      nextBtn.textContent = last ? 'סיימנו את הפעילות! ⬅' : 'למשימה הבאה ⬅';
+      nextBtn.classList.remove('hidden');
+      nextBtn.onclick = () => { if (last) nextPart(); else { qi++; renderQuestion(); } };
+      refreshNikud();
+    }
+
+    checkBtn.onclick = check;
+    input.onkeydown = e => { if (e.key === 'Enter') check(); };
+  }
+
+  renderQuestion();
 }
 
 /* ---------- המפלצות הרעבות: מאכילים כל מפלצת במשפחה שלה ---------- */

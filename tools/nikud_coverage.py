@@ -18,7 +18,8 @@ with sync_playwright() as p:
         if (typeof v === 'string') texts.push(v);
         else if (Array.isArray(v)) v.forEach(walk);
         else if (v && typeof v === 'object') Object.entries(v).forEach(([k, x]) => {
-          if (!['sceneImage','sceneSvg','cardBg','img','type','theme','kicker','color','dark'].includes(k)) walk(x);
+          /* keys = גזעי אימות פנימיים של free-write — לא מוצגים ללומד */
+          if (!['sceneImage','sceneSvg','cardBg','img','type','theme','kicker','color','dark','keys'].includes(k)) walk(x);
         });
       };
       walk(UNITS[UNIT_ID]);
@@ -38,4 +39,4 @@ with sync_playwright() as p:
 if missing:
     print(f"חסרות במילון ({len(missing)}):", ", ".join(missing))
 else:
-    print("כל מילות יחידה 3 מכוסות במילון הניקוד ✅")
+    print(f"כל מילות יחידה {UNIT} מכוסות במילון הניקוד ✅")

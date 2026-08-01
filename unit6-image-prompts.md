@@ -45,7 +45,7 @@
 
 ### תמונה 3 — שרשרת הכוכבים (שלב 2 · המשפט הראשון)
 **קובץ:** `unit6-stars.png` | **יחס:** 21:9
-**שימוש:** איור מעל המשפט "בלילה ראינו כוכב אחד זוהר, סביבו נצנצו כוכבים קטנים, ובשמים נמתחה שרשרת של כוכביות."
+**שימוש:** איור מעל המשפט "בלילה ראינו כוכב אחד זוהר, סביבו זהרו עוד כוכבים קטנים, והזוהר שלהם מילא את השמים." (משפחת ז־ה־ר)
 **חשוב:** כוכב אחד גדול וזוהר במרכז, סביבו כוכבים קטנים, ושרשרת עדינה של כוכביות נמתחת לרוחב השמים. שני ילדים מביטים מלמטה בפליאה.
 **פרומפט:**
 > Two children standing on a grassy hill at night looking up amazed at the sky: one huge glowing golden star in the center, smaller twinkling stars scattered around it, and a delicate chain of tiny stars stretching across the whole sky like a sparkling necklace, deep warm blue night, fireflies near the grass, sense of wonder and magic, characters rounded and adorable with big friendly eyes, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art

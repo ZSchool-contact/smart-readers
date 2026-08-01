@@ -168,6 +168,19 @@ with sync_playwright() as p:
                 }""")
                 wait_enabled(page, "#btn-cloze-next")
 
+        elif ptype == "free-write":
+            nq = page.evaluate("() => currentUnit.parts[partIndex].questions.length")
+            for _ in range(nq):
+                page.wait_for_timeout(250)
+                page.evaluate("""() => {
+                  const part = currentUnit.parts[partIndex];
+                  const shown = document.querySelector('.part-kicker').textContent;
+                  const q = part.questions.find(x => shown.includes(x.label));
+                  document.getElementById('fw-input').value = q.sample;
+                  document.getElementById('btn-fw-check').click();
+                }""")
+                wait_enabled(page, "#btn-fw-next")
+
         elif ptype == "family-expand":
             nr = page.evaluate("() => currentUnit.parts[partIndex].rounds.length")
             for ri in range(nr):
