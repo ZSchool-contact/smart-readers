@@ -40,6 +40,17 @@ function stopPartActivities() {
   if (partCleanup) { partCleanup(); partCleanup = null; }
 }
 
+/* ערבוב הוגן (פישר-ייטס). לא להשתמש ב-sort(() => Math.random() - .5) —
+   הוא מוטה ומשאיר את התשובה הנכונה כמעט תמיד במקום הראשון */
+function shuffled(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 /* ---------- אפס גלילה: הכרטיס מתכווץ להתאים למסך, כמו שקופית ---------- */
 let fitObserverStarted = false;
 
@@ -960,7 +971,7 @@ function renderFeedGame(part) {
   function build() {
     idx = 0;
     busy = false;
-    queue = [...part.words].sort(() => Math.random() - .5);
+    queue = shuffled(part.words);
     setStrikes(part.strikes, part.strikes);
 
     $card().innerHTML = `
@@ -1135,7 +1146,7 @@ function renderMcqSet(part) {
     const letters = ['א', 'ב', 'ג', 'ד'];
     const optsEl = document.getElementById('q-options');
     /* ערבוב סדר התשובות — שהתשובה הנכונה לא תהיה תמיד באותו מקום */
-    const order = q.options.map((_, i) => i).sort(() => Math.random() - .5);
+    const order = shuffled(q.options.map((_, i) => i));
     order.forEach((oi, pos) => {
       const btn = document.createElement('button');
       btn.className = 'q-opt chest';
@@ -1225,7 +1236,7 @@ function renderSortFamilies(part) {
       return bin;
     });
 
-    [...part.words].sort(() => Math.random() - .5).forEach(({ w, fam }) => {
+    shuffled(part.words).forEach(({ w, fam }) => {
       const chip = document.createElement('button');
       chip.className = 'sort-chip';
       chip.textContent = w;
