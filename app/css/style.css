@@ -1208,12 +1208,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transition: transform .45s cubic-bezier(.5,-.1,.7,.4), opacity .45s;
   pointer-events: none;
 }
+/* שורת המפלצות מתמרכזת לפי מספרן — גם 2 או 3 מפלצות יושבות באמצע */
 .feed-monsters {
-  display: grid; grid-template-columns: repeat(4, 1fr);
+  display: flex; flex-wrap: wrap; justify-content: center;
   gap: 10px;
 }
-@media (max-width: 560px) { .feed-monsters { grid-template-columns: repeat(2, 1fr); } }
 .feed-monster {
+  flex: 1 1 0; max-width: 235px; min-width: 130px;
   display: flex; flex-direction: column; align-items: center; gap: 4px;
   background: #fff;
   border: 3px solid var(--cream-dark);
