@@ -510,7 +510,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .objectives h3 { color: var(--wood-dark); margin-bottom: 10px; font-size: 1.1rem; }
 .objectives li { list-style: none; padding: 5px 0 5px 4px; display: flex; gap: 8px; align-items: flex-start; }
-.objectives li::before { content: '🌟'; font-size: .95rem; }
+/* תבליט מצויר במקום אימוג'י — עיגול בצבעי המותג */
+.objectives li::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 10px; height: 10px;
+  margin-top: .45em;
+  border-radius: 50%;
+  background: var(--gold, #f5b301);
+  border: 2px solid rgba(138, 90, 43, .45);
+}
 
 /* --- הטרמה: ציד מילים --- */
 .hunt-scene {
@@ -749,6 +758,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .summary-check:nth-child(2) { animation-delay: .35s; }
 .summary-check:nth-child(3) { animation-delay: .7s; }
+/* וי מצויר במקום אימוג'י */
+.summary-check .check-mark {
+  flex: 0 0 auto;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--green-ok, #3a9e3d);
+  position: relative;
+}
+.summary-check .check-mark::after {
+  content: '';
+  position: absolute;
+  left: 6px; top: 3px;
+  width: 6px; height: 11px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(40deg);
+}
 @keyframes check-in { to { opacity: 1; transform: none; } }
 .word-input-wrap { text-align: center; margin-top: 6px; }
 .word-input-wrap label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 1.1rem; }

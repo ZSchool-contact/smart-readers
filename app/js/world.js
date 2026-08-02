@@ -110,7 +110,7 @@ function startOnboarding() {
         <h1 class="ob-title">קוראים חכמים</h1>
         <p class="ob-sub">ברוכים הבאים לעולם הקריאה!<br>
         כאן נצא יחד למסע בין תחנות, נאסוף מטבעות ופריטים,<br>ונהפוך לקוראות ולקוראים חכמים.</p>
-        <button class="btn-main" id="ob-next">מתחילים! 🚀</button>`;
+        <button class="btn-main" id="ob-next">מתחילים!</button>`;
       card.querySelector('#ob-next').onclick = steps.name;
     },
     name() {
@@ -342,7 +342,7 @@ function openShop() {
           ? `<span class="si-swatch" style="background:${AVATAR_COLORS[item.value].body}"><img class="si-color-dragon" src="assets/img/creature-s2-${item.value}.png" alt="" onerror="this.remove()"></span>`
           : `<span class="si-emoji">${itemVisual(item.id)}</span>`}
         <span class="si-name">${item.name}</span>
-        ${locked ? `<span class="si-price">🪙 ${item.price}</span><span class="si-lock">🔒 נפתח בתחנה ${item.unlockUnit}</span>`
+        ${locked ? `<span class="si-price">🪙 ${item.price}</span><span class="si-lock">נפתח בתחנה ${item.unlockUnit}</span>`
           : equipped ? '<span class="si-badge">✔ לבוש עליי</span>'
           : owned ? '<span class="si-badge">יש לי! (להלבשה)</span>'
           : `<span class="si-price">🪙 ${item.price}</span>`}`;
@@ -455,8 +455,8 @@ function init() {
       <div class="creature-next">
         <div class="creature-silhouette">${creatureMarkup(S.avatar.color, stage + 1)}</div>
         <div>עוד <strong>${next.need - n}</strong> יחידות ומשהו מסתורי יקרה... 👀</div>
-      </div>` : '<div class="creature-next">🏆 היצור שלך הגיע לשיא ההתפתחות!</div>'}
-      <div style="margin-top:10px">🪙 ${S.coins} מטבעות · ✅ ${S.completed.length} תחנות · 🎁 ${S.items.length} פריטים</div>`;
+      </div>` : '<div class="creature-next">היצור שלך הגיע לשיא ההתפתחות!</div>'}
+      <div style="margin-top:10px">${S.coins} מטבעות · ${S.completed.length} תחנות · ${S.items.length} פריטים</div>`;
     openOverlay('overlay-avatar');
   };
 

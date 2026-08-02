@@ -235,13 +235,12 @@ function renderIntro() {
     guide: `שלום ${S.name}! היום נתחיל בקטן ונגדל: משפט אחד, אחר כך קטע קצר, ובסוף פסקה שלמה. ובדרך? נתפוס מילים באוויר! 🎈`,
   });
   $card().innerHTML = `
-    <div class="intro-emoji">${currentUnit.emoji}</div>
     <h2 class="part-title" style="text-align:center">יחידה ${currentUnit.id}: ${currentUnit.title}</h2>
     <div class="objectives">
       <h3>בסוף היחידה אדע:</h3>
       <ul>${currentUnit.objectives.map(o => `<li>${o}</li>`).join('')}</ul>
     </div>
-    <div class="part-actions"><button class="btn-main" id="btn-start-unit">יוצאים לדרך! 🚀</button></div>
+    <div class="part-actions"><button class="btn-main" id="btn-start-unit">יוצאים לדרך!</button></div>
   `;
   refreshNikud();
   animateGuideBubble();
@@ -716,14 +715,14 @@ function renderClozeTitle(part) {
       ${partHeader(part)}
       ${part.questions.length > 1 ? `<div class="q-count">כותרת ${qi + 1} מתוך ${part.questions.length}</div>` : ''}
       <div class="part-kicker">🔎 ${q.label}</div>
-      ${q.refText ? `<div class="q-ref">📖 ${q.refText}</div>` : ''}
+      ${q.refText ? `<div class="q-ref">${q.refText}</div>` : ''}
       <div class="cloze-line" dir="rtl">
         <span>${before}</span><input class="cloze-input" id="cloze-input" maxlength="16"
           autocomplete="off" aria-label="המילה החסרה בכותרת"><span>${after}</span>
       </div>
       <div id="cloze-feedback"></div>
       <div class="part-actions">
-        <button class="btn-main" id="btn-cloze-check">בודקים! 🔍</button>
+        <button class="btn-main" id="btn-cloze-check">בודקים!</button>
         <button class="btn-main hidden" id="btn-cloze-next"></button>
       </div>
     `;
@@ -791,7 +790,7 @@ function renderFamilyExpand(part) {
         <div class="fx-input-row">
           <input class="cloze-input" id="fx-input" maxlength="14" autocomplete="off"
             placeholder="מילה מהמשפחה..." aria-label="מילה חדשה מהמשפחה">
-          <button class="btn-main" id="btn-fx-add">מוסיפים! ➕</button>
+          <button class="btn-main" id="btn-fx-add">מוסיפים!</button>
         </div>
         <div class="fx-progress" id="fx-progress"></div>
       </div>
@@ -892,7 +891,7 @@ function renderFreeWrite(part) {
       ${partHeader(part)}
       ${part.questions.length > 1 ? `<div class="q-count">משימה ${qi + 1} מתוך ${part.questions.length}</div>` : ''}
       <div class="part-kicker">✍️ ${q.label}</div>
-      ${q.refText ? `<div class="q-ref">📖 ${q.refText}</div>` : ''}
+      ${q.refText ? `<div class="q-ref">${q.refText}</div>` : ''}
       <div class="q-text">${q.prompt}</div>
       <div class="fx-input-row">
         <input class="cloze-input fw-input" id="fw-input" maxlength="90" autocomplete="off"
@@ -900,7 +899,7 @@ function renderFreeWrite(part) {
       </div>
       <div id="fw-feedback"></div>
       <div class="part-actions">
-        <button class="btn-main" id="btn-fw-check">בודקים! 🔍</button>
+        <button class="btn-main" id="btn-fw-check">בודקים!</button>
         <button class="btn-main hidden" id="btn-fw-next"></button>
       </div>
     `;
@@ -1085,7 +1084,7 @@ function renderReading(part) {
     ${partHeader(part)}
     ${part.sceneSvg || part.sceneImage ? `<div class="hunt-scene${part.sceneSize === 'small' ? ' small' : ''}" id="read-scene"></div>` : ''}
     <div id="read-paras"${longText ? ' class="read-scroll"' : ''}></div>
-    <p class="read-hint">💡 לחיצה על משפט מסמנת אותו. אפשר לשנות בחירה בכל רגע${longText ? ' · גוללים בתוך הקטע לקריאת כל הפסקאות ⬇' : ''}</p>
+    <p class="read-hint">לחיצה על משפט מסמנת אותו. אפשר לשנות בחירה בכל רגע${longText ? ' · גוללים בתוך הקטע לקריאת כל הפסקאות' : ''}</p>
     <div class="part-actions">
       <button class="btn-main" id="btn-read-next" disabled>סיימתי לקרוא ולסמן ⬅</button>
     </div>
@@ -1139,7 +1138,7 @@ function renderMcqSet(part) {
       <div class="part-kicker">🔎 ${q.label}</div>
       ${q.img ? `<img class="q-img${q.imgSmall ? ' tiny' : ''}" src="${q.img}" alt="" onerror="this.remove()">` : ''}
       <div class="q-text">${q.q}</div>
-      ${q.refText ? `<div class="q-ref">📖 ${q.refText}</div>` : ''}
+      ${q.refText ? `<div class="q-ref">${q.refText}</div>` : ''}
       <div class="q-options chests" id="q-options"></div>
       <div id="q-feedback"></div>
       <div class="part-actions"><button class="btn-main hidden" id="btn-q-next"></button></div>
@@ -1310,7 +1309,6 @@ function renderAnecdote(part) {
   $card().innerHTML = `
     ${partHeader(part)}
     <div class="anecdote-card">
-      <span class="bulb">💡</span>
       <div class="anecdote-words">${part.words.map(w => `<span>${w}</span>`).join('')}</div>
       <p class="anecdote-text">${part.text.replace(/\n/g, '<br>')}</p>
       <div class="anecdote-tip">${part.tip}</div>
@@ -1325,12 +1323,12 @@ function renderSummary(part) {
   $card().innerHTML = `
     ${partHeader(part)}
     <div class="summary-checks">
-      ${part.checks.map(c => `<div class="summary-check">✅ <span>${c}</span></div>`).join('')}
+      ${part.checks.map(c => `<div class="summary-check"><span class="check-mark"></span><span>${c}</span></div>`).join('')}
     </div>
     <div class="word-input-wrap">
-      <label for="journey-word">✨ ${part.wordPrompt}</label>
+      <label for="journey-word">${part.wordPrompt}</label>
       <input class="ob-input" id="journey-word" maxlength="20" placeholder="כתבו כאן מילה...">
-      <div class="part-actions"><button class="btn-main" id="btn-finish-unit">מסיימים את היחידה! 🏁</button></div>
+      <div class="part-actions"><button class="btn-main" id="btn-finish-unit">מסיימים את היחידה!</button></div>
     </div>
   `;
   document.getElementById('btn-finish-unit').onclick = () => {
@@ -1358,19 +1356,19 @@ function renderRewards() {
   setStrikes(0, null);
 
   partHeader({
-    kicker: 'סיום היחידה 🏁',
+    kicker: 'סיום היחידה',
     title: currentUnit.title,
-    guide: 'התחלת ממשפט אחד וסיימת פסקה שלמה. אני גאה בך! נתראה בתחנה הבאה 🦉',
+    guide: 'התחלת ממשפט אחד וסיימת פסקה שלמה. אני גאה בך! נתראה בתחנה הבאה',
   });
   $card().innerHTML = `
     <div class="reward-stage">
-      <h2 class="part-title" style="text-align:center">🎉 כל הכבוד, ${S.name}!</h2>
+      <h2 class="part-title" style="text-align:center">כל הכבוד, ${S.name}!</h2>
       <p>סיימת את יחידה ${currentUnit.id}: ${currentUnit.title}</p>
       <div class="reward-item-circle">${item.emoji}</div>
       <p><strong>${item.name}</strong> נוסף לספר המסע שלך!</p>
       ${evolved ? `
       <div class="evolution-box">
-        <div class="evolution-title">✨ רגע... משהו קורה! ✨</div>
+        <div class="evolution-title">רגע... משהו קורה!</div>
         <div class="evolution-pair">
           <div class="avatar-box evo-old">${creatureMarkup(S.avatar.color, stageBefore)}</div>
           <div class="evo-arrow">⬅</div>
@@ -1379,7 +1377,7 @@ function renderRewards() {
         <div class="evolution-name">היצור שלך התפתח: <strong>${CREATURE_STAGES[stageAfter].name}</strong>!</div>
       </div>` : ''}
       <div class="reward-coins">${alreadyDone ? 'היחידה הושלמה שוב, איזה תרגול!' : '‏+50 🪙 בונוס השלמת יחידה'}</div>
-      <div class="part-actions"><button class="btn-main" id="btn-back-map">חוזרים למפה 🗺️</button></div>
+      <div class="part-actions"><button class="btn-main" id="btn-back-map">חוזרים למפה</button></div>
     </div>
   `;
   refreshNikud();
