@@ -270,6 +270,51 @@
   .game-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
   .game-card p { font-size: 0.93rem; color: var(--brown-soft); }
 
+  /* ── DRAGON EVOLUTION ── */
+  .dragon-section { background: linear-gradient(180deg, var(--cream) 0%, var(--cream2) 100%); }
+
+  .dragon-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(4px, 1.2vw, 14px);
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .dragon-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .dragon-stage img { width: auto; object-fit: contain; }
+  .dragon-stage span {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.7rem, 1.6vw, 0.95rem);
+    color: var(--brown-soft);
+  }
+  .st-0 img { height: clamp(52px, 8vw, 95px); }
+  .st-1 img { height: clamp(66px, 10.5vw, 125px); }
+  .st-2 img { height: clamp(84px, 13.5vw, 160px); }
+  .st-3 img { height: clamp(106px, 17vw, 200px); }
+  .st-4 img { height: clamp(136px, 22vw, 260px); }
+
+  .dragon-arrow {
+    width: clamp(16px, 2.6vw, 30px);
+    height: clamp(16px, 2.6vw, 30px);
+    stroke: var(--gold);
+    flex-shrink: 0;
+    margin-bottom: clamp(40px, 7vw, 80px);
+  }
+
+  .dragon-caption {
+    text-align: center;
+    color: var(--brown-soft);
+    margin-top: 30px;
+    font-size: 1.05rem;
+  }
+
   /* ── VIDEO ── */
   .video-section { background: linear-gradient(180deg, var(--cream2) 0%, var(--cream) 100%); }
   .video-frame {
@@ -596,6 +641,44 @@
   </div>
 </section>
 
+<!-- DRAGON EVOLUTION -->
+<section class="section dragon-section" id="dragon">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag">הדרקון</span>
+      <h2>הדרקון גדל יחד עם הקורא</h2>
+      <p>בתחילת המסע בוחרים ביצת פלא. כל יחידה שמסתיימת מקרבת את השלב הבא.</p>
+    </div>
+    <div class="dragon-row">
+      <div class="dragon-stage st-0">
+        <img src="assets/dragon-egg.png" alt="ביצת פלא ורודה נוצצת">
+        <span>ביצת פלא</span>
+      </div>
+      <svg class="dragon-arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+      <div class="dragon-stage st-1">
+        <img src="assets/dragon-hatch.png" alt="דרקון קטן בוקע מהביצה">
+        <span>בקיע</span>
+      </div>
+      <svg class="dragon-arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+      <div class="dragon-stage st-2">
+        <img src="assets/dragon-young.png" alt="דרקון צעיר מחזיק ספר">
+        <span>צעיר</span>
+      </div>
+      <svg class="dragon-arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+      <div class="dragon-stage st-3">
+        <img src="assets/dragon-winged.png" alt="דרקון מכונף קורא ספר">
+        <span>מכונף</span>
+      </div>
+      <svg class="dragon-arrow" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+      <div class="dragon-stage st-4">
+        <img src="assets/dragon-royal.png" alt="דרקון מלכותי עם כתר, גלימה וערימת ספרים">
+        <span>מלכותי</span>
+      </div>
+    </div>
+    <p class="dragon-caption">בדרך אוספים מטבעות, קונים לו כובעים ואביזרים בחנות, וממלאים את ספר המסע.</p>
+  </div>
+</section>
+
 <!-- VIDEO -->
 <section class="section video-section">
   <div class="section-inner">
@@ -680,6 +763,7 @@
       <h2>השקעה חד פעמית, מסע שלם</h2>
     </div>
     <div class="pricing-card">
+      <img src="assets/dragon-royal.png" alt="הדרקון המלכותי" style="height:190px; width:auto; margin:0 auto 18px; display:block;">
       <span class="price-badge">גישה מלאה לכל העולם</span>
       <span class="price">249 ₪</span>
       <p class="price-note">תשלום חד פעמי, בלי מנוי ובלי חיובים נוספים</p>
