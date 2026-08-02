@@ -16,6 +16,7 @@ const DEFAULT_STATE = {
   nikud: false,                /* גלגל הצלה: תצוגת ניקוד */
   nikudTipSeen: false,         /* האם הוצג האונבורדינג של גלגל ההצלה */
   dragonPowerTipSeen: false,   /* האם הוצג ההסבר על כוח הדרקון */
+  courseCelebrated: false,     /* האם הוצגה חגיגת סיום הקורס */
 };
 
 let S = loadState();

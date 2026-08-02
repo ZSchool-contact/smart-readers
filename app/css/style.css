@@ -1333,6 +1333,76 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ============ בועת הינשוף — טקסט מלא ומיידי (אפקט ההקלדה בוטל 2.8) ============ */
 .guide-bubble { min-height: 2.6em; }
 
+/* ============ רשת ביטחון לרזולוציות נמוכות: גלילה כשההקטנה לא מספיקה ============ */
+.unit-stage.stage-scroll { overflow-y: auto; }
+
+/* ============ חגיגת סיום הקורס ============ */
+.celebration {
+  position: fixed; inset: 0; z-index: 900;
+  background: linear-gradient(180deg, #2a2e66 0%, #4a3f8f 45%, #f5953b 100%);
+  overflow-y: auto;
+}
+.celebration.hidden { display: none; }
+.celebration-inner {
+  position: relative; min-height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px 16px;
+}
+.celebration-card {
+  position: relative; z-index: 2;
+  background: rgba(253, 246, 227, .96);
+  border: 4px solid var(--wood, #8a5a2b);
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .35);
+  max-width: 560px; width: 100%;
+  padding: 28px 26px;
+  text-align: center;
+}
+.celebration-card h1 {
+  font-family: Rubik, sans-serif; font-weight: 900;
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  color: #5a2f96; margin-bottom: 6px;
+}
+.celebration-big { font-size: 1.15rem; font-weight: 700; color: var(--wood, #8a5a2b); margin-bottom: 12px; }
+.celebration-card p { margin-bottom: 10px; line-height: 1.6; }
+.celebration-stats {
+  background: linear-gradient(180deg, #fffdf4, #fdf3da);
+  border: 2px solid #e3cb96; border-radius: 12px;
+  padding: 10px 14px; margin: 12px 0;
+  font-weight: 700; color: #6b4423;
+}
+.celebration-sub { font-size: .95rem; color: var(--ink-soft); }
+/* הדרקון המלכותי עף על המסך */
+.celebration-dragon {
+  position: absolute; z-index: 1;
+  top: 12%; left: -170px;
+  width: 130px; height: 150px;
+  animation: dragon-fly 9s linear infinite, dragon-bob 1.7s ease-in-out infinite;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .3));
+  pointer-events: none;
+}
+.celebration-dragon.second {
+  top: 68%; width: 90px; height: 104px;
+  animation: dragon-fly-back 12s linear infinite, dragon-bob 2.1s ease-in-out infinite;
+  animation-delay: 2.5s; opacity: .85;
+}
+.celebration-dragon svg { width: 100%; height: 100%; }
+.celebration-dragon .creature-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+}
+@keyframes dragon-fly {
+  from { left: -170px; }
+  to   { left: calc(100% + 170px); }
+}
+@keyframes dragon-fly-back {
+  from { left: calc(100% + 170px); transform: scaleX(-1); }
+  to   { left: -170px; transform: scaleX(-1); }
+}
+@keyframes dragon-bob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -28px; }
+}
+
 /* ============ תזכורת משפחות במשחקי חזרה ============ */
 .side-families { width: 100%; }
 .side-families:not(:empty) { margin-top: 10px; }

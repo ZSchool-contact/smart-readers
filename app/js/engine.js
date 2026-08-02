@@ -59,10 +59,21 @@ function fitUnitCard() {
   const layout = document.getElementById('unit-layout');
   if (!stage || !layout) return;
   layout.style.transform = '';
+  layout.style.marginBottom = '';
+  stage.classList.remove('stage-scroll');
   const avail = stage.clientHeight - 14;
   const h = layout.offsetHeight;
   if (h > avail && avail > 100) {
-    layout.style.transform = `scale(${Math.max(.5, avail / h)})`;
+    const scale = avail / h;
+    if (scale >= .7) {
+      layout.style.transform = `scale(${scale})`;
+    } else {
+      /* רשת ביטחון לרזולוציות נמוכות: לא מקטינים מעבר ל-70% (הטקסט נהיה
+         קטן מדי) — במקום זה נפתחת גלילה, כך ששום כפתור לא ייחתך לעולם */
+      layout.style.transform = 'scale(.7)';
+      layout.style.marginBottom = -(h * .3) + 'px';
+      stage.classList.add('stage-scroll');
+    }
   }
 }
 
@@ -1440,5 +1451,44 @@ function renderRewards() {
   refreshNikud();
   animateGuideBubble();
   fitUnitCard();
-  document.getElementById('btn-back-map').onclick = () => showMap(true);
+  document.getElementById('btn-back-map').onclick = () => {
+    /* סיום יחידה 8 בפעם הראשונה = סיום הקורס כולו — חגיגה גדולה! */
+    if (currentUnit.id === 8 && !S.courseCelebrated) showCourseCelebration();
+    else showMap(true);
+  };
+}
+
+/* ---------- חגיגת סיום הקורס: הדרקון עף על המסך ---------- */
+function showCourseCelebration() {
+  S.courseCelebrated = true;
+  saveState();
+  const el = document.getElementById('course-celebration');
+  el.innerHTML = `
+    <div class="celebration-inner">
+      <div class="celebration-dragon" aria-hidden="true">${creatureMarkup(S.avatar.color, 4)}</div>
+      <div class="celebration-dragon second" aria-hidden="true">${creatureMarkup(S.avatar.color, 4)}</div>
+      <div class="celebration-card">
+        <h1>כל הכבוד, ${S.name}!</h1>
+        <p class="celebration-big">סיימת את כל מסע קוראים חכמים</p>
+        <p>מהמשפט הראשון ועד ההרפתקה שקראת לגמרי לבד: עברת דרך ענקית,
+        והדרקון שלך גדל יחד איתך.</p>
+        <div class="celebration-stats">
+          ${S.completed.filter(id => id > 0).length} תחנות הושלמו ·
+          ${S.items.length} פריטים בספר המסע ·
+          ${S.words.filter(w => w.word).length} מילים שנאספו בדרך
+        </div>
+        <p class="celebration-sub">המסע נגמר, אבל הקריאה רק מתחילה: כל ספר חדש הוא תחנה חדשה.</p>
+        <button class="btn-main" id="btn-celebration-done">חוזרים למפה</button>
+      </div>
+    </div>`;
+  el.classList.remove('hidden');
+  Sound.play('fanfare');
+  confettiBurst(140);
+  setTimeout(() => confettiBurst(80), 1800);
+  refreshNikud();
+  document.getElementById('btn-celebration-done').onclick = () => {
+    el.classList.add('hidden');
+    el.innerHTML = '';
+    showMap(true);
+  };
 }
