@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>קוראים חכמים — הבנת הנקרא כהרפתקה | Z-School</title>
-<meta name="description" content="קורס דיגיטלי להבנת הנקרא לכיתות ג׳ ו-ד׳: עולם משחק שלם עם דרקון שגדל, משחקוני מילים, וכתיבה הדרגתית. 8 יחידות של הרפתקה.">
+<meta name="description" content="קורס דיגיטלי להבנת הנקרא לכיתות ג׳ ו-ד׳: עולם משחק שלם עם דרקון שגדל, משחקוני מילים, וכתיבה הדרגתית. 8 יחידות של הרפתקה. 249 ₪ בלבד.">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;700;900&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -346,6 +346,49 @@
     stroke: var(--green);
   }
 
+  /* ── PRICING ── */
+  .pricing-card {
+    max-width: 460px;
+    margin: 0 auto;
+    background: #fff;
+    border: 3px solid var(--gold-soft);
+    border-radius: 22px;
+    padding: 44px 38px;
+    text-align: center;
+    box-shadow: 0 8px 0 var(--gold-soft), 0 26px 54px rgba(233,169,61,0.18);
+  }
+  .price-badge {
+    display: inline-block;
+    background: rgba(62,142,74,0.1);
+    color: var(--green-deep);
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 100px;
+    padding: 5px 16px;
+    margin-bottom: 18px;
+  }
+  .price {
+    font-family: 'Rubik', sans-serif;
+    font-size: 3.4rem;
+    font-weight: 900;
+    color: var(--brown);
+    display: block;
+    line-height: 1.1;
+  }
+  .price-note { font-size: 0.9rem; color: var(--brown-soft); margin-bottom: 28px; }
+  .price-includes {
+    list-style: none;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-bottom: 32px;
+  }
+  .price-includes li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.96rem; }
+  .price-includes li svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 3px; stroke: var(--green); }
+  .pricing-card .btn-primary { width: 100%; font-size: 1.15rem; padding: 16px; }
+  .guarantee { font-size: 0.82rem; color: var(--brown-soft); margin-top: 14px; }
+
   /* ── FAQ ── */
   .faq-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
   .faq-item {
@@ -427,7 +470,7 @@
     <img src="assets/zschool-logo.png" alt="Z-School">
     <strong>קוראים חכמים</strong>
   </a>
-  <a href="https://zschool-contact.github.io/smart-readers/" class="btn btn-nav" target="_blank" rel="noopener">מתחילים לשחק</a>
+  <a href="#pricing" class="btn btn-nav">לרכישה — 249 ₪</a>
 </nav>
 
 <!-- HERO -->
@@ -442,7 +485,7 @@
     צדים מילים, פותרים חידות וכותבים בעצמם. והכי חשוב: הם מבקשים עוד.
   </p>
   <div class="hero-cta">
-    <a href="https://zschool-contact.github.io/smart-readers/" class="btn btn-primary" target="_blank" rel="noopener">להתחיל את המסע</a>
+    <a href="#pricing" class="btn btn-primary">להתחיל את המסע — 249 ₪</a>
     <a href="#world" class="btn btn-ghost">איך זה נראה מבפנים</a>
   </div>
 
@@ -629,6 +672,30 @@
   </div>
 </section>
 
+<!-- PRICING -->
+<section class="section parents-section" id="pricing">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-tag">הצטרפות</span>
+      <h2>השקעה חד פעמית, מסע שלם</h2>
+    </div>
+    <div class="pricing-card">
+      <span class="price-badge">גישה מלאה לכל העולם</span>
+      <span class="price">249 ₪</span>
+      <p class="price-note">תשלום חד פעמי, בלי מנוי ובלי חיובים נוספים</p>
+      <ul class="price-includes">
+        <li><svg fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>8 יחידות הרפתקה מלאות במפת העולם</li>
+        <li><svg fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>12 סוגי משחקונים עם פידבק מיידי</li>
+        <li><svg fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>דרקון קריאה אישי, חנות שדרוגים וספר מסע</li>
+        <li><svg fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>גלגל הצלה עם ניקוד מלא לכל טקסט</li>
+        <li><svg fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>עובד בדפדפן מכל מחשב או טאבלט</li>
+      </ul>
+      <a href="https://mrng.to/6itj6W3jud" class="btn btn-primary" target="_blank" rel="noopener">לרכישה ורישום</a>
+      <p class="guarantee">תשלום מאובטח דרך Morning</p>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="section" id="faq">
   <div class="section-inner">
@@ -680,7 +747,7 @@
 <section class="cta-final">
   <h2>המסע מתחיל בביצת פלא אחת</h2>
   <p>נכנסים, בוחרים ביצה, והדרקון כבר מחכה לבקוע.</p>
-  <a href="https://zschool-contact.github.io/smart-readers/" class="btn btn-primary" target="_blank" rel="noopener">להתחיל את המסע עכשיו</a>
+  <a href="https://mrng.to/6itj6W3jud" class="btn btn-primary" target="_blank" rel="noopener">לרכישת הקורס ב-249 ₪</a>
 </section>
 
 <!-- FOOTER -->
