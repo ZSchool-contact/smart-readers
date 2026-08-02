@@ -1333,6 +1333,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ============ בועת הינשוף — טקסט מלא ומיידי (אפקט ההקלדה בוטל 2.8) ============ */
 .guide-bubble { min-height: 2.6em; }
 
+/* ============ כוח הדרקון: עזרה בפתרון, פעמיים ביחידה ============ */
+.dragon-power { margin-top: 12px; width: 100%; }
+.dragon-power-btn {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; padding: 8px 12px;
+  border: 2px solid #7d48bd;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f3ebff, #e2d1fb);
+  box-shadow: 0 3px 0 #7d48bd33, inset 0 1px 0 #fff8;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: right;
+  transition: transform .15s, box-shadow .15s;
+}
+.dragon-power-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 10px #7d48bd44; }
+.dragon-power-btn .dp-dragon {
+  flex: 0 0 auto; width: 40px; height: 46px; position: relative; display: block;
+}
+.dragon-power-btn .dp-dragon svg { width: 100%; height: 100%; }
+.dragon-power-btn .dp-dragon .creature-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+}
+.dragon-power-btn .dp-text { display: flex; flex-direction: column; gap: 2px; }
+.dragon-power-btn .dp-text strong { font-size: .88rem; color: #5a2f96; line-height: 1.25; }
+.dragon-power-btn .dp-text small { font-size: .74rem; color: var(--ink-soft); }
+.dragon-power-btn.out {
+  opacity: .55; filter: grayscale(.5); cursor: not-allowed;
+}
+.dragon-power-btn.out:hover { transform: none; box-shadow: 0 3px 0 #7d48bd33; }
+
 /* ============ אונבורדינג גלגל ההצלה ============ */
 .nikud-coach {
   position: fixed; z-index: 96;

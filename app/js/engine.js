@@ -118,6 +118,7 @@ function startUnit(id) {
   currentUnit = UNITS[id];
   if (!currentUnit) { toast('היחידה הזו עוד בבנייה, נפתח אותה בקרוב! 🔧'); return; }
   partIndex = -1;
+  dragonPowerLeft = 2;   /* כוח הדרקון מתמלא מחדש בכל יחידה */
   startFitObserver();
   /* רקע איור ליחידה: ייעודי אם קיים, אחרת ברירת המחדל של העולם */
   const unitScreen = document.getElementById('screen-unit');
@@ -207,7 +208,53 @@ function partHeader(part) {
   const bubble = document.getElementById('side-bubble');
   bubble.textContent = part.guide || '';
   bubble.style.display = part.guide ? '' : 'none';
+  renderDragonPower();
   return '';
+}
+
+/* ---------- כוח הדרקון: עזרה בפתרון, פעמיים בכל יחידה ---------- */
+let dragonPowerLeft = 2;
+
+function renderDragonPower() {
+  const wrap = document.getElementById('dragon-power');
+  if (!wrap) return;
+  /* מוצג רק בשלבי פעילות — לא בפתיחה, בפרס, באנקדוטה ובסיכום */
+  const inPart = currentUnit && partIndex >= 0 && partIndex < currentUnit.parts.length;
+  const type = inPart ? currentUnit.parts[partIndex].type : null;
+  if (!inPart || type === 'summary' || type === 'anecdote') {
+    wrap.innerHTML = '';
+    return;
+  }
+  const out = dragonPowerLeft <= 0;
+  wrap.innerHTML = `
+    <button class="dragon-power-btn${out ? ' out' : ''}" id="btn-dragon-power">
+      <span class="dp-dragon">${creatureMarkup(S.avatar.color, creatureStage(contentUnitsDone()))}</span>
+      <span class="dp-text">
+        <strong>כוח הדרקון לעזרה בפתרון</strong>
+        <small>${out ? 'נגמר ביחידה הזו' : dragonPowerLeft === 2 ? 'נשארו 2 שימושים' : 'נשאר שימוש אחד'}</small>
+      </span>
+    </button>`;
+  document.getElementById('btn-dragon-power').onclick = dragonPowerClick;
+}
+
+function dragonPowerClick() {
+  /* לחיצה ראשונה אי-פעם: הסבר בלבד, בלי לבזבז שימוש */
+  if (!S.dragonPowerTipSeen) {
+    S.dragonPowerTipSeen = true;
+    saveState();
+    toast('נתקעתם בשלב? הדרקון שלכם יכול לעזור! לחיצה על כוח הדרקון פותרת את השלב ומעבירה לשלב הבא. אפשר להשתמש בכוח פעמיים בכל יחידה', 6000);
+    return;
+  }
+  if (dragonPowerLeft <= 0) {
+    toast('כוח הדרקון נגמר ביחידה הזו. הוא יתמלא מחדש בתחנה הבאה!');
+    return;
+  }
+  dragonPowerLeft--;
+  const btn = document.getElementById('btn-dragon-power');
+  if (btn) sparkleBurst(btn, 10);
+  Sound.play('fanfare');
+  toast('כוח הדרקון עזר לכם! ממשיכים לשלב הבא');
+  nextPart();
 }
 
 /* ---------- מסך פתיחת יחידה ---------- */
