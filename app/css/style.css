@@ -1330,14 +1330,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .nikud-on .sentence-word { line-height: 1.9; }
 .nikud-on .q-opt, .nikud-on .q-text, .nikud-on .guide-bubble { line-height: 2; }
 
-/* ============ בועת הינשוף — כתיבה חיה ============ */
-.guide-bubble { min-height: 2.6em; cursor: pointer; }
-.guide-bubble.typing::after {
-  content: '▌';
-  color: var(--blue-btn);
-  animation: cursor-blink .7s step-end infinite;
-}
-@keyframes cursor-blink { 50% { opacity: 0; } }
+/* ============ בועת הינשוף — טקסט מלא ומיידי (אפקט ההקלדה בוטל 2.8) ============ */
+.guide-bubble { min-height: 2.6em; }
 
 /* ============ אונבורדינג גלגל ההצלה ============ */
 .nikud-coach {

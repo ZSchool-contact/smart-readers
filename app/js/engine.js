@@ -93,25 +93,9 @@ function sparkleBurst(el, count = 6) {
   }
 }
 
-/* אלף הינשוף "מדבר": הבועה נכתבת אות אחרי אות בקצב קריאה של ילד (לחיצה מדלגת) */
-let guideTypeTimer = null;
-
-function animateGuideBubble() {
-  const b = document.querySelector('.guide-bubble');
-  if (!b) return;
-  /* עוצרים הקלדה קודמת שעוד רצה — אחרת היא תדרוס את הטקסט החדש */
-  clearInterval(guideTypeTimer);
-  const full = b.textContent;
-  b.textContent = '';
-  b.classList.add('typing');
-  let i = 0;
-  guideTypeTimer = setInterval(() => {
-    i += 1;
-    b.textContent = full.slice(0, i);
-    if (i >= full.length) { clearInterval(guideTypeTimer); b.classList.remove('typing'); }
-  }, 45);
-  b.onclick = () => { clearInterval(guideTypeTimer); b.textContent = full; b.classList.remove('typing'); };
-}
+/* בועת אלף מוצגת מלאה ומיד — אפקט ההקלדה אות-אות בוטל
+   (פידבק מילד 2.8: "זה לא כיף" לחכות לטקסט) */
+function animateGuideBubble() {}
 
 /* תמונת סצנה לחלק: תמונת AI אם קיימת, אחרת ה-SVG המצויר */
 function mountScene(container, part) {
