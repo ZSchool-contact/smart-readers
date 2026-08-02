@@ -97,7 +97,7 @@ tiny antennae, huge open mouth, gross-funny but friendly, NOT scary, ages 8-10
 > The same monster from the reference image, holding a red balloon string and floating upward, excited expression, transparent background, [Style Bible]
 > The same monster from the reference image, with small purple bat wings flapping, flying to the side at night, mischievous smile, transparent background, [Style Bible]
 
-### סצנות יחידה 1 — הפרומפטים המלאים כבר כתובים ב-[image-prompts.md](image-prompts.md)
+### סצנות יחידה 1 — הפרומפטים המלאים כבר כתובים ב-[image-prompts/image-prompts.md](image-prompts/image-prompts.md)
 
 ---
 

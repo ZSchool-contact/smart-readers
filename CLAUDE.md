@@ -95,8 +95,8 @@
 ## החלטות טכניות
 - **אפליקציה אחת** — `app/index.html` מכיל את כל העולם; יחידות הן data ב-JS, לא קבצים נפרדים
 - **שמירת מצב**: localStorage (מפתח `smart-readers-save-v1`). חיבור Supabase/TeachPal — שלב עתידי
-- **גרפיקה**: תמונות AI מאוירות (סגנון התמונה `ChatGPT Image Apr 23...png` — עולם טבע מאויר, שלטי עץ).
-  עד שהתמונות מוכנות: placeholders ב-SVG/CSS. פרומפטים: [image-prompts.md](image-prompts.md)
+- **גרפיקה**: תמונות AI מאוירות (עוגן הסגנון: `source-materials/style-anchor.png` — עולם טבע מאויר, שלטי עץ).
+  עד שהתמונות מוכנות: placeholders ב-SVG/CSS. פרומפטים: תיקיית [image-prompts/](image-prompts/)
 - Vanilla JS, ללא Tailwind, Lucide רק ל-UI, גופנים Rubik + Heebo, RTL מלא
 - מובייל פירסט — כל אינטראקציית גרירה חייבת גם מצב הקשה (tap-tap)
 
@@ -111,10 +111,12 @@
   נעולה במפה, אימוג'י המפה והחנות הישנים — כולם מועמדים להחלפה באיורים. אימוג'י שיחה
   בתוך טקסט של אלף (בועות, פידבק) מותר במשורה
 
-## קבצי מקור (docx בתיקייה זו)
+## קבצי מקור (בתיקיית source-materials/)
 - `syllabus-smart-readers.docx` — הסילבוס המקורי (הומר ל-syllabus.md)
 - `unit1-smart-readers (1).docx` — מפרט מלא של יחידה 1 (מוטמע ב-app/js/data.js)
+- `unit2-smart-readers.docx` — מפרט יחידה 2
 - `קורס שיפור הבנת הנקרא שלושה ציר תוכן מרכזיים.docx` — ההיגיון הפדגוגי של הצירים
+- `style-anchor.png` — תמונת עוגן הסגנון לכל איורי ה-AI
 
 <!-- flowpad:capsule identity
 version: 1

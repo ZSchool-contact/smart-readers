@@ -3,7 +3,7 @@
 כל תמונה שנוצרת נשמרת בנתיב המצוין תחת `app/assets/img/`.
 האפליקציה בנויה כך שאם התמונה חסרה, מוצג placeholder (SVG/CSS) — אפשר להחליף בהדרגה.
 
-**עוגן סגנוני לכל הפרומפטים** (מבוסס על תמונת הוויז'ן `ChatGPT Image Apr 23...png`):
+**עוגן סגנוני לכל הפרומפטים** (מבוסס על תמונת הוויז'ן `source-materials/style-anchor.png`):
 `cheerful children's game illustration, storybook style, vibrant saturated colors, soft painterly texture, green meadows, blue sky with fluffy clouds, wooden signs, suitable for ages 8-10, no text, high quality digital art`
 
 ---
