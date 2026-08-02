@@ -1333,6 +1333,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ============ בועת הינשוף — טקסט מלא ומיידי (אפקט ההקלדה בוטל 2.8) ============ */
 .guide-bubble { min-height: 2.6em; }
 
+/* ============ תזכורת משפחות במשחקי חזרה ============ */
+.side-families { width: 100%; }
+.side-families:not(:empty) { margin-top: 10px; }
+.sf-title {
+  font-size: .78rem; font-weight: 700; color: var(--ink-soft);
+  margin-bottom: 6px; text-align: center;
+}
+.sf-chips { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+.sf-chip {
+  background: linear-gradient(180deg, #fffdf4, #fdf3da);
+  border: 1.5px solid #e3cb96;
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: .8rem; font-weight: 700; color: #6b4423;
+  white-space: nowrap;
+}
+
 /* ============ כוח הדרקון: עזרה בפתרון, פעמיים ביחידה ============ */
 .dragon-power { margin-top: 12px; width: 100%; }
 .dragon-power-btn {

@@ -208,6 +208,13 @@ function partHeader(part) {
   const bubble = document.getElementById('side-bubble');
   bubble.textContent = part.guide || '';
   bubble.style.display = part.guide ? '' : 'none';
+  /* תזכורת משפחות (משחקי חזרה): שבבי שורשים בצד של אלף */
+  const fams = document.getElementById('side-families');
+  if (fams) {
+    fams.innerHTML = part.familiesReminder ? `
+      <div class="sf-title">תזכורת: המשפחות שלמדנו</div>
+      <div class="sf-chips">${part.familiesReminder.map(f => `<span class="sf-chip">${f}</span>`).join('')}</div>` : '';
+  }
   renderDragonPower();
   return '';
 }
