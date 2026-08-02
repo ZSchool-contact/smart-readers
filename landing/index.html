@@ -265,13 +265,13 @@
   .game-card:hover { transform: translateY(-5px); box-shadow: 0 11px 0 var(--card-border), 0 18px 34px rgba(92,64,35,0.12); }
 
   .game-card .shot { aspect-ratio: 16/9; overflow: hidden; background: var(--parchment); }
-  .game-card .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .game-card .shot img, .game-card .shot video { width: 100%; height: 100%; object-fit: cover; object-position: top; }
   .game-card .body { padding: 20px 22px 24px; }
   .game-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
   .game-card p { font-size: 0.93rem; color: var(--brown-soft); }
 
   /* ── DRAGON EVOLUTION ── */
-  .dragon-section { background: linear-gradient(180deg, var(--cream) 0%, var(--cream2) 100%); }
+  .dragon-section { background: linear-gradient(180deg, var(--cream) 0%, var(--cream2) 50%, var(--cream) 100%); }
 
   .dragon-row {
     display: flex;
@@ -313,18 +313,6 @@
     color: var(--brown-soft);
     margin-top: 30px;
     font-size: 1.05rem;
-  }
-
-  /* ── VIDEO ── */
-  .video-section { background: linear-gradient(180deg, var(--cream2) 0%, var(--cream) 100%); }
-  .video-frame {
-    max-width: 760px;
-    margin: 0 auto;
-    border-radius: 18px;
-    overflow: hidden;
-    border: 3px solid #fff;
-    box-shadow: 0 22px 54px rgba(92,64,35,0.22);
-    background: #fff;
   }
 
   /* ── METHOD ── */
@@ -617,7 +605,7 @@
         </div>
       </div>
       <div class="game-card">
-        <div class="shot"><img src="assets/shot-mole.png" alt="משחק מחבואים: מפלצות מציצות ממחילות בדשא עם מילים"></div>
+        <div class="shot"><video src="assets/gameplay-2.mp4" autoplay muted loop playsinline aria-label="משחק מחבואים: מפלצות מציצות ממחילות בדשא עם מילים"></video></div>
         <div class="body">
           <h3>ארקייד מילים בתנועה</h3>
           <p>מפלצות מציצות מהמחילות ונושאות מילים. תופסים רק את מילות המשפחה הנכונה, עם קומבו ומטבעות.</p>
@@ -676,19 +664,6 @@
       </div>
     </div>
     <p class="dragon-caption">בדרך אוספים מטבעות, קונים לו כובעים ואביזרים בחנות, וממלאים את ספר המסע.</p>
-  </div>
-</section>
-
-<!-- VIDEO -->
-<section class="section video-section">
-  <div class="section-inner">
-    <div class="section-header">
-      <span class="section-tag">הצצה נוספת</span>
-      <h2>דקה אחת מתוך המשחק</h2>
-    </div>
-    <div class="video-frame">
-      <video src="assets/gameplay-2.mp4" muted loop playsinline controls preload="metadata" aria-label="קטע משחק נוסף מתוך קוראים חכמים"></video>
-    </div>
   </div>
 </section>
 
