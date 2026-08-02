@@ -27,6 +27,7 @@ app/                    האפליקציה עצמה — מה שמתפרסם ור
   js/state.js           שמירת התקדמות (localStorage, מפתח smart-readers-save-v1)
   js/nikud.js           גלגל ההצלה: מילון ניקוד בכתיב מלא (~1,600 מילים)
   js/sound.js           אפקטים קוליים (WebAudio, בלי קבצים)
+  js/lms.js             גשר ל-TeachPal: דיווח השלמות ב-postMessage כשהאפליקציה בתוך iframe
   assets/img/           כל איורי ה-AI (תמונה חסרה = fallback מצויר, כלום לא נשבר)
 
 tools/                  סקריפטי בדיקה (uv run --with playwright python tools/...)
@@ -48,8 +49,10 @@ index.html              הפניה בלבד (redirect אל app/) — נחוץ ל
 
 - **שמירת התקדמות היא מקומית לדפדפן** (localStorage). מעבר מכשיר = התחלה מחדש.
   שדרוג לשמירה בענן (Supabase) מוגדר כצעד פתוח — ראו PROJECT-STATUS.
-- **חיבור למערכת הלמידה (campus.z-school.co.il)**: המדריך המלא עם כל המלכודות נמצא
-  בשורש פרויקט העל: `../../PUBLISHING-TO-TEACHPAL.md` (iframe, postMessage, תשלום).
+- **חיבור למערכת הלמידה (campus.z-school.co.il)**: מחובר (2.8) במודל "העולם נשאר הבית" —
+  המערכת מטמיעה את האפליקציה כולה ב-iframe אחד (ישירות מ-GitHub Pages), ו-`js/lms.js`
+  מדווח כל השלמת יחידה ב-postMessage (`smart-readers-unit-complete`) ומסנכרן התקדמות
+  קיימת בעלייה. המדריך הכללי: `../../PUBLISHING-TO-TEACHPAL.md`.
 - **האפליקציה עצמאית לחלוטין** — קובץ HTML אחד + JS/CSS/תמונות, בלי תלות חיצונית
   מלבד גופני Google ו-Lucide מ-CDN. אפשר לארח בכל שרת סטטי.
 - **בדיקה לפני כל פרסום**: `uv run --with playwright python tools/e2e_unit.py 1` (או כל יחידה).

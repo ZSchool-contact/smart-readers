@@ -94,6 +94,7 @@ function completeUnit(id) {
     S.items.push({ unit: id, emoji: item.emoji, name: item.name });
   }
   saveState();
+  if (window.LMS) LMS.report(id);
 }
 
 function saveJourneyWord(unitId, word) {

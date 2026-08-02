@@ -137,11 +137,21 @@ syllabus.md       9 היחידות במלואן · media-redesign-spec.md אפי
 - קונבנציית התמונות: קובץ חסר = fallback מצויר, האפליקציה לעולם לא נשברת. שמות קבצים
   מדויקים = חיבור אוטומטי
 
+## 🔗 חיבור TeachPal (בוצע 2.8)
+מודל "העולם נשאר הבית": המערכת מטמיעה את האפליקציה כולה ב-iframe אחד (ישירות
+מ-GitHub Pages — 180MB התמונות לא נכנסות לריפו של TeachPal), המפה/דרקון/חנות נשארים
+חוויית הליבה, וה-LMS רק רושם ניקוד. `js/lms.js` מדווח כל השלמה
+(`smart-readers-unit-complete` + unitId, דרך `completeUnit` ב-state.js) ומסנכרן את כל
+ההתקדמות השמורה בכל עלייה — ריפוי רשומות חסרות. בצד TeachPal: רג'יסטרי `smart-readers`
+עם `world: true`, מצב עולם ב-SelfPacedUnitPlayer (מאזין לכל היחידות, בלי ניווט אוטומטי),
+ראוט `learn.smart-readers.$unitId`. בדיקה: `test_lms_bridge.py` (הרנס iframe מלא).
+
 ## 🔜 צעדים פתוחים (לפי סדר ערך)
 1. יחידה 0 מלאה (כרגע הרשמה לייט מכסה אותה)
 2. Supabase לשמירה חוצת מכשירים (~יום עבודה, מדריך PUBLISHING-TO-TEACHPAL.md בשורש הפרויקט)
 3. וידאו (פאזה 2 ב-media-redesign-spec.md): אמביינט מפה, אינטרו עולם, חגיגת סיום
 4. מדליוני תחנות מאוירים למפה (אופציונלי, מ-image-prompts/image-prompts.md הישן)
+5. קישור תשלום Morning לקורס (הוחלט 2.8: עולים קודם בלי תשלום)
 
 <!-- flowpad:capsule identity
 version: 1
