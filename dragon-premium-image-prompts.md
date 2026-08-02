@@ -78,3 +78,9 @@
 | `creature-s{0-4}-silver/gold.png` | אוטומטי — הקוד מנסה לטעון ונופל ל-SVG אם חסר. עובד גם חלקית |
 | עיגול הצבע בחנות | טוען אוטומטית את `creature-s2-{color}.png` |
 | קונבנציה | אותה התנהגות כמו חמשת הצבעים הקיימים — שום שינוי קוד לא נדרש |
+
+<!-- flowpad:capsule identity
+version: 1
+data:
+  id: c48e82ce-bba9-4425-91fa-b02b883ac644
+flowpad:endcapsule identity -->

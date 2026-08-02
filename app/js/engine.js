@@ -350,6 +350,7 @@ function renderCatchGame(part) {
   const goal = part.goal || part.targets.length;
 
   let caught, items, rafId, spawnId, lastT, colorIdx = 0, running = false, streak = 0;
+  const spawnMemo = { x: null, y: null };   /* מיקום ההנחתה הקודמת — למניעת הצטברות */
 
   $card().innerHTML = `
     ${partHeader(part)}
@@ -396,15 +397,27 @@ function renderCatchGame(part) {
       <span class="vessel-word">${NK(w)}</span>`;
     const bw = box.clientWidth, bh = box.clientHeight;
     const item = { el, w, ok, alive: true };
+    /* מהירויות הואטו ב-30% (פידבק שני 2.8: מהר מדי לילדים) */
     if (theme.dir === 'up') {
-      item.x = 10 + Math.random() * (bw - 120);
+      /* מיקום אקראי, עם הגנה מהצטברות: לא נולדים קרוב לבלון הקודם */
+      let x = 10 + Math.random() * (bw - 120);
+      if (spawnMemo.x != null && Math.abs(x - spawnMemo.x) < bw * .22) {
+        x = 10 + Math.random() * (bw - 120);
+      }
+      spawnMemo.x = x;
+      item.x = x;
       item.y = bh + 20;
-      item.vy = -(38 + Math.random() * 34);   /* פיקסלים לשנייה */
+      item.vy = -(27 + Math.random() * 24);   /* פיקסלים לשנייה */
       item.vx = 0;
     } else {
+      let y = 8 + Math.random() * (bh - 160);
+      if (spawnMemo.y != null && Math.abs(y - spawnMemo.y) < bh * .22) {
+        y = 8 + Math.random() * (bh - 160);
+      }
+      spawnMemo.y = y;
       item.x = bw + 20;
-      item.y = 8 + Math.random() * (bh - 160);
-      item.vx = -(70 + Math.random() * 50);
+      item.y = y;
+      item.vx = -(49 + Math.random() * 35);
       item.vy = 0;
     }
     el.style.transform = `translate(${item.x}px, ${item.y}px)`;
@@ -503,7 +516,7 @@ function renderCatchGame(part) {
     spawn();
     setTimeout(spawn, 250);
     setTimeout(spawn, 500);
-    spawnId = setInterval(spawn, 950);
+    spawnId = setInterval(spawn, 1360);   /* הואט ב-30% (2.8) */
     rafId = requestAnimationFrame(tick);
   }
 
@@ -521,7 +534,7 @@ function renderMoleGame(part) {
   setStrikes(part.strikes, part.strikes);
   const goal = part.goal || 10;
   const holes = 6;
-  let caught, streak, running, spawnId, hideTimers = [], colorIdx = 0;
+  let caught, streak, running, spawnId, hideTimers = [], colorIdx = 0, lastHole = null;
 
   $card().innerHTML = `
     ${partHeader(part)}
@@ -561,13 +574,16 @@ function renderMoleGame(part) {
 
   function popMole() {
     if (!running) return;
-    const free = [];
+    let free = [];
     for (let i = 0; i < holes; i++) {
       const el = document.getElementById(`mole-${i}`);
       if (el && !el.classList.contains('up')) free.push(el);
     }
     if (!free.length) return;
+    /* אקראי אמיתי, בלי אותה מחילה פעמיים ברצף */
+    if (free.length > 1 && lastHole) free = free.filter(h => h !== lastHole);
     const el = free[Math.floor(Math.random() * free.length)];
+    lastHole = el;
     const { w, ok } = pickWord();
     const mi = colorIdx++;
     const [mc, md] = ARCADE_MONSTER_COLORS[mi % ARCADE_MONSTER_COLORS.length];
@@ -579,7 +595,7 @@ function renderMoleGame(part) {
       <span class="monster-body">${monsterHtml}</span>`;
     el.classList.add('up');
     el.onclick = () => whack(el, ok);
-    const upFor = 1400 + Math.random() * 700;
+    const upFor = 2000 + Math.random() * 1000;   /* הואט ב-30%: יותר זמן לקרוא (2.8) */
     hideTimers.push(setTimeout(() => { if (running) hideMole(el); }, upFor));
   }
 
@@ -653,7 +669,7 @@ function renderMoleGame(part) {
     running = true;
     popMole();
     setTimeout(popMole, 400);
-    spawnId = setInterval(popMole, 850);
+    spawnId = setInterval(popMole, 1210);   /* הואט ב-30% (2.8) */
   }
 
   partCleanup = () => {
