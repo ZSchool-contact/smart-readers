@@ -968,8 +968,11 @@ function renderFreeWrite(part) {
       }
 
       let ok = true;
-      /* rootCount: כמה מילים שונות מהמשפחה נדרשות במשפט (ברירת מחדל 1) */
-      if (q.root) ok = words.filter(w => wordHasRoot(w, q.root)).length >= (q.rootCount || 1);
+      /* rootCount: כמה מילים שונות מהמשפחה נדרשות במשפט (ברירת מחדל 1).
+         q.accept — מילים שמתקבלות גם בלי אותיות השורש לפי הסדר (שורשים עלולים כמו ע־ו־פ) */
+      if (q.root) ok = words.filter(w =>
+        wordHasRoot(w, q.root) || (q.accept || []).some(a => normalizeTyped(a) === normalizeTyped(w))
+      ).length >= (q.rootCount || 1);
       else if (q.keys) ok = words.some(w => q.keys.some(k => typedHasKey(w, normalizeTyped(k))));
       /* חסד: בכתיבה פתוחה אין תשובה אחת נכונה — אחרי שני ניסיונות באורך תקין
          מקבלים כל תשובה. חוץ ממשפטי שורש, שם מילת המשפחה היא כל המטרה */
