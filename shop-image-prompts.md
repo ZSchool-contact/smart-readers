@@ -108,14 +108,8 @@
 ### `shop-pet-dragon.png` — גור דרקונים (550 🪙, תחנה 7)
 > A single adorable baby dragon pet in emerald green with tiny folded wings, big sparkling friendly eyes, small rounded horns, sitting happily with a tiny puff of harmless smoke from its nose, isolated on transparent background, centered, cheerful children's game illustration, storybook style, vibrant saturated colors, no text, high quality digital art
 
-### אופציונלי: דרקוני הצבעים הנדירים (כסוף וזהב)
-שני צבעי היוקרה (כסוף כוכבים 450 🪙 · זהב מלכותי 600 🪙) עובדים כבר עכשיו עם דרקון
-ה-SVG המובנה. כדי שיהיו מרהיבים באמת אפשר לייצר גם להם את סדרת הדרקון המלאה
-(`creature-s0` עד `creature-s4`, בדיוק כמו ב-dragon-image-prompts.md) בשני צבעים:
-- **silver**: shimmering silver-white scales with icy blue accents, like moonlight
-- **gold**: radiant golden scales with warm amber glow, like a royal treasure
-
-10 קבצים: `creature-s{0-4}-silver.png` + `creature-s{0-4}-gold.png` — מתחברים אוטומטית.
+### דרקוני הצבעים הנדירים (כסוף וזהב)
+פרומפטים מלאים ומוכנים לכל 10 התמונות: [dragon-premium-image-prompts.md](dragon-premium-image-prompts.md)
 
 ## מה לא צריך לייצר
 - **צבעי הדמות (קטגוריית 🎨)** — מציגים אוטומטית את הדרקון עצמו בכל צבע, אין קובץ.
