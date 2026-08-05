@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תצוגה מקדימה — קרוסלת פייסבוק · קוראים חכמים</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Heebo',sans-serif;
+    background:#F0F2F5;
+    direction:rtl;
+    padding:32px 12px 60px;
+    color:#050505;
+  }
+  .note {
+    max-width:560px; margin:0 auto 20px;
+    background:#FFF8EA; border:2px solid #EAD9B4; border-radius:12px;
+    padding:14px 18px; font-size:0.95rem; color:#5C4023; line-height:1.6;
+  }
+  .post {
+    max-width:560px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.2);
+    overflow:hidden;
+  }
+  .post-header { display:flex; align-items:center; gap:10px; padding:14px 16px 6px; }
+  .avatar {
+    width:42px; height:42px; border-radius:50%;
+    background:#FFF8EA url('../../landing/assets/zschool-logo.png') center/70% no-repeat;
+    border:1px solid #e4e6eb;
+    flex-shrink:0;
+  }
+  .page-name { font-weight:700; font-size:0.95rem; }
+  .sponsored { font-size:0.8rem; color:#65676B; }
+  .primary-text { padding:10px 16px 12px; font-size:0.95rem; line-height:1.55; white-space:pre-line; }
+
+  .carousel {
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:4px 16px 8px;
+    scroll-snap-type:x mandatory;
+  }
+  .carousel::-webkit-scrollbar { height:8px; }
+  .carousel::-webkit-scrollbar-thumb { background:#c9ccd1; border-radius:4px; }
+
+  .ad-card {
+    flex:0 0 300px;
+    scroll-snap-align:start;
+    border:1px solid #e4e6eb;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fff;
+  }
+  .ad-card img { width:300px; height:300px; object-fit:cover; display:block; }
+  .ad-card .meta { padding:10px 12px; background:#F7F8FA; display:flex; align-items:center; gap:8px; }
+  .ad-card .txt { flex:1; min-width:0; }
+  .ad-card h3 { font-size:0.9rem; font-weight:700; line-height:1.3; margin-bottom:2px; }
+  .ad-card p { font-size:0.78rem; color:#65676B; line-height:1.35; }
+  .ad-card .cta {
+    flex-shrink:0;
+    background:#E4E6EB; color:#050505;
+    font-weight:700; font-size:0.82rem;
+    padding:8px 12px; border-radius:6px; white-space:nowrap;
+  }
+
+  .post-footer {
+    display:flex; justify-content:space-around;
+    border-top:1px solid #e4e6eb;
+    margin-top:8px; padding:6px 0;
+    color:#65676B; font-size:0.85rem; font-weight:500;
+  }
+  .post-footer span { padding:6px 12px; }
+
+  .hint { text-align:center; color:#65676B; font-size:0.85rem; margin-top:14px; }
+</style>
+</head>
+<body>
+
+<div class="note">
+  <strong>ככה המודעה תיראה בפיד.</strong>
+  גררו את הכרטיסים הצידה (או גלגלו עם העכבר) כמו שהגולשים יעשו בפייסבוק.
+  בנייד רואים כרטיס אחד וחצי בכל רגע, והחצי החתוך מזמין להחליק הלאה.
+</div>
+
+<div class="post">
+  <div class="post-header">
+    <div class="avatar"></div>
+    <div>
+      <div class="page-name">Z-School</div>
+      <div class="sponsored">ממומן</div>
+    </div>
+  </div>
+
+  <div class="primary-text">"עוד דף עבודה?!"
+
+אם המשפט הזה נשמע מוכר, כנראה שגם אצלכם הבנת הנקרא הפכה למאבק.
+
+קוראים חכמים עושה את זה אחרת: עולם משחק שלם שבו הילדים מגדלים דרקון קריאה משלהם, צדים מילים ממשפחות מילים, פותרים חידות וכותבים בעצמם. בלי דפים, בלי מאבקים. הם פשוט מבקשים עוד.
+
+תשלום חד פעמי של 199 ₪. מתחילים בלינק.</div>
+
+  <div class="carousel">
+    <div class="ad-card">
+      <img src="card-1-map.png" alt="">
+      <div class="meta"><div class="txt"><h3>הבנת הנקרא? זו הרפתקה</h3><p>עולם משחק שלם לכיתות ג׳ ו-ד׳, עם מפה, תחנות ומסע</p></div><div class="cta">הרשמה</div></div>
+    </div>
+    <div class="ad-card">
+      <img src="card-2-dragon.png" alt="">
+      <div class="meta"><div class="txt"><h3>מגדלים דרקון קריאה</h3><p>מביצת פלא ועד דרקון מלכותי. כל יחידה שמסיימים מגדלת אותו</p></div><div class="cta">הרשמה</div></div>
+    </div>
+    <div class="ad-card">
+      <img src="card-3-arcade.png" alt="">
+      <div class="meta"><div class="txt"><h3>לומדים בלי להרגיש</h3><p>צדים מילות משפחה במשחקי ארקייד עם מפלצות מצחיקות</p></div><div class="cta">הרשמה</div></div>
+    </div>
+    <div class="ad-card">
+      <img src="card-4-reading.png" alt="">
+      <div class="meta"><div class="txt"><h3>כל ילד קורא ברמה שלו</h3><p>ניקוד מלא בלחיצת כפתור, איור לכל קטע, קצב אישי</p></div><div class="cta">הרשמה</div></div>
+    </div>
+    <div class="ad-card">
+      <img src="card-5-owl.png" alt="">
+      <div class="meta"><div class="txt"><h3>אף אחד לא נתקע לבד</h3><p>אלף הינשוף מלווה, רומז ומעודד. טעות היא חלק מהמשחק</p></div><div class="cta">הרשמה</div></div>
+    </div>
+    <div class="ad-card">
+      <img src="card-6-cta.png" alt="">
+      <div class="meta"><div class="txt"><h3>מתחילים את המסע</h3><p>199 ₪ חד פעמי, בלי מנוי. עובד מכל מחשב או טאבלט</p></div><div class="cta">הרשמה</div></div>
+    </div>
+  </div>
+
+  <div class="post-footer">
+    <span>אהבתי</span><span>תגובה</span><span>שיתוף</span>
+  </div>
+</div>
+
+<div class="hint">מתחת לכל תמונה: הכותרת, התיאור וכפתור ההרשמה של אותו כרטיס</div>
+
+</body>
+</html>
