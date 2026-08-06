@@ -77,6 +77,24 @@ function fitUnitCard() {
   }
 }
 
+/* חשיפת כפתור ההמשך אחרי תשובה: מתאימים את הכרטיס מחדש (כי הפידבק
+   הוסיף גובה), ואם עדיין צריך גלילה — גוללים את הכפתור אל תוך המסך.
+   בלי זה ילדים לא מצאו איפה ממשיכים לשאלה הבאה (פידבק מהקמפוס, 6.8.26) */
+function revealNext(btn) {
+  if (!btn) return;
+  btn.classList.remove('hidden');
+  const bring = () => {
+    fitUnitCard();
+    const stage = document.querySelector('.unit-stage');
+    if (stage && stage.scrollHeight > stage.clientHeight + 2) {
+      btn.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    }
+  };
+  requestAnimationFrame(bring);
+  /* מעבר שני: תמונה שנטענת באיחור מגדילה את הכרטיס אחרי ההתאמה הראשונה */
+  setTimeout(bring, 400);
+}
+
 function startFitObserver() {
   if (fitObserverStarted) return;
   fitObserverStarted = true;
@@ -341,6 +359,7 @@ function renderWordHunt(part) {
           document.getElementById('hunt-feedback').innerHTML =
             `<div class="feedback-box good">🎉 ${part.doneFeedback}</div>`;
           document.getElementById('btn-hunt-next').disabled = false;
+          revealNext(document.getElementById('btn-hunt-next'));
         }
       } else {
         btn.classList.add('picked-bad');
@@ -387,6 +406,7 @@ function renderSentenceHunt(part) {
           document.getElementById('sh-feedback').innerHTML =
             `<div class="feedback-box good">🌟 ${part.fbGood}</div>`;
           document.getElementById('btn-sh-next').disabled = false;
+          revealNext(document.getElementById('btn-sh-next'));
           confettiBurst(30);
         }
       } else {
@@ -563,6 +583,7 @@ function renderCatchGame(part) {
     document.getElementById('arcade-feedback').innerHTML =
       `<div class="feedback-box good">🏆 ${part.doneFeedback}</div>`;
     document.getElementById('btn-arcade-next').disabled = false;
+    revealNext(document.getElementById('btn-arcade-next'));
   }
 
   function startRound() {
@@ -721,6 +742,7 @@ function renderMoleGame(part) {
     document.getElementById('mole-feedback').innerHTML =
       `<div class="feedback-box good">🏆 ${part.doneFeedback}</div>`;
     document.getElementById('btn-mole-next').disabled = false;
+    revealNext(document.getElementById('btn-mole-next'));
   }
 
   function startRound() {
@@ -812,7 +834,7 @@ function renderClozeTitle(part) {
         fb.innerHTML = `<div class="feedback-box good">✅ ${q.fbGood}</div>`;
         const last = qi === part.questions.length - 1;
         nextBtn.textContent = last ? 'סיימנו את הפעילות! ⬅' : 'לכותרת הבאה ⬅';
-        nextBtn.classList.remove('hidden');
+        revealNext(nextBtn);
         nextBtn.onclick = () => { if (last) nextPart(); else { qi++; renderQuestion(); } };
         refreshNikud();
       } else {
@@ -919,7 +941,7 @@ function renderFamilyExpand(part) {
         fb.innerHTML = `<div class="feedback-box good">🏆 ${r.praise}${moreIdeas.length ? `<br>רעיונות נוספים מהמשפחה: ${moreIdeas.join(', ')}` : ''}</div>`;
         const last = ri === part.rounds.length - 1;
         nextBtn.textContent = last ? 'סיימנו את הפעילות! ⬅' : 'למשפחה הבאה ⬅';
-        nextBtn.classList.remove('hidden');
+        revealNext(nextBtn);
         nextBtn.onclick = () => { if (last) nextPart(); else { ri++; renderRound(); } };
         refreshNikud();
       }
@@ -1018,7 +1040,7 @@ function renderFreeWrite(part) {
       fb.innerHTML = `<div class="feedback-box good">✅ ${q.fbGood}${q.sample ? `<br>💡 עוד רעיון שחשבנו עליו: "${q.sample}"` : ''}</div>`;
       const last = qi === part.questions.length - 1;
       nextBtn.textContent = last ? 'סיימנו את הפעילות! ⬅' : 'למשימה הבאה ⬅';
-      nextBtn.classList.remove('hidden');
+      revealNext(nextBtn);
       nextBtn.onclick = () => { if (last) nextPart(); else { qi++; renderQuestion(); } };
       refreshNikud();
     }
@@ -1121,7 +1143,7 @@ function renderFeedGame(part) {
           document.getElementById('feed-status').textContent = 'כולן שבעות!';
           document.getElementById('feed-feedback').innerHTML =
             `<div class="feedback-box good">🏆 ${part.doneFeedback}</div>`;
-          document.getElementById('btn-feed-next').classList.remove('hidden');
+          revealNext(document.getElementById('btn-feed-next'));
         } else {
           showWord();
           busy = false;
@@ -1177,7 +1199,10 @@ function renderReading(part) {
         Sound.play('click');
         if (!marked[pi]) { marked[pi] = true; addCoins(5, span); }
         p.classList.add('marked');
-        if (marked.every(Boolean)) document.getElementById('btn-read-next').disabled = false;
+        if (marked.every(Boolean)) {
+          document.getElementById('btn-read-next').disabled = false;
+          revealNext(document.getElementById('btn-read-next'));
+        }
       };
       p.appendChild(span);
     });
@@ -1238,9 +1263,9 @@ function renderMcqSet(part) {
         document.getElementById('q-feedback').innerHTML =
           `<div class="feedback-box good">✅ ${q.fbGood}</div>`;
         const next = document.getElementById('btn-q-next');
-        next.classList.remove('hidden');
         const last = qi === part.questions.length - 1;
         next.textContent = last ? 'סיימנו את הפעילות! ⬅' : 'לשאלה הבאה ⬅';
+        revealNext(next);
         next.onclick = () => {
           if (last) nextPart();
           else { qi++; renderQuestion(); }
@@ -1345,7 +1370,7 @@ function renderSortFamilies(part) {
         placedCount++;
         if (placedCount === part.words.length) {
           toast('כל המילים מצאו את המשפחה שלהן! 🎉');
-          document.getElementById('btn-sort-next').classList.remove('hidden');
+          revealNext(document.getElementById('btn-sort-next'));
         }
       } else {
         bin.classList.add('flash-bad');
